@@ -1,0 +1,68 @@
+version '1.0' + '.' + (System.getenv("BUILD_NUMBER") ?: 'dev')
+apply plugin: 'java'
+group = 'ch.newscron'
+/*  IGNORE THIS */
+//--------------
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE")
+    }
+}
+apply plugin: 'spring-boot'
+//--------------
+
+repositories {
+    mavenCentral()
+    maven { url "http://repository.apache.org/snapshots/" }
+    maven { url "http://repo.maven.apache.org/maven2" }
+
+}
+
+
+processResources {
+    filesMatching('application.properties') {
+        expand projectVersion: project.version
+    }
+
+}
+
+
+dependencies {
+
+
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    }
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jetty'
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc') {
+        exclude(module: 'tomcat-jdbc')
+    }
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+
+
+    compile(project(':Newscron-lib')) {
+        exclude(module: 'com.stripe')
+        exclude(module: 'com.restfb')
+        exclude(module: 'org.imgscalr')
+        exclude(module: 'com.amazonaws')
+        exclude(module: 'javax.ws.rs')
+        exclude(module: 'commons-chain')
+        exclude(module: 'com.google.apis')
+        exclude(module: 'com.google.identitytoolkit')
+    }
+
+
+
+    testCompile group: 'org.springframework', name: 'spring-test', version: '4.3.3.RELEASE'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.4.1.RELEASE'
+    testCompile("org.springframework.boot:spring-boot-starter-actuator")
+    testCompile 'junit:junit:4.12'
+}
+
+
+
+
+

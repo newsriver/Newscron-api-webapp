@@ -1,0 +1,17 @@
+li{
+  list-style-type:none
+}
+
+ul{
+  padding: 0px;
+}
+
+h2{
+  margin-bottom: 0rem;
+  margin-top: 16rem;
+  font-size: 5rem;
+}
+
+hr{
+  margin-top: 1rem;
+}
