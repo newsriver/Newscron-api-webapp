@@ -2,6 +2,8 @@ package ch.newscron.v3.rest;
 
 
 import ch.newscron.v3.data.Category;
+import ch.newscron.v3.data.Configuration;
+import ch.newscron.v3.data.Package;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.dbutils.DbUtils;
@@ -41,6 +43,101 @@ public class Settings {
     @RequestMapping("/v3/categories")
     public List<Category> categories(@RequestParam(value = "countryId", defaultValue = "1") int countryId) {
 
+        return getCategories(countryId);
+
+    }
+
+
+    //Add this option to the marathond-lb "HAPROXY_0_BACKEND_HTTP_OPTIONS":"  option forwardfor\n"
+
+    @CrossOrigin(origins = "*")
+    @RequestMapping("/v3/boot")
+    public Configuration bootsrapConfig(HttpServletRequest httpRequest, @RequestParam(value = "countryCode", defaultValue = "us") String countryCode) {
+
+
+        String requestIp = httpRequest.getHeader("x-forwarded-for");
+        if (requestIp == null) {
+            requestIp = httpRequest.getRemoteAddr();
+        }
+
+        UserLocation location = null;
+        try {
+            location = mapper.readValue(new URL("http://ip-api.com/json/" + requestIp), UserLocation.class);
+
+            Configuration configuration = new Configuration();
+            configuration.setCountryId(fittingCountryId(location.countryCode));
+            configuration.setPackages(fittingPackagesId(configuration.getCountryId()));
+            configuration.setCategories(getCategories(configuration.getCountryId()));
+            return configuration;
+
+        } catch (MalformedURLException e) {
+            log.fatal("Unable to identify user location", e);
+        } catch (IOException e) {
+            log.fatal("Unable to identify user location", e);
+        }
+
+
+        return null;
+
+    }
+
+    private List<Package> fittingPackagesId(int countryId) {
+
+        List<Package> packages = new LinkedList<>();
+        ResultSet rs = null;
+        try (Connection conn = this.dataSource.getConnection()) {
+
+            conn.setReadOnly(true);
+            try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM NewscronConfiguration.package WHERE countryID=?")) {
+
+                stmt.setInt(1, countryId);
+
+                rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    Package sourcePackage = new Package();
+                    sourcePackage.setId(rs.getInt("id"));
+                    sourcePackage.setName(rs.getString("name"));
+                    sourcePackage.setLanguage(rs.getInt("defaultLanguage"));
+                    sourcePackage.setRootPackage(rs.getInt("rootPackage"));
+                    packages.add(sourcePackage);
+                }
+            }
+        } catch (Exception e) {
+            log.log(Level.ERROR, "Error unable find country id", e);
+        } finally {
+            DbUtils.closeQuietly(rs);
+        }
+        return packages;
+    }
+
+
+    private int fittingCountryId(String countryCode) {
+        ResultSet rs = null;
+        try (Connection conn = this.dataSource.getConnection()) {
+            conn.setReadOnly(true);
+            try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM NewscronConfiguration.country where ISOCode like '?'")) {
+                if (countryCode != null) {
+                    stmt.setString(1, countryCode.toUpperCase());
+                } else {
+                    stmt.setString(1, "Unknown");
+                }
+                rs = stmt.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt("id");
+                }
+            }
+        } catch (Exception e) {
+            log.log(Level.ERROR, "Error unable find country id", e);
+        } finally {
+            DbUtils.closeQuietly(rs);
+        }
+        //as defatuld return us country id
+        return 33;
+    }
+
+    protected List<Category> getCategories(int countryId) {
+
         List<Category> categories = new LinkedList<>();
 
         PreparedStatement stmt = null;
@@ -69,36 +166,6 @@ public class Settings {
         }
 
         return categories;
-
-    }
-
-
-    //Add this option to the marathond-lb "HAPROXY_0_BACKEND_HTTP_OPTIONS":"  option forwardfor\n"
-
-    @CrossOrigin(origins = "*")
-    @RequestMapping("/v3/boot")
-    public List<Category> bootsrapConfig(HttpServletRequest httpRequest, @RequestParam(value = "countryCode", defaultValue = "us") String countryCode) {
-
-
-        String requestIp = httpRequest.getHeader("x-forwarded-for");
-        if (requestIp == null) {
-            requestIp = httpRequest.getRemoteAddr();
-        }
-
-        UserLocation location = null;
-        try {
-            location = mapper.readValue(new URL("http://ip-api.com/json/" + requestIp), UserLocation.class);
-
-
-        } catch (MalformedURLException e) {
-            log.fatal("Unable to identify user location", e);
-        } catch (IOException e) {
-            log.fatal("Unable to identify user location", e);
-        }
-
-
-        return null;
-
     }
 
 

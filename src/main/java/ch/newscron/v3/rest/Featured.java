@@ -5,6 +5,8 @@ import ch.newscron.data.article.v2.ArticleFactory;
 import ch.newscron.extractor.StructuredArticle;
 import ch.newscron.v3.data.Article;
 import ch.newscron.v3.data.Category;
+import ch.newscron.v3.data.Configuration;
+import ch.newscron.v3.data.Package;
 import ch.newscron.v3.data.Section;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.log4j.Level;
@@ -48,26 +50,28 @@ public class Featured {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/v3/featured", method = RequestMethod.POST)
-    public List<Section> featured(@RequestBody List<Category> categories) {
+    public List<Section> featured(@RequestBody Configuration configuration) {
 
         List<Section> sections = new LinkedList<>();
 
-        for (Category category : categories) {
 
-            Section section = featuredCategory(category.getId(), 3, 10);
+        for (Category category : configuration.getCategories()) {
+
+            Section section = featuredCategory(category.getId(), configuration.getPackages(), 10);
             section.setCategory(category);
             sections.add(section);
         }
+
 
         return sections;
     }
 
 
-    private Section featuredCategory(int categoryId, int packageId, int limit) {
+    private Section featuredCategory(int categoryId, List<Package> packages, int limit) {
 
         Section categoryArticles = new Section();
         ArticleFactory articleFactory = ArticleFactory.getInstance();
-        Set<Long> articlesId = featuredArticlesIdsPerCategory(categoryId, packageId, limit);
+        Set<Long> articlesId = featuredArticlesIdsPerCategory(categoryId, packages, limit);
         for (Long articleId : articlesId) {
             StructuredArticle strArticle = articleFactory.getArticle(articleId);
 
@@ -85,12 +89,19 @@ public class Featured {
     }
 
 
-    private Set<Long> featuredArticlesIdsPerCategory(int categoryId, int packageId, int limit) {
+    private Set<Long> featuredArticlesIdsPerCategory(int categoryId, List<Package> packages, int limit) {
 
         HashSet<Long> articleIds = new HashSet<>();
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
+
+        String packagesIds = "";
+        for (Package p : packages) {
+            packagesIds += p.getId() + ",";
+        }
+        packagesIds += "-1";
+
         try {
 
 
@@ -99,13 +110,13 @@ public class Featured {
             String sql = "SELECT A.id, T.id, T.version FROM NewscronContent.articleFeature AS F " +
                     "JOIN NewscronContent.article AS A ON A.id=F.id " +
                     "JOIN NewscronContent.topic as T ON T.id=A.topicId " +
-                    "WHERE F.categoryID=? AND F.packageID = ?  " +
+                    "WHERE F.categoryID=? AND F.packageID in (?)  " +
                     "AND cloneOf is NULL " +
                     "AND F.publicationDate > DATE_SUB(now(), Interval 16 Hour) " +
                     "ORDER BY F.rank DESC LIMIT ?;";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, categoryId);
-            stmt.setInt(2, packageId);
+            stmt.setString(2, packagesIds);
             stmt.setInt(3, limit * 20);
 
             rs = stmt.executeQuery();
