@@ -1,0 +1,7 @@
+<urlrewrite use-query-strings="true">
+    <!-- This is to support the legacy path of Readability -->
+    <rule>
+        <from>/Readability/readability.jsp</from>
+        <to>/Readability/?%{query-string}</to>
+    </rule>
+</urlrewrite>
