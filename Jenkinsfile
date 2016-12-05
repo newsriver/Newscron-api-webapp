@@ -1,7 +1,7 @@
 #!groovy​
 
-def marathonAppId = '/newscron/newscron-ranker'
-def projectName = 'newscron-ranker'
+def marathonAppId = '/newscron/newscron-api-webapp'
+def projectName = 'newscron-api-webapp'
 def dockerRegistry = 'docker-registry.newsriver.io:5000'
 def marathonURL = 'http://46.4.71.105:8080/'
 
