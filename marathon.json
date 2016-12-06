@@ -1,34 +1,39 @@
 {
-  "id": "/newscron/newscron-ranker",
+  "id": "/newscron/newscron-api-webapp",
   "cmd": null,
-  "cpus": 0.2,
-  "mem": 1000,
+  "cpus": 0.5,
+  "mem": 4096,
   "disk": 0,
   "instances": 1,
   "container": {
     "type": "DOCKER",
+    "volumes": [],
     "docker": {
-      "image": "docker-registry.newsriver.io:5000/newscron-ranker:latest",
+      "image": "docker-registry.newsriver.io:5000/newscron-api:latest",
       "network": "HOST",
       "privileged": false,
       "parameters": [],
       "forcePullImage": true
     }
   },
+  "env": {
+    "JAVA_OPTS": "-Xms256m -Xmx3584m -Dport.http=$PORT"
+  },
   "healthChecks": [
     {
       "path": "/health",
       "protocol": "HTTP",
       "portIndex": 0,
-      "gracePeriodSeconds": 90,
+      "gracePeriodSeconds": 300,
       "intervalSeconds": 60,
       "timeoutSeconds": 20,
       "maxConsecutiveFailures": 3,
       "ignoreHttp1xx": false
     }
   ],
-  "args": [
-    "--threads=20",
-    "--queue=40"
-  ]
+  "labels": {
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_VHOST": "app.newscron.newsriver.io",
+    "HAPROXY_0_REDIRECT_TO_HTTPS": "false"
+  }
 }

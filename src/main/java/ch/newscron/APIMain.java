@@ -10,9 +10,11 @@ import org.springframework.boot.actuate.metrics.buffer.BufferMetricReader;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
+import org.tuckey.web.filters.urlrewrite.UrlRewriteFilter;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -27,6 +29,16 @@ public class APIMain {
         SpringApplication app = new SpringApplication(APIMain.class);
         app.run(args);
 
+    }
+
+    @Bean
+    public FilterRegistrationBean tuckeyRegistrationBean() {
+        final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+
+        registrationBean.setFilter(new UrlRewriteFilter());
+        registrationBean.addInitParameter("confPath", "urlrewrite.xml");
+
+        return registrationBean;
     }
 
 
