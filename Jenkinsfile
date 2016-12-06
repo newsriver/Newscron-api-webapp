@@ -54,7 +54,7 @@ def deployDockerImage(projectName, dockerRegistry) {
     sh 'mkdir docker'
 
     dir('docker') {
-        sh "cp ../build/libs/$projectName-*.jar ."
+        sh "cp ../build/libs/$projectName-*.war ."
         sh 'cp ../Dockerfile .'
         docker.withRegistry("https://$dockerRegistry/") {
             stage 'build docker image'
