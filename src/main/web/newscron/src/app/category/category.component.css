@@ -5,18 +5,3 @@ li{
 ul{
   padding: 0px;
 }
-
-h2:first-child {
-  margin-top: 2rem;
-}
-
-
-h2{
-  margin-bottom: 0rem;
-  margin-top: 16rem;
-  font-size: 5rem;
-}
-
-hr{
-  margin-top: 1rem;
-}

@@ -1,63 +1,10 @@
 
-li{
-  list-style-type:none
+.active-link{
+  color: #252830!important;
+  background-color: #1CA8DD!important;
 }
 
 ul{
-  padding: 0px;
-}
-
-
-.bt {
-    padding-top: 60px;
-    margin-bottom: 30px;
-    font-size: 20px;
-    color: #fff;
-    background-color: #1ca8dd;
-    background-image: linear-gradient(to bottom, #137499, #1ca8dd);
-}
-
-.bt h1 {
-    margin-bottom: 5px;
-    font-size: 40px;
-    line-height: 1;
-}
-
-.bt p {
-    font-weight: 300;
-    line-height: 1.4;
-    color: #9fdcf3;
-}
-
-
-.bw {
-    width: 970px;
-}
-.bw {
-    margin-right: auto;
-    margin-left: auto;
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-.modal-actions{
-  border-color: white;
-  border-top: 1px;
-  border-top-style: solid;
-  margin-top: 60px;
-}
-
-
-.modal-actions button{
-  color: white;
-  max-width: 250px;
-  border-left: 1px;
-  float: right;
-  border-left-style: solid;
-  border-radius: 0px;
-  border-top: 0px;
-}
-
-.modal-actions button:hover{
-  color: #1CA8D9;
+  position: fixed;
+  margin-top: 5rem;
 }

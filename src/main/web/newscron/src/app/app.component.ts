@@ -1,12 +1,12 @@
-import { NgModule, Component } from '@angular/core';
-import {CategoryComponent} from './category/category.component';
-import {IpApiClientService, UserLocation} from './ip-api-client.service';
-import {NewscronClientService, Section, Category, Article} from './newscron-client.service';
+import { NgModule, OnInit, Component } from '@angular/core';
+import {FeaturedComponent} from './featured/featured.component';
+import {WelcomeComponent} from './welcome/welcome.component';
+import {NewscronClientService, BootstrapConfiguration, Section, Category, Article} from './newscron-client.service';
 import {Injectable, Pipe, PipeTransform} from '@angular/core';
 
 
 @NgModule({
-    declarations: [CategoryComponent]
+    declarations: [FeaturedComponent, WelcomeComponent]
 })
 
 
@@ -24,25 +24,31 @@ export class ValidSectionFilter implements PipeTransform {
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
-    providers: [NewscronClientService, IpApiClientService]
+    providers: []
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-    public sections: Section[] = [];
+    public bootConfig: BootstrapConfiguration;
     public categories: Category[] = [];
-    public location: UserLocation = null;
+    public welcome: boolean = false;
 
-    constructor(private client: NewscronClientService, private ipClient: IpApiClientService) {
+    constructor(private client: NewscronClientService) {
 
+    }
 
-        this.client.boot().subscribe(configuration => {
-            this.categories = configuration.categories;
-
-            this.client.featured(configuration).subscribe(sections => {
-                this.sections = sections;
-            });
+    ngOnInit() {
+        this.client.getCategories().subscribe(categories => {
+            if (categories == null) {
+                this.welcome = true;
+            } else {
+                this.categories = categories
+            }
         });
+    }
 
+
+    public closeWelcome(event) {
+        this.welcome = false;
     }
 
 

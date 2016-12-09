@@ -1,46 +1,79 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs/Rx';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import {Inject} from '@angular/core';
-
+import { Observable, BehaviorSubject, Subject } from 'rxjs/Rx';
 
 @Injectable()
 export class NewscronClientService {
 
 
-    private baseURL: string = "http://localhost:9092/v3";
+    private baseURL: string = "/v3";
+
+    private categories: Subject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
+    private bootConfig: Subject<BootstrapConfiguration> = new BehaviorSubject<BootstrapConfiguration>(null);
+
+
+    //public categories: Observable<Array<Category>> = this._categories.asObservable();
+
+
 
     constructor( @Inject(Http) private http: Http) {
-
+        let cat: Array<Category> = JSON.parse(localStorage.getItem('categories'));
+        if (cat != null) {
+            this.categories.next(cat);
+        }
     }
 
-
-
-    public featured(configuration: Configuration): Observable<Section[]> {
+    public category(cat: Category): Observable<Section> {
 
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.post(this.baseURL + "/featured", configuration, options)
+        return this.http.post(this.baseURL + "/category", cat, options)
             .map(this.extractData);
-        //.catch(this.handleError);
-
 
     }
 
-    public boot(): Observable<Configuration> {
 
-        return this.http.get(this.baseURL + "/boot")
+    public featured(cat: Array<Category>): Observable<Section[]> {
+
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post(this.baseURL + "/featured", cat, options)
             .map(this.extractData);
-        //.catch(this.handleError);
+
+    }
+
+    public boot(packagesIds: number[]): Observable<BootstrapConfiguration> {
+
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        this.http.post(this.baseURL + "/boot", packagesIds, options)
+            .map(this.extractData).subscribe(bootConfig => {
+                this.categories.next(bootConfig.categories);
+                this.bootConfig.next(bootConfig);
+            });
+
+
+        return this.bootConfig;
     }
 
 
-    public getCategories(): Observable<Category[]> {
 
-        return this.http.get(this.baseURL + "/categories")
-            .map(this.extractData);
-        //.catch(this.handleError);
+
+
+    public setCategories(categories: Category[]) {
+        this.categories.next(categories);
+        localStorage.setItem('categories', JSON.stringify(categories));
+    }
+
+
+
+
+    public getCategories(): Observable<Array<Category>> {
+        return this.categories;
     }
 
 
@@ -49,25 +82,23 @@ export class NewscronClientService {
         return body || {};
     }
 
+
+
 }
 
-export class Configuration {
+export class BootstrapConfiguration {
     public categories: Category[];
-    public pacakges: Package[];
+    public packagesIds: number[];
+    public localPackagesIds: number[];
     public countryId: number;
 }
 
-export class Package {
-    public id: number;
-    public name: string = null;
-    public language: number;
-    public rootPackage: number;
-}
 
 export class Category {
     public name: string = null;
     public id: number;
     public defaultAmount: number;
+    public packages: number[];
 }
 
 export class Section {

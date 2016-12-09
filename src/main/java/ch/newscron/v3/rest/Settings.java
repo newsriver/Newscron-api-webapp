@@ -1,9 +1,8 @@
 package ch.newscron.v3.rest;
 
 
+import ch.newscron.v3.data.BootstrapConfiguration;
 import ch.newscron.v3.data.Category;
-import ch.newscron.v3.data.Configuration;
-import ch.newscron.v3.data.Package;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.dbutils.DbUtils;
@@ -12,8 +11,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,68 +39,99 @@ public class Settings {
     @Qualifier("dataSource")
     private DataSource dataSource;
 
-    @CrossOrigin(origins = "*")
-    @RequestMapping("/v3/categories")
-    public List<Category> categories(@RequestParam(value = "countryId", defaultValue = "1") int countryId) {
+    /*@CrossOrigin(origins = "*")
+    @RequestMapping(value = "/v3/categories", method = RequestMethod.POST)
+    public List<CategoryArticles> categories(@RequestBody List<Integer> packagesIds) {
 
-        return getCategories(countryId);
+        return getCategories(packagesIds);
 
-    }
+    }*/
 
 
     //Add this option to the marathond-lb "HAPROXY_0_BACKEND_HTTP_OPTIONS":"  option forwardfor\n"
 
     @CrossOrigin(origins = "*")
-    @RequestMapping("/v3/boot")
-    public Configuration bootsrapConfig(HttpServletRequest httpRequest, @RequestParam(value = "countryCode", defaultValue = "us") String countryCode) {
+    @RequestMapping(value = "/v3/boot", method = RequestMethod.POST)
+    public BootstrapConfiguration bootsrapConfig(HttpServletRequest httpRequest, @RequestBody(required = false) List<Integer> packagesIds) {
 
 
-        String requestIp = httpRequest.getHeader("x-forwarded-for");
-        if (requestIp == null) {
-            requestIp = httpRequest.getRemoteAddr();
+        BootstrapConfiguration configuration = new BootstrapConfiguration();
+
+
+        if (packagesIds == null) {
+            UserLocation location = null;
+            try {
+                String requestIp = httpRequest.getHeader("x-forwarded-for");
+                if (requestIp == null) {
+                    requestIp = httpRequest.getRemoteAddr();
+                }
+                location = mapper.readValue(new URL("http://ip-api.com/json/" + requestIp), UserLocation.class);
+                Integer countryId = fittingCountryId(location.countryCode);
+                packagesIds = fittingPackagesId(countryId);
+            } catch (MalformedURLException e) {
+                log.fatal("Unable to identify user location", e);
+            } catch (IOException e) {
+                log.fatal("Unable to identify user location", e);
+            }
         }
+        configuration.setPackagesIds(packagesIds);
+        configuration.setLocalPackagesIds(fittingSubPackagesId(configuration.getPackagesIds()));
 
-        UserLocation location = null;
-        try {
-            location = mapper.readValue(new URL("http://ip-api.com/json/" + requestIp), UserLocation.class);
+        List<Integer> categoryPackages = new LinkedList<>();
+        categoryPackages.addAll(configuration.getPackagesIds());
+        categoryPackages.addAll(configuration.getLocalPackagesIds());
 
-            Configuration configuration = new Configuration();
-            configuration.setCountryId(fittingCountryId(location.countryCode));
-            configuration.setPackages(fittingPackagesId(configuration.getCountryId()));
-            configuration.setCategories(getCategories(configuration.getCountryId()));
-            return configuration;
-
-        } catch (MalformedURLException e) {
-            log.fatal("Unable to identify user location", e);
-        } catch (IOException e) {
-            log.fatal("Unable to identify user location", e);
+        List<Category> categories = getCategories(categoryPackages);
+        for (Category category : categories) {
+            category.setPackages(categoryPackages);
         }
-
-
-        return null;
-
+        configuration.setCategories(categories);
+        return configuration;
     }
 
-    private List<Package> fittingPackagesId(int countryId) {
+    private List<Integer> fittingPackagesId(int countryId) {
 
-        List<Package> packages = new LinkedList<>();
+        List<Integer> packages = new LinkedList<>();
         ResultSet rs = null;
         try (Connection conn = this.dataSource.getConnection()) {
 
             conn.setReadOnly(true);
-            try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM NewscronConfiguration.package WHERE countryID=?")) {
+            try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM NewscronConfiguration.package WHERE countryID=? AND rootPackage is NULL")) {
 
                 stmt.setInt(1, countryId);
 
                 rs = stmt.executeQuery();
 
                 while (rs.next()) {
-                    Package sourcePackage = new Package();
-                    sourcePackage.setId(rs.getInt("id"));
-                    sourcePackage.setName(rs.getString("name"));
-                    sourcePackage.setLanguage(rs.getInt("defaultLanguage"));
-                    sourcePackage.setRootPackage(rs.getInt("rootPackage"));
-                    packages.add(sourcePackage);
+                    packages.add(rs.getInt("id"));
+                }
+            }
+        } catch (Exception e) {
+            log.log(Level.ERROR, "Error unable find country id", e);
+        } finally {
+            DbUtils.closeQuietly(rs);
+        }
+        return packages;
+    }
+
+    private List<Integer> fittingSubPackagesId(List<Integer> packagesIds) {
+
+        String packagesIdsStr = "";
+        for (Integer packageId : packagesIds) {
+            packagesIdsStr += packageId + ",";
+        }
+        packagesIdsStr += "-1";
+
+        List<Integer> packages = new LinkedList<>();
+        ResultSet rs = null;
+        try (Connection conn = this.dataSource.getConnection()) {
+
+            conn.setReadOnly(true);
+            try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM NewscronConfiguration.package WHERE rootPackage in (?)")) {
+                stmt.setString(1, packagesIdsStr);
+                rs = stmt.executeQuery();
+                while (rs.next()) {
+                    packages.add(rs.getInt("id"));
                 }
             }
         } catch (Exception e) {
@@ -116,7 +147,7 @@ public class Settings {
         ResultSet rs = null;
         try (Connection conn = this.dataSource.getConnection()) {
             conn.setReadOnly(true);
-            try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM NewscronConfiguration.country where ISOCode like '?'")) {
+            try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM NewscronConfiguration.country where ISOCode like ?")) {
                 if (countryCode != null) {
                     stmt.setString(1, countryCode.toUpperCase());
                 } else {
@@ -136,18 +167,25 @@ public class Settings {
         return 33;
     }
 
-    protected List<Category> getCategories(int countryId) {
+    protected List<Category> getCategories(List<Integer> packages) {
 
         List<Category> categories = new LinkedList<>();
+
+        String packagesIds = "";
+        for (Integer packageId : packages) {
+            packagesIds += packageId + ",";
+        }
+        packagesIds += "-1";
+
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try (Connection conn = this.dataSource.getConnection()) {
 
             conn.setReadOnly(true);
-            String sql = "SELECT * FROM NewscronConfiguration.category where (specificCountryID is NULL OR specificCountryID = ?) AND isActive=1 AND isHidden=0 AND id <> 12";
+            String sql = "SELECT * FROM NewscronConfiguration.category where (specificCountryID is NULL OR specificCountryID in (SELECT distinct countryId FROM NewscronConfiguration.package WHERE id in (?))) AND isActive=1 AND isHidden=0 AND id <> 12";
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, countryId);
+            stmt.setString(1, packagesIds);
 
             rs = stmt.executeQuery();
 

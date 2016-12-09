@@ -5,8 +5,6 @@ import ch.newscron.data.article.v2.ArticleFactory;
 import ch.newscron.extractor.StructuredArticle;
 import ch.newscron.v3.data.Article;
 import ch.newscron.v3.data.Category;
-import ch.newscron.v3.data.Configuration;
-import ch.newscron.v3.data.Package;
 import ch.newscron.v3.data.Section;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.log4j.Level;
@@ -38,10 +36,6 @@ public class Featured {
 
     private static final Logger log = Logger.getLogger(Featured.class);
 
-    private DataSource ds;
-    private boolean run = true;
-    private Thread localThread = null;
-
 
     @Autowired
     @Qualifier("dataSource")
@@ -50,14 +44,14 @@ public class Featured {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/v3/featured", method = RequestMethod.POST)
-    public List<Section> featured(@RequestBody Configuration configuration) {
+    public List<Section> featured(@RequestBody List<Category> categories) {
 
         List<Section> sections = new LinkedList<>();
 
 
-        for (Category category : configuration.getCategories()) {
+        for (Category category : categories) {
 
-            Section section = featuredCategory(category.getId(), configuration.getPackages(), 10);
+            Section section = featuredCategory(category, 10);
             section.setCategory(category);
             sections.add(section);
         }
@@ -67,11 +61,11 @@ public class Featured {
     }
 
 
-    private Section featuredCategory(int categoryId, List<Package> packages, int limit) {
+    private Section featuredCategory(Category category, int limit) {
 
         Section categoryArticles = new Section();
         ArticleFactory articleFactory = ArticleFactory.getInstance();
-        Set<Long> articlesId = featuredArticlesIdsPerCategory(categoryId, packages, limit);
+        Set<Long> articlesId = featuredArticlesIdsPerCategory(category.getId(), category.getPackages(), limit);
         for (Long articleId : articlesId) {
             StructuredArticle strArticle = articleFactory.getArticle(articleId);
 
@@ -89,7 +83,7 @@ public class Featured {
     }
 
 
-    private Set<Long> featuredArticlesIdsPerCategory(int categoryId, List<Package> packages, int limit) {
+    private Set<Long> featuredArticlesIdsPerCategory(int categoryId, List<Integer> packages, int limit) {
 
         HashSet<Long> articleIds = new HashSet<>();
         Connection conn = null;
@@ -97,8 +91,8 @@ public class Featured {
         ResultSet rs = null;
 
         String packagesIds = "";
-        for (Package p : packages) {
-            packagesIds += p.getId() + ",";
+        for (Integer packageId : packages) {
+            packagesIds += packageId + ",";
         }
         packagesIds += "-1";
 
@@ -107,13 +101,24 @@ public class Featured {
 
             conn = this.dataSource.getConnection();
             conn.setReadOnly(true);
-            String sql = "SELECT A.id, T.id, T.version FROM NewscronContent.articleFeature AS F " +
+
+            /*String sql = "SELECT A.id, T.id, T.version FROM NewscronContent.articleFeature AS F " +
                     "JOIN NewscronContent.article AS A ON A.id=F.id " +
                     "JOIN NewscronContent.topic as T ON T.id=A.topicId " +
                     "WHERE F.categoryID=? AND F.packageID in (?)  " +
                     "AND cloneOf is NULL " +
                     "AND F.publicationDate > DATE_SUB(now(), Interval 16 Hour) " +
-                    "ORDER BY F.rank DESC LIMIT ?;";
+                    "ORDER BY F.rank DESC LIMIT ?;";*/
+
+
+            String sql = "SELECT A.id, T.id, T.version,S.finalScore FROM NewscronContent.articleScore AS S\n" +
+                    "            JOIN NewscronContent.article AS A ON A.id=S.articleId\n" +
+                    "            JOIN NewscronContent.topic as T ON T.id=A.topicId\n" +
+                    "            WHERE A.categoryID=? AND A.packageID in (?) AND A.cloneID is NULL\n" +
+                    "            AND A.publicationDateGMT > DATE_SUB(now(), Interval 16 Hour)\n" +
+                    "            ORDER BY S.finalScore DESC LIMIT ?;";
+
+
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, categoryId);
             stmt.setString(2, packagesIds);

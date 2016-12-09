@@ -1,0 +1,47 @@
+<div class="bt" *ngIf="this.step==0">
+    <div class="bw">
+        <h1>Welcome to Newscron</h1>
+        <p>Democrating access to news, togheter we are smarter!
+            <br/> Configure Newscron to provide you with news you truley care.
+            <br/> Collaborate with the comunity to hilight important news and ban inapropriate content.</p>
+    </div>
+    <div class="modal-actions">
+        <button type="button" class="btn-link modal-action" (click)="next()"><strong>Next</strong></button>
+    </div>
+</div>
+
+<div class="bt" *ngIf="this.step==1">
+    <div class="bw">
+        <h1>Configure Newscron</h1>
+        <p>Select your main regional editions</p>
+        <div class="row" id="editions">
+
+            <ng-container *ngFor="let package of packages let i = index;">
+                <div class="col-lg-4 col-md-6">
+                    <label class="custom-control custom-checkbox">
+                        <input type="checkbox" [(ngModel)]="package.selected" class="custom-control-input" value="{{package.id}}" (change)="selectEdition($event)">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">{{package.name}}</span>
+                    </label>
+                </div>
+                <div *ngIf="(i + 1) % 3 === 0" class="clearfix visible-lg"></div>
+                <div *ngIf="(i + 1) % 2 === 0" class="clearfix visible-md"></div>
+            </ng-container>
+
+        </div>
+    </div>
+    <div class="modal-actions">
+        <button type="button" class="btn-link modal-action" (click)="next()"><strong>Next</strong></button>
+    </div>
+</div>
+
+<div class="bt" *ngIf="this.step==2">
+    <div class="bw">
+        <h1>Done</h1>
+        <p>You are all set, ready to read the best news aggregated from hundreds of publishers and to cotribute indentifing the most relevant ones.</p>
+
+    </div>
+    <div class="modal-actions">
+        <button type="button" class="btn-link modal-action" (click)="finish()"><strong>Finish</strong></button>
+    </div>
+</div>

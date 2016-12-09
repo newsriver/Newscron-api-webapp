@@ -1,5 +1,7 @@
 package ch.newscron.v3.data;
 
+import java.util.List;
+
 /**
  * Created by eliapalme on 19.11.16.
  */
@@ -8,6 +10,7 @@ public class Category {
     private String name;
     private int id;
     private int defaultAmount;
+    private List<Integer> packages;
 
 
     public String getName() {
@@ -32,5 +35,13 @@ public class Category {
 
     public void setDefaultAmount(int defaultAmount) {
         this.defaultAmount = defaultAmount;
+    }
+
+    public List<Integer> getPackages() {
+        return packages;
+    }
+
+    public void setPackages(List<Integer> packages) {
+        this.packages = packages;
     }
 }

@@ -1,9 +1,10 @@
 <h2>
-  {{section.category.name}}
+  {{name}}
 </h2>
 <hr class="aky">
+<div class="loading" *ngIf="loading"><img src="loading.svg"></div>
 <ul>
-  <li *ngFor="let article of section.articles; let j = index">
-    <articles [article]="article"></articles>
-  </li>
+    <li>
+        <section [section]="section" *ngIf="section!=null"></section>
+    </li>
 </ul>
