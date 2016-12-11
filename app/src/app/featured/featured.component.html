@@ -1,0 +1,10 @@
+<div class="loading" *ngIf="loading">
+    <h2>&nbsp;</h2>
+    <hr class="aky">
+    <div class="img"></div>
+</div>
+<ul>
+    <li *ngFor="let section of (sections | validSection)">
+        <section [section]="section"></section>
+    </li>
+</ul>

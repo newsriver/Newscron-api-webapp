@@ -1,0 +1,161 @@
+.bt {
+  padding-top: 60px;
+  margin-bottom: 30px;
+  font-size: 20px;
+  color: #fff;
+}
+
+.bt-background {
+    background-color: #1ca8dd;
+    background-image: linear-gradient(to bottom, #137499, #1ca8dd);
+}
+
+.full{
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  position:fixed;
+  z-index:-1;
+  margin-bottom: 0px!important;
+}
+
+.bt h1 {
+    margin-bottom: 5px;
+    font-size: 40px;
+    line-height: 1;
+}
+
+.bt p {
+    font-weight: 300;
+    line-height: 1.4;
+    color: #9fdcf3;
+}
+.bw {
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 60px;
+}
+
+.modal-actions{
+  border-color: white;
+  border-top: 1px;
+  border-top-style: solid;
+}
+
+
+.modal-actions button{
+  color: white;
+  max-width: 250px;
+  border-left: 1px;
+  float: right;
+  border-style: solid;
+  border-radius: 0px;
+  border-top: 0px;
+}
+
+.modal-actions .left{
+  float: left!important;
+  border-left: 0px!important;
+  border-right: 1px;
+  border-style: solid;
+}
+
+.modal-actions button:hover{
+  color: #1CA8D9;
+}
+
+.custom-control-indicator{
+  margin-top: 6px;
+}
+
+.custom-control-description{
+  margin-left: 20px;
+  white-space: nowrap;
+}
+
+#editions{
+  margin-top: 3rem;
+}
+
+.statcard{
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.statcard:hover{
+  background-color: white;
+  color: #1BC98E;
+}
+.statcard:hover .statcard-desc{
+  color: #1BC98E;
+}
+
+.custom-control-indicator{
+  background-color: white;
+}
+
+.statcard i {
+  float: right;
+  font-size: 4rem;
+  margin-top: 0.8rem;
+}
+
+.delta-indicator{
+  float: right;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  color: white;
+}
+
+
+.statcard:hover .delta-indicator{
+  color: #1BC98E;
+}
+
+.fixed-bar{
+    bottom: 0px;
+    margin-top: 3rem;
+    position: fixed;
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 30px;
+    padding-top: 30px;
+    z-index: 3;
+    background-color: rgba(28,168,221,0.75);
+}
+
+.fixed-bar div{
+  max-width: 1200px;
+  margin: auto;
+}
+
+
+@media screen and (min-width: 960px) {
+.twocol {
+-moz-column-count: 3;
+-webkit-column-count: 3;
+column-count: 3;
+}
+}
+
+@media screen and (max-width: 960px) and (min-width: 540px) {
+.twocol {
+-moz-column-count: 2;
+-webkit-column-count: 2;
+column-count: 2;
+}
+}
+
+@media screen and (max-width: 540px) {
+.twocol {
+-moz-column-count: 1;
+-webkit-column-count: 1;
+column-count: 1;
+}
+}

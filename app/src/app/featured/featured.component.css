@@ -1,0 +1,14 @@
+
+li{
+  list-style-type:none
+}
+
+ul{
+  padding: 0px;
+}
+
+h2{
+  margin-top: 2rem;
+  margin-bottom: 0rem;
+  font-size: 5rem;
+}

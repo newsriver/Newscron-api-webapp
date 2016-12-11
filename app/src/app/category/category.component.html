@@ -1,0 +1,12 @@
+<div class="loading" *ngIf="loading">
+    <h2>
+    {{name}}
+  </h2>
+    <hr class="aky">
+    <div class="img"></div>
+</div>
+<ul>
+    <li>
+        <section [section]="section" *ngIf="section!=null"></section>
+    </li>
+</ul>

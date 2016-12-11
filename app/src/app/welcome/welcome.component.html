@@ -1,0 +1,103 @@
+<!--<div class="bt bt-background" *ngIf="this.step==-1">
+    <div class="bw">
+        <h1>Welcome to Newscron</h1>
+        <p>Democrating access to news, togheter we are smarter!
+            <br/> Configure Newscron to provide you with news you truley care.
+            <br/> Collaborate with the comunity to hilight important news and ban inapropriate content.</p>
+    </div>
+    <div class="modal-actions">
+        <button type="button" class="btn-link modal-action" (click)="next()"><strong>Next</strong></button>
+    </div>
+</div>-->
+
+<div class="bt bt-background" *ngIf="this.step==1">
+    <div class="bw">
+        <h1>Welome to Newscron</h1>
+        <p>Select your editions</p>
+        <div class="row" id="editions">
+
+            <div class="col-lg-4 col-md-6">
+                <button class="btn btn-block statcard statcard-success p-a-md" (click)="setContinent('EUROPE')">
+                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                    <h3 class="statcard-number">EUROPE</h3>
+                    <span class="statcard-desc">15 editions</span>
+                </button>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <button class="btn btn-block statcard statcard-success p-a-md" (click)="setContinent('NORTH_AMERICA')">
+                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                    <h3 class="statcard-number">NORTH AMERICA</h3>
+                    <span class="statcard-desc">3 editions</span>
+                </button>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <button type="button" class="btn btn-block statcard statcard-success p-a-md" (click)="setContinent('SOUTH_AMERICA')">
+                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                    <h3 class="statcard-number">SOUTH AMERICA</h3>
+                    <span class="statcard-desc">20 editions</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bt bt-background full" *ngIf="this.step>1"></div>
+
+<div class="bt" *ngIf="this.step==2">
+    <div class="bw" style="padding-bottom: 120px;">
+        <h1>Select local editions</h1>
+        <p>FOR {{continent}}</p>
+
+        <div class="twocol">
+            <div *ngFor="let package of continents[continent] let i = index;">
+                <label class="custom-control custom-checkbox statcard statcard-success p-a-md" style="padding: 15px!important;width: 100%;">
+                    <input type="checkbox" [(ngModel)]="package.selected" class="custom-control-input" value="{{package.id}}" (change)="selectEdition($event)">
+                    <span class="custom-control-indicator" style=" top: 12px;left: 12px; width: 22px; height: 22px;"></span>
+                    <span class="custom-control-description statcard-number" style="margin-left: 30px;">{{package.name}}</span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="fixed-bar">
+        <div>
+            <button type="button" class="btn btn-lg btn-pill btn-default left" (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</button>
+            <button type="button" class="btn btn-lg btn-pill btn-default" (click)="next()" style="float:right;">Next <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+        </div>
+    </div>
+</div>
+
+<div class="bt" *ngIf="this.step==3">
+    <div class="bw" style="padding-bottom: 120px;">
+        <h1>Tune it</h1>
+        <p>Categories</p>
+
+        <div class="twocol">
+            <div *ngFor="let category of this.bootConfig.categories let i = index;">
+                <div class="custom-control custom-checkbox statcard statcard-success p-a-md" style="padding: 15px!important;width: 100%;">
+                    <h3 class="statcard-number">{{category.name}}
+                      <small class="delta-indicator">{{category.defaultAmount | categoryAmmount}}</small>
+                    </h3>
+                    <md-slider min="0" max="25" step="5" value="10" tick-interval="1" [(ngModel)]="category.defaultAmount"></md-slider>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fixed-bar">
+        <div>
+            <button type="button" class="btn btn-lg btn-pill btn-default left" (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</button>
+            <button type="button" class="btn btn-lg btn-pill btn-default" (click)="finish()" style="float:right;">Save <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+        </div>
+    </div>
+</div>
+
+<!--<div class="bt" *ngIf="this.step==3">
+    <div class="bw">
+        <h1>Done</h1>
+        <p>You are all set, ready to read the best news aggregated from hundreds of publishers and to cotribute indentifing the most relevant ones.</p>
+
+    </div>
+    <div class="modal-actions">
+        <button type="button" class="btn btn-lg btn-pill btn-default">Default</button>
+        <button type="button" class="btn-link modal-action" (click)="finish()"><strong>Finish</strong></button>
+    </div>
+</div>-->
