@@ -15,6 +15,6 @@
   margin: auto;
   margin-top: 10rem;
   display: block;
-  background: url('loading.gif');
-  background-image: url('loading.svg'), none;
+  background: url('assets/img/loading.gif');
+  background-image: url('assets/img/loading.svg'), none;
 }
