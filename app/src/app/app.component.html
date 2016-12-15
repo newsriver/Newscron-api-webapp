@@ -18,17 +18,17 @@
 
                         <li><a routerLink='/' [routerLinkActive]="['active-link']" [routerLinkActiveOptions]="{exact:true}">Top News</a></li>
                         <li class="nav-header">Categories</li>
-                        <li *ngFor="let category of categories">
-                            <a [routerLink]="['category', category.id,category.name]" [routerLinkActive]="['active-link']">{{category.name}}</a>
+                        <li *ngFor="let category of categories | sortCategory">
+                            <a [routerLink]="[ 'category', category.id,category.name] " [routerLinkActive]="[ 'active-link'] ">{{category.name}}</a>
                         </li>
 
-                        <!---
+
                         <li class=" nav-header ">Other</li>
 
                         <li>
-                            <a>About</a>
+                            <a (click)="setUp()">Set-up</a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a>Request Newspaper</a>
                         </li>
                         <li>

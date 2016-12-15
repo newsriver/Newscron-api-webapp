@@ -58,9 +58,34 @@ export class WelcomeComponent implements OnInit {
     ngOnInit() {
         this.step = 1;
 
-        this.client.boot(null).subscribe(bootConfig => {
-            if (bootConfig != null) {
-                this.bootConfig = bootConfig;
+        this.client.getCategories().subscribe(categories => {
+            if (categories == null) {
+                this.client.boot(null).subscribe(bootConfig => {
+                    if (bootConfig != null) {
+                        this.bootConfig = bootConfig;
+                        this.packages.sort((a: Package, b: Package) => {
+                            if (a.name < b.name) return -1;
+                            if (a.name > b.name) return 1;
+                            return 0;
+                        });
+                        let _continents: { [key: string]: Package[] } = {};
+                        for (let p of this.packages) {
+                            if (this.bootConfig.packagesIds.indexOf(p.id) > -1) {
+                                p.selected = true;
+                            }
+                            let _packages: Package[] = _continents[p.continent];
+                            if (_packages == null) {
+                                _packages = [];
+                            }
+                            _packages.push(p);
+                            _continents[p.continent] = _packages;
+                        }
+                        this.continents = _continents;
+                    }
+                });
+            } else {
+                this.bootConfig = new BootstrapConfiguration();
+                this.bootConfig.categories = categories;
                 this.packages.sort((a: Package, b: Package) => {
                     if (a.name < b.name) return -1;
                     if (a.name > b.name) return 1;
@@ -68,8 +93,11 @@ export class WelcomeComponent implements OnInit {
                 });
                 let _continents: { [key: string]: Package[] } = {};
                 for (let p of this.packages) {
-                    if (this.bootConfig.packagesIds.indexOf(p.id) > -1) {
-                        p.selected = true;
+                    for (let c of categories) {
+                        if (c.packages.indexOf(p.id) > -1) {
+                            p.selected = true;
+                            break;
+                        }
                     }
                     let _packages: Package[] = _continents[p.continent];
                     if (_packages == null) {
@@ -81,6 +109,9 @@ export class WelcomeComponent implements OnInit {
                 this.continents = _continents;
             }
         });
+
+
+
     }
 
     setContinent(name: string) {

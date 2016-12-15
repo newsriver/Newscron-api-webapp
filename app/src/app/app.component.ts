@@ -17,10 +17,31 @@ import {Injectable, Pipe, PipeTransform} from '@angular/core';
     name: 'validSection'
 })
 export class ValidSectionFilter implements PipeTransform {
-    transform(items: any[], args: any[]): any {
-        return items.filter(item => item.articles.length > 0);
+    transform(items: Array<Section>, args: any[]): Array<Section> {
+        items = items.filter(item => item.articles.length > 0);
+        items = items.filter(item => item.category.defaultAmount > 0);
+        items.sort((a: Section, b: Section) => {
+            return b.category.defaultAmount - a.category.defaultAmount;
+        });
+        return items;
     }
 }
+
+
+@Pipe({
+    name: "sortCategory",
+    pure: false
+})
+export class SortCategory {
+    transform(array: Array<Category>, args: string): Array<Category> {
+        array = array.filter(item => item.defaultAmount > 0)
+        array.sort((a: Category, b: Category) => {
+            return b.defaultAmount - a.defaultAmount;
+        });
+        return array;
+    }
+}
+
 
 @Component({
     selector: 'app-root',
@@ -51,6 +72,10 @@ export class AppComponent implements OnInit {
 
     public setWelcomeStep(step: number) {
         this.welcomeStep = step;
+    }
+
+    public setUp() {
+        this.welcomeStep = 1;
     }
 
 
