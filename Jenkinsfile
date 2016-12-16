@@ -7,6 +7,9 @@ def marathonURL = 'http://46.4.71.105:8080/'
 
 node {
 
+    angular2Compile()
+
+
     stage 'checkout project'
     checkout scm
     stage 'checkout lib'
@@ -22,6 +25,9 @@ node {
 
     stage 'test'
     sh 'gradle test'
+
+
+
 
     if (env.BRANCH_NAME == "master") {
         deployDockerImage(projectName, dockerRegistry)
@@ -39,6 +45,23 @@ def restartDockerContainer(marathonAppId, projectName, dockerRegistry, marathonU
             appid: "$marathonAppId",
             docker: "$dockerRegistry/$projectName:${env.BUILD_NUMBER}"
     )
+}
+
+
+def angular2Compile() {
+
+    stage 'angular2'
+
+    dir('src/main/resources/static') {
+        deleteDir()
+    }
+
+    dir('app') {
+        sh 'npm install'
+        sh 'ng build --target=production --environment=prod'
+        sh 'mv dist  ../src/main/resources/static'
+    }
+
 }
 
 def deployDockerImage(projectName, dockerRegistry) {
