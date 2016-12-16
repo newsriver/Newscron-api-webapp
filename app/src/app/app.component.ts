@@ -76,6 +76,7 @@ export class AppComponent implements OnInit {
 
     public setUp() {
         this.welcomeStep = 1;
+        window.scrollTo(0, 0);
     }
 
 
