@@ -56,8 +56,11 @@ def angular2Compile() {
         deleteDir()
     }
 
+    stage 'install modules'
+    sh 'npm install --verbose'
+    sh 'npm update --verbose'
+
     dir('app') {
-        sh 'npm install'
         sh 'ng build --target=production --environment=prod'
         sh 'mv dist  ../src/main/resources/static'
     }
