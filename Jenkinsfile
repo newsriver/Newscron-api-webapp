@@ -64,10 +64,9 @@ def angular2Compile() {
     dir('app') {
 
         stage 'install modules'
-        sh 'npm install --verbose'
-        sh 'npm update --verbose'
-
-
+        sh 'npm install'
+        sh 'npm update'
+        
         sh 'ng build --target=production --environment=prod'
         sh 'mv dist  ../src/main/resources/static'
     }
