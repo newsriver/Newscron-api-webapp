@@ -7,8 +7,6 @@ def marathonURL = 'http://46.4.71.105:8080/'
 
 node {
 
-    angular2Compile()
-
 
     stage 'checkout project'
     checkout scm
@@ -19,6 +17,11 @@ node {
 
     stage 'set-up project'
     writeFile file: 'settings.gradle', text: '''rootProject.name = \'''' + projectName + '''\' \ninclude \'Newscron-lib\' '''
+
+
+    angular2Compile()
+
+
 
     stage 'compile'
     sh 'gradle compileJava'
@@ -66,7 +69,7 @@ def angular2Compile() {
         stage 'install modules'
         sh 'npm install'
         sh 'npm update'
-        
+
         sh 'ng build --target=production --environment=prod'
         sh 'mv dist  ../src/main/resources/static'
     }
