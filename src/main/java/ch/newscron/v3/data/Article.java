@@ -8,7 +8,7 @@ public class Article {
     private String url;
     private String snippet;
     private String imgUrl;
-    private String publicationDate;
+    private long publicationDate;
     private String publisher;
 
 
@@ -44,19 +44,19 @@ public class Article {
         this.imgUrl = imgUrl;
     }
 
-    public String getPublicationDate() {
-        return publicationDate;
-    }
-
-    public void setPublicationDate(String publicationDate) {
-        this.publicationDate = publicationDate;
-    }
-
     public String getPublisher() {
         return publisher;
     }
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
+    }
+
+    public long getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(long publicationDate) {
+        this.publicationDate = publicationDate;
     }
 }

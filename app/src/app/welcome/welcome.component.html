@@ -9,8 +9,8 @@
         <button type="button" class="btn-link modal-action" (click)="next()"><strong>Next</strong></button>
     </div>
 </div>-->
-
 <div class="bt bt-background" *ngIf="this.step==1">
+    <a (click)="close()"><i class="fa fa-times-circle close" aria-hidden="true"></i></a>
     <div class="bw">
         <h1>Welome to Newscron</h1>
         <p>Select your editions</p>
@@ -44,6 +44,7 @@
 <div class="bt bt-background full" *ngIf="this.step>1"></div>
 
 <div class="bt" *ngIf="this.step==2">
+    <a (click)="close()"><i class="fa fa-times-circle close" aria-hidden="true"></i></a>
     <div class="bw" style="padding-bottom: 120px;">
         <h1>Select local editions</h1>
         <p>FOR {{continent}}</p>
@@ -61,23 +62,24 @@
     <div class="fixed-bar">
         <div>
             <button type="button" class="btn btn-lg btn-pill btn-default left" (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</button>
-            <button type="button" class="btn btn-lg btn-pill btn-default" (click)="next()" style="float:right;">Next <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+            <button type="button" class="btn btn-lg btn-pill btn-default" (click)="next()" style="float:right;" [disabled]="bootConfig.packagesIds.length <=0">Next <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
         </div>
     </div>
 </div>
 
 <div class="bt" *ngIf="this.step==3">
+    <a (click)="close()"><i class="fa fa-times-circle close" aria-hidden="true"></i></a>
     <div class="bw" style="padding-bottom: 120px;">
         <h1>Tune it</h1>
         <p>Categories</p>
 
         <div class="twocol">
-            <div *ngFor="let category of this.bootConfig.categories let i = index;">
+            <div *ngFor="let category of bootConfig.categories let i = index;">
                 <div class="custom-control custom-checkbox statcard statcard-success p-a-md" style="padding: 15px!important;width: 100%;">
                     <h3 class="statcard-number">{{category.name}}
-                      <small class="delta-indicator">{{category.defaultAmount | categoryAmmount}}</small>
+                      <small class="delta-indicator">{{category.amount | categoryAmmount}}</small>
                     </h3>
-                    <md-slider min="0" max="25" step="5" value="10" tick-interval="1" [(ngModel)]="category.defaultAmount"></md-slider>
+                    <md-slider min="0" max="25" step="5" value="10" tick-interval="1" [(ngModel)]="category.amount"></md-slider>
                 </div>
             </div>
         </div>

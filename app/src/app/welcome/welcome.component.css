@@ -10,6 +10,14 @@
     background-image: linear-gradient(to bottom, #137499, #1ca8dd);
 }
 
+.close{
+  margin: 20px;
+  margin-top: -40px;
+  float: right;
+  font-size: 3rem;
+  color: white;
+}
+
 .full{
   position:absolute;
   top:0;

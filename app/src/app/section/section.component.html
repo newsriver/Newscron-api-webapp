@@ -3,7 +3,7 @@
 </h2>
 <hr class="aky">
 <ul>
-    <li *ngFor="let article of section.articles; let j = index">
+    <li *ngFor="let article of section.articles | sortArticle ; let j = index">
         <articles [article]="article"></articles>
     </li>
 </ul>

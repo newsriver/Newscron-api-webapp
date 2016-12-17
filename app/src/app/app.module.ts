@@ -9,7 +9,7 @@ import { AppComponents, AppRoutes } from "./app.routing";
 import { ArticleComponent } from './article/article.component';
 import { WelcomeComponent, KeysPipe, CategoryAmmountPipe } from './welcome/welcome.component';
 import {NewscronClientService} from './newscron-client.service';
-import {SectionComponent} from './section/section.component';
+import {SectionComponent, SortArticle} from './section/section.component';
 import { MaterialModule } from '@angular/material';
 
 @NgModule({
@@ -18,6 +18,7 @@ import { MaterialModule } from '@angular/material';
         ArticleComponent,
         KeysPipe,
         SortCategory,
+        SortArticle,
         CategoryAmmountPipe,
         ValidSectionFilter,
         WelcomeComponent,

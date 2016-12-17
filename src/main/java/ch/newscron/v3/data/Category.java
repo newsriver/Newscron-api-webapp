@@ -9,7 +9,7 @@ public class Category {
 
     private String name;
     private int id;
-    private int defaultAmount;
+    private int amount;
     private List<Integer> packages;
 
 
@@ -29,19 +29,19 @@ public class Category {
         this.id = id;
     }
 
-    public int getDefaultAmount() {
-        return defaultAmount;
-    }
-
-    public void setDefaultAmount(int defaultAmount) {
-        this.defaultAmount = defaultAmount;
-    }
-
     public List<Integer> getPackages() {
         return packages;
     }
 
     public void setPackages(List<Integer> packages) {
         this.packages = packages;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 }

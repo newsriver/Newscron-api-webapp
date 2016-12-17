@@ -193,7 +193,7 @@ public class Settings {
                 Category category = new Category();
                 category.setId(rs.getInt("id"));
                 category.setName(rs.getString("name"));
-                category.setDefaultAmount(rs.getInt("defaultAmount"));
+                category.setAmount(5 * Math.round((rs.getFloat("defaultAmount") * 3.5f) / 5f));  //multiple of 5
                 categories.add(category);
             }
         } catch (Exception e) {

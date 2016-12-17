@@ -62,7 +62,7 @@ public class CategoryArticles {
             article.setTitle(strArticle.getTitle());
             article.setSnippet(buildSnippet(strArticle.getText()));
             article.setImgUrl(strArticle.getImageSrc());
-            article.setPublicationDate("" + strArticle.getPublicationDateGMT());
+            article.setPublicationDate(strArticle.getPublicationDateGMT());
             article.setUrl(strArticle.getUrl());
             article.setPublisher(strArticle.getPublisher());
 

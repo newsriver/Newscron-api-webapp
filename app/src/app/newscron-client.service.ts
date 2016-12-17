@@ -8,6 +8,7 @@ export class NewscronClientService {
 
 
     private baseURL: string = "http://app.newscron.newsriver.io/v3";
+    //private baseURL: string = "http://localhost:9092/v3";
 
     private categories: Subject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
     private bootConfig: Subject<BootstrapConfiguration> = new BehaviorSubject<BootstrapConfiguration>(null);
@@ -88,7 +89,7 @@ export class NewscronClientService {
 
 export class BootstrapConfiguration {
     public categories: Category[];
-    public packagesIds: number[];
+    public packagesIds: number[] = [];
     public localPackagesIds: number[];
     public countryId: number;
 }
@@ -97,7 +98,7 @@ export class BootstrapConfiguration {
 export class Category {
     public name: string = null;
     public id: number;
-    public defaultAmount: number;
+    public amount: number;
     public packages: number[];
 }
 
@@ -111,7 +112,7 @@ export class Article {
     public url: string = null;
     public snippet: string = null;
     public imgUrl: string = null;
-    public publicationDate: string = null;
+    public publicationDate: number = null;
     public publisher: string = null;
 
 }

@@ -19,9 +19,9 @@ import {Injectable, Pipe, PipeTransform} from '@angular/core';
 export class ValidSectionFilter implements PipeTransform {
     transform(items: Array<Section>, args: any[]): Array<Section> {
         items = items.filter(item => item.articles.length > 0);
-        items = items.filter(item => item.category.defaultAmount > 0);
+        items = items.filter(item => item.category.amount > 0);
         items.sort((a: Section, b: Section) => {
-            return b.category.defaultAmount - a.category.defaultAmount;
+            return b.category.amount - a.category.amount;
         });
         return items;
     }
@@ -34,9 +34,9 @@ export class ValidSectionFilter implements PipeTransform {
 })
 export class SortCategory {
     transform(array: Array<Category>, args: string): Array<Category> {
-        array = array.filter(item => item.defaultAmount > 0)
+        array = array.filter(item => item.amount > 0)
         array.sort((a: Category, b: Category) => {
-            return b.defaultAmount - a.defaultAmount;
+            return b.amount - a.amount;
         });
         return array;
     }
