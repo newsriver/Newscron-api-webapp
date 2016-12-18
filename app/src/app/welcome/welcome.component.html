@@ -50,7 +50,7 @@
         <p>FOR {{continent}}</p>
 
         <div class="twocol">
-            <div *ngFor="let package of continents[continent] let i = index;">
+            <div *ngFor="let package of packages | editionPerContinent:continent let i = index;">
                 <label class="custom-control custom-checkbox statcard statcard-success p-a-md" style="padding: 15px!important;width: 100%;">
                     <input type="checkbox" [(ngModel)]="package.selected" class="custom-control-input" value="{{package.id}}" (change)="selectEdition($event)">
                     <span class="custom-control-indicator" style=" top: 12px;left: 12px; width: 22px; height: 22px;"></span>
@@ -62,7 +62,7 @@
     <div class="fixed-bar">
         <div>
             <button type="button" class="btn btn-lg btn-pill btn-default left" (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</button>
-            <button type="button" class="btn btn-lg btn-pill btn-default" (click)="next()" style="float:right;" [disabled]="bootConfig.packagesIds.length <=0">Next <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+            <button type="button" class="btn btn-lg btn-pill btn-default" (click)="next()" style="float:right;" [disabled]="!hasOnePackage()">Next <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
         </div>
     </div>
 </div>
@@ -74,7 +74,7 @@
         <p>Categories</p>
 
         <div class="twocol">
-            <div *ngFor="let category of bootConfig.categories let i = index;">
+            <div *ngFor="let category of categories let i = index;">
                 <div class="custom-control custom-checkbox statcard statcard-success p-a-md" style="padding: 15px!important;width: 100%;">
                     <h3 class="statcard-number">{{category.name}}
                       <small class="delta-indicator">{{category.amount | categoryAmmount}}</small>

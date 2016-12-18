@@ -3,8 +3,15 @@
     <hr class="aky">
     <div class="img"></div>
 </div>
-<ul>
+<div class="wrap">
+    <div class="header" *ngIf="currentSectionName!=null">
+        <h2>{{currentSectionName}}</h2>
+        <hr class="aky">
+    </div>
+</div>
+
+<ul class="content">
     <li *ngFor="let section of (sections | validSection)">
-        <section [section]="section"></section>
+        <section [section]="section" (sectionPosition)="sectionPosition($event)"></section>
     </li>
 </ul>

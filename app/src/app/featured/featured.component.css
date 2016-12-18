@@ -12,3 +12,17 @@ h2{
   margin-bottom: 0rem;
   font-size: 5rem;
 }
+
+.header{
+  position: fixed;
+  top: 0px;
+  width: inherit;
+  z-index: 2;
+  background: #252830;
+}
+
+
+.wrap{
+    position: relative;
+    width: 100%;
+}
