@@ -10,7 +10,7 @@ export class NewscronClientService {
     private baseURL: string = "http://app.newscron.newsriver.io/v3";
     //private baseURL: string = "http://localhost:9092/v3";
 
-    private categories: Subject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
+    private categories: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
     private bootConfig: Subject<BootstrapConfiguration> = new BehaviorSubject<BootstrapConfiguration>(null);
 
 
@@ -73,7 +73,7 @@ export class NewscronClientService {
 
 
 
-    public getCategories(): Observable<Array<Category>> {
+    public getCategories(): BehaviorSubject<Array<Category>> {
         return this.categories;
     }
 
