@@ -4,7 +4,7 @@
     <div class="img"></div>
 </div>
 <div class="wrap">
-    <div class="header" *ngIf="currentSectionName!=null">
+    <div class="header" *ngIf="currentSectionName!=null" [style.width.px]="headerWidth">
         <h2>{{currentSectionName}}</h2>
         <hr class="aky">
     </div>

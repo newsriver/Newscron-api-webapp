@@ -1,4 +1,4 @@
-import { NgModule, Component, OnInit, Input, OnChanges, SimpleChanges, HostListener } from '@angular/core';
+import { NgModule, Component, OnInit, Input, OnChanges, SimpleChanges, HostListener, ElementRef } from '@angular/core';
 import {SectionComponent} from '../section/section.component';
 import {NewscronClientService, Section, Category, Article} from '../newscron-client.service';
 
@@ -20,12 +20,13 @@ export class FeaturedComponent implements OnInit {
     public loading: boolean = true;
     public currentSectionName: string = null;
     public positions: any[] = [];
+    public headerWidth: number = 600;
 
 
-
-    constructor(private client: NewscronClientService) { }
+    constructor(private client: NewscronClientService, private el: ElementRef) { }
 
     ngOnInit() {
+        this.headerWidth = this.el.nativeElement.getBoundingClientRect().width + 1;
         this.client.getCategories().subscribe(categories => {
             if (categories != null) {
                 this.sections = [];
@@ -59,14 +60,22 @@ export class FeaturedComponent implements OnInit {
     }
 
     private getCurrentSectionName(): string {
+
+        let offset: number = this.el.nativeElement.parentElement.offsetTop - this.el.nativeElement.offsetTop;
+
         for (let section of this.positions) {
-            if (section.position < document.body.scrollTop) {
+            if ((section.position + offset - document.body.scrollTop) < 0) {
                 return section.name;
             }
         }
         return null;
     }
 
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        this.headerWidth = this.el.nativeElement.getBoundingClientRect().width + 1;
+    }
 
 
 
