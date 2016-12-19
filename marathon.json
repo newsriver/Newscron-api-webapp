@@ -33,7 +33,8 @@
   ],
   "labels": {
     "HAPROXY_GROUP": "external",
-    "HAPROXY_0_VHOST": "app.newscron.newsriver.io",
-    "HAPROXY_0_REDIRECT_TO_HTTPS": "false"
+    "HAPROXY_0_VHOST": "app.newscron.newsriver.io,app.newscron.com,www.newscron.com,newscron.com",
+    "HAPROXY_0_REDIRECT_TO_HTTPS": "false",
+    "HAPROXY_0_BACKEND_HTTP_OPTIONS": "  option forwardfor\n"
   }
 }

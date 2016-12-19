@@ -47,9 +47,7 @@ public class Settings {
 
     }*/
 
-
-    //Add this option to the marathond-lb "HAPROXY_0_BACKEND_HTTP_OPTIONS":"  option forwardfor\n"
-
+    
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/v3/boot", method = RequestMethod.POST)
     public BootstrapConfiguration bootsrapConfig(HttpServletRequest httpRequest, @RequestBody(required = false) List<Integer> packagesIds) {
