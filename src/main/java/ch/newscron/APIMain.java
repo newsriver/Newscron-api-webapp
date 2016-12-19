@@ -31,19 +31,18 @@ public class APIMain {
 
     }
 
+
     @Bean
     public FilterRegistrationBean tuckeyRegistrationBean() {
         final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
 
         registrationBean.setFilter(new UrlRewriteFilter());
-        registrationBean.addInitParameter("confPath", "urlrewrite.xml");
+        registrationBean.addInitParameter("confPath", "/WEB-INF/classes/urlrewrite.xml");
 
         return registrationBean;
     }
 
-
 }
-
 
 @Component(value = "apiHealth")
 class APIHealth implements HealthIndicator {
