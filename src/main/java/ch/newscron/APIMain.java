@@ -37,6 +37,7 @@ public class APIMain {
         final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
 
         registrationBean.setFilter(new UrlRewriteFilter());
+        //registrationBean.addInitParameter("confPath", "urlrewrite.xml"); //used to test localy on IDE
         registrationBean.addInitParameter("confPath", "/WEB-INF/classes/urlrewrite.xml");
 
         return registrationBean;

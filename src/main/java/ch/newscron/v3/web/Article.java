@@ -3,6 +3,8 @@ package ch.newscron.v3.web;
 import ch.newscron.data.article.v2.ArticleFactory;
 import ch.newscron.data.article.v2.ArticleFactoryIFace;
 import ch.newscron.extractor.StructuredArticle;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +19,7 @@ public class Article {
 
 
     @RequestMapping(value = "/topic/{topicId}/article/{articleId}", method = RequestMethod.GET)
-    public String article(@PathVariable Long articleId) {
+    public ResponseEntity<String> article(@PathVariable Long articleId) {
 
         ArticleFactory articleFactory = ArticleFactory.getInstance();
         StructuredArticle article = articleFactory.getArticle(articleId);
@@ -25,13 +27,13 @@ public class Article {
         if (article == null) {
             ArticleFactoryIFace.LongTermArticlesURLs articleURL = articleFactory.getLongtermArticleURL(articleId);
             if (articleURL != null) {
-                return "redirect:" + articleURL.url;
+                return ResponseEntity.status(HttpStatus.FOUND).header("Location", articleURL.url).body(null);
             }
         } else {
-            return "redirect:" + article.getUrl();
+            return ResponseEntity.status(HttpStatus.FOUND).header("Location", article.getUrl()).body(null);
         }
 
-        return "Article not found";
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
 

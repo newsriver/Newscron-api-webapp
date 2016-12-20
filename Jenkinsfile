@@ -60,10 +60,6 @@ def angular2Compile() {
     env.PATH = "${nodeHome}/bin:${env.PATH}"
 
 
-    dir('src/main/resources/static') {
-        deleteDir()
-    }
-
     dir('app') {
 
         stage 'install modules'
@@ -71,7 +67,7 @@ def angular2Compile() {
         sh 'npm update'
 
         sh 'ng build --target=production --environment=prod'
-        sh 'mv dist  ../src/main/resources/static'
+        sh 'cp -R dist/*  ../src/main/resources/static/'
     }
 
 }

@@ -6,9 +6,16 @@
     </rule>
 
 
+    <!-- This is to redirect the old app path -->
+    <rule>
+        <from>/app/</from>
+        <to>/</to>
+    </rule>
+
+
     <!-- This is to manage article sharing -->
     <rule match-type="regex">
-        <from>^/?(app)?/([0-9]+)/([0-9]+)([/|\\?|\\+|\\#|\\%|\\-|\\/].*)?$</from>
+        <from>^/?(app|render)?/([0-9]+)/([0-9]+)([/|\\?|\\+|\\#|\\%|\\-|\\/].*)?$</from>
         <to>/topic/$2/article/$3</to>
     </rule>
 

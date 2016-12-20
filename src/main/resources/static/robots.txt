@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /notsupported.html
+Disallow: /register.jsp
+Disallow: /reset.jsp
+Disallow: /Readability/readability.jsp
