@@ -1,24 +1,24 @@
 <welcome *ngIf="this.welcomeStep > 0" (setWelcomeStep)="setWelcomeStep($event)"></welcome>
 <div class="container" [hidden]="this.welcomeStep > 1">
     <div class="row">
-        <div class="col-sm-3 sidebar">
-            <nav class="sidebar-nav">
-                <div class="sidebar-header">
-                    <button class="nav-toggler nav-toggler-sm sidebar-toggler" type="button" data-toggle="collapse" data-target="#nav-toggleable-sm">
-                        <span class="sr-only">Toggle nav</span>
+        <div class="col-sm-3 hidden-xs-down sidebar">
+            <nav class="sidebar-nav ">
+                <div class="sidebar-header ">
+                    <button class="nav-toggler nav-toggler-sm sidebar-toggler " type="button " data-toggle="collapse " data-target="#nav-toggleable-sm ">
+                        <span class="sr-only ">Toggle nav</span>
                     </button>
-                    <a class="sidebar-brand img-responsive" href="index.html">
-                        <!---<span class="sidebar-brand-icon" style="font-size:14px; font-weight:bolder;">newscron.com</span>--->
+                    <a class="sidebar-brand img-responsive " href="index.html ">
+                        <!---<span class="sidebar-brand-icon " style="font-size:14px; font-weight:bolder; ">newscron.com</span>--->
                     </a>
                 </div>
 
-                <div class="collapse nav-toggleable-sm" id="nav-toggleable-sm">
+                <div class="collapse nav-toggleable-sm " id="nav-toggleable-sm ">
 
-                    <ul class="nav nav-pills nav-stacked" [style.position]="welcomeStep == 1  ? 'relative': 'fixed'">
+                    <ul class="nav nav-pills nav-stacked " [style.position]="welcomeStep==1 ? 'relative': 'fixed' ">
 
-                        <li><a routerLink='/' [routerLinkActive]="['active-link']" [routerLinkActiveOptions]="{exact:true}">Top News</a></li>
-                        <li class="nav-header">Categories</li>
-                        <li *ngFor="let category of categories | sortCategory">
+                        <li><a routerLink='/' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} ">Top News</a></li>
+                        <li class="nav-header ">Categories</li>
+                        <li *ngFor="let category of categories | sortCategory ">
                             <a [routerLink]="[ 'category', category.id,category.name] " [routerLinkActive]="[ 'active-link'] ">{{category.name}}</a>
                         </li>
 
@@ -26,7 +26,7 @@
                         <li class=" nav-header ">Other</li>
 
                         <li>
-                            <a (click)="setUp()">Set-up</a>
+                            <a (click)="setUp() ">Set-up</a>
                         </li>
                         <!-- <li>
                             <a>Request Newspaper</a>
@@ -40,7 +40,7 @@
                 </div>
             </nav>
         </div>
-        <div class="col-sm-9 content ">
+        <div class="col-xs-12 col-sm-9 content">
 
             <router-outlet></router-outlet>
 

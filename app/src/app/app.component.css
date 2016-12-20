@@ -8,3 +8,10 @@ ul{
   position: fixed;
   margin-top: 5rem;
 }
+
+
+@media screen and (max-width: 576px){
+  .container{
+    width: 100%!important;
+  }
+}
