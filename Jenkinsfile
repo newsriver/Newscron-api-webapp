@@ -90,7 +90,7 @@ def deployDockerImage(projectName, dockerRegistry) {
 
     dir('docker') {
         sh "cp ../build/libs/$projectName-*.war ."
-        sh "cp ../newrelic-agent/newrelic.jar ."
+        sh "cp ../newrelic-agent/newrelic-*.jar ."
         sh "cp ../newrelic-agent/newrelic.yml ."
         sh 'cp ../Dockerfile .'
         docker.withRegistry("https://$dockerRegistry/") {

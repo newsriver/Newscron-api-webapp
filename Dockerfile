@@ -1,6 +1,6 @@
 FROM openjdk:8-jre-alpine
 COPY newscron-api-webapp-*.war /home/newscron-api-webapp.war
-COPY newrelic.jar /home/newrelic.jar
+COPY newrelic-*.jar /home/newrelic.jar
 COPY newrelic.yml /home/newrelic.yml
 WORKDIR /home
 EXPOSE 31000-32000
