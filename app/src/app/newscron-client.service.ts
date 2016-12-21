@@ -7,7 +7,7 @@ import { Observable, BehaviorSubject, Subject } from 'rxjs/Rx';
 export class NewscronClientService {
 
 
-    private baseURL: string = "http://app.newscron.newsriver.io/v3";
+    private baseURL: string = "http://app.newscron.com/v3";
     //private baseURL: string = "http://localhost:9092/v3";
 
     private categories: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);

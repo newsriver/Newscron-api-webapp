@@ -30,6 +30,7 @@ export class FeaturedComponent implements OnInit {
         this.client.getCategories().subscribe(categories => {
             if (categories != null) {
                 this.sections = [];
+                this.positions = [];
                 this.loading = true;
                 this.client.featured(categories).subscribe(sections => {
                     this.sections = sections;
