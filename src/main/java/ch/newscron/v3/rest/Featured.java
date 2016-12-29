@@ -21,6 +21,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -66,8 +67,10 @@ public class Featured {
         Section categoryArticles = new Section();
         ArticleFactory articleFactory = ArticleFactory.getInstance();
         Set<Long> articlesId = featuredArticlesIdsPerCategory(category.getId(), category.getPackages(), limit);
-        for (Long articleId : articlesId) {
-            StructuredArticle strArticle = articleFactory.getArticle(articleId);
+
+        ArrayList<StructuredArticle> articles = articleFactory.getArticles(articlesId);
+
+        for (StructuredArticle strArticle : articles) {
 
             Article article = new Article();
             article.setTitle(strArticle.getTitle());
