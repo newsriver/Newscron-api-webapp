@@ -2,8 +2,8 @@
 
 def marathonAppId = '/newscron/newscron-api-webapp'
 def projectName = 'newscron-api-webapp'
-def dockerRegistry = 'docker-registry.newsriver.io:5000'
-def marathonURL = 'http://46.4.71.105:8080/'
+def dockerRegistry = 'docker-registry-v2.newsriver.io:5000'
+def marathonURL = 'http://leader.mesos:8080/'
 
 node {
 

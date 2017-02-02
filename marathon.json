@@ -2,14 +2,14 @@
   "id": "/newscron/newscron-api-webapp",
   "cmd": null,
   "cpus": 0.5,
-  "mem": 4096,
+  "mem": 1024,
   "disk": 0,
   "instances": 1,
   "container": {
     "type": "DOCKER",
     "volumes": [],
     "docker": {
-      "image": "docker-registry.newsriver.io:5000/newscron-api:latest",
+      "image": "docker-registry-v2.newsriver.io:5000/newscron-api:latest",
       "network": "HOST",
       "privileged": false,
       "parameters": [],
@@ -17,8 +17,11 @@
     }
   },
   "env": {
-    "JAVA_OPTS": "-Xms256m -Xmx3584m -Dport.http=$PORT"
+    "JAVA_OPTS": "-Xms256m -Xmx819m -Dport.http=$PORT"
   },
+  "acceptedResourceRoles": [
+    "slave_public"
+  ],
   "healthChecks": [
     {
       "path": "/health",
