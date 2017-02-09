@@ -1,17 +1,25 @@
 <div class="loading" *ngIf="loading">
-    <h2>&nbsp;</h2>
-    <hr class="aky">
-    <div class="img"></div>
+  <h2>&nbsp;</h2>
+  <hr class="aky">
+  <div class="img"></div>
 </div>
 <div class="wrap">
-    <div class="header" *ngIf="currentSectionName!=null" [style.width.px]="headerWidth">
-        <h2>{{currentSectionName}}</h2>
-        <hr class="aky">
-    </div>
+  <div class="header" *ngIf="currentSectionName!=null" [style.width.px]="headerWidth">
+    <h2>{{currentSectionName}}</h2>
+    <hr class="aky">
+  </div>
 </div>
 
 <ul class="content">
-    <li *ngFor="let section of (sections | validSection)">
-        <section [section]="section" (sectionPosition)="sectionPosition($event)"></section>
-    </li>
+  <li *ngFor="let section of (sections | validSection)">
+    <section [section]="section" (sectionPosition)="sectionPosition($event)"></section>
+  </li>
 </ul>
+
+
+<!--- Footer --->
+<div style="font-weight: lighter; padding-bottom: 30px;" *ngIf="!loading">
+  <hr class="aky"> Newscron.com is a project of Elia Palme
+  <a href="https://www.linkedin.com/in/elia-palme"><i class="fa fa-linkedin-square" style="margin-left: 10px;" aria-hidden="true"></i></a>
+  <a href="https://twitter.com/EliaPalme"><i class="fa fa-twitter-square"  style="margin-left: 10px;" aria-hidden="true"></i></a>
+</div>
