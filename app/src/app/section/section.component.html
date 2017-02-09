@@ -3,7 +3,16 @@
 </h2>
 <hr class="aky">
 <ul>
-    <li *ngFor="let article of section.articles | sortArticle ; let j = index">
-        <articles [article]="article"></articles>
-    </li>
+  <li *ngFor="let article of section.articles | sortArticle ; let j = index">
+    <articles [article]="article"></articles>
+  </li>
 </ul>
+
+
+
+<!--- Footer --->
+<div style="font-weight: lighter; padding-bottom: 30px;">
+  <hr class="aky"> Newscron.com is a project of Elia Palme
+  <a href="https://www.linkedin.com/in/elia-palme"><i class="fa fa-linkedin-square" style="margin-left: 10px;" aria-hidden="true"></i></a>
+  <a href="https://twitter.com/EliaPalme"><i class="fa fa-twitter-square"  style="margin-left: 10px;" aria-hidden="true"></i></a>
+</div>
