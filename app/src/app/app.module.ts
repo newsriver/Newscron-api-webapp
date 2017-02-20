@@ -13,28 +13,28 @@ import {SectionComponent, SortArticle} from './section/section.component';
 import { MaterialModule } from '@angular/material';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        ArticleComponent,
-        KeysPipe,
-        SortCategory,
-        SortArticle,
-        CategoryAmmountPipe,
-        EditionPerContinent,
-        ValidSectionFilter,
-        WelcomeComponent,
-        SectionComponent,
-        AppComponents
-    ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        HttpModule,
-        MaterialModule.forRoot(),
-        RouterModule,
-        RouterModule.forRoot(AppRoutes)
-    ],
-    providers: [NewscronClientService],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    ArticleComponent,
+    KeysPipe,
+    SortCategory,
+    SortArticle,
+    CategoryAmmountPipe,
+    EditionPerContinent,
+    ValidSectionFilter,
+    WelcomeComponent,
+    SectionComponent,
+    AppComponents
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    MaterialModule,
+    RouterModule,
+    RouterModule.forRoot(AppRoutes)
+  ],
+  providers: [NewscronClientService],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

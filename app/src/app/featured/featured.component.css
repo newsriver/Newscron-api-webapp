@@ -29,7 +29,7 @@ hr{
 
 .header{
   position: fixed;
-  top: 0px;
+  top: 50px;
   width: inherit;
   z-index: 2;
   background: #252830;

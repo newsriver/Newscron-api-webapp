@@ -1,15 +1,17 @@
-.md-slider-thumb {
-    background-color: white;
+.mat-slider-thumb {
+  background-color: white;
+  transform: none!important;
 }
-.md-slider-track-fill {
-    background-color: white;
+.mat-slider-track-fill {
+  background-color: white;
 }
-.md-slider-horizontal {
-    width: 100%;
+.mat-slider-horizontal {
+  width: 100%;
 }
-.statcard:hover .md-slider-thumb {
-    background-color: #1BC98E;
+.statcard:hover .mat-slider-thumb {
+  background-color: #1BC98E;
+  transform: none;
 }
-.statcard:hover .md-slider-track-fill {
-    background-color: #1BC98E;
+.statcard:hover .mat-slider-track-fill {
+  background-color: #1BC98E;
 }
