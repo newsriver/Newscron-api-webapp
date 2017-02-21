@@ -2,11 +2,6 @@ import { NgModule, Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {NewscronClientService, Section, Category, Article} from '../newscron-client.service';
 
-
-@NgModule({
-    declarations: []
-})
-
 @Component({
     selector: 'category',
     templateUrl: './category.component.html',
