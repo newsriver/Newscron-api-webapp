@@ -6,7 +6,7 @@ import {Injectable, Pipe, PipeTransform} from '@angular/core';
 
 
 @NgModule({
-  declarations: [FeaturedComponent, WelcomeComponent]
+  declarations: []
 })
 
 
