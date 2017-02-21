@@ -19,7 +19,7 @@ export class SortArticle {
 
 
 @NgModule({
-    declarations: [ArticleComponent]
+    declarations: []
 })
 
 @Component({
