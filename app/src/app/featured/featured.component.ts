@@ -3,11 +3,6 @@ import {SectionComponent} from '../section/section.component';
 import {NewscronClientService, Section, Category, Article} from '../newscron-client.service';
 
 
-
-@NgModule({
-  declarations: []
-})
-
 @Component({
   selector: 'featured',
   templateUrl: './featured.component.html',
