@@ -17,11 +17,6 @@ export class SortArticle {
 }
 
 
-
-@NgModule({
-    declarations: []
-})
-
 @Component({
     selector: 'section',
     templateUrl: './section.component.html',
