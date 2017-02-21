@@ -5,7 +5,7 @@ import {NewscronClientService, Section, Category, Article} from '../newscron-cli
 
 
 @NgModule({
-  declarations: [SectionComponent]
+  declarations: []
 })
 
 @Component({
