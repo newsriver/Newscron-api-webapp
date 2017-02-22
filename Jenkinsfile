@@ -63,6 +63,7 @@ def angular2Compile() {
     dir('app') {
 
         stage 'install modules'
+        sh 'rm -rf node_modules && npm cache clean && npm uninstall --save angular-cli && npm uninstall -g angular-cli && npm i --save @angular/cli && npm i -g @angular/cli'
         sh 'npm install'
         sh 'npm update'
 
