@@ -54,8 +54,6 @@ export class AppComponent implements OnInit {
   public bootConfig: BootstrapConfiguration;
   public categories: Category[] = [];
   public welcomeStep: number = 0;
-  public min: number = 1;
-  public max: number = 10;
 
   constructor(private client: NewscronClientService) {
 
