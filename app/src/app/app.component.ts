@@ -5,14 +5,6 @@ import {NewscronClientService, BootstrapConfiguration, Section, Category, Articl
 import {Injectable, Pipe, PipeTransform} from '@angular/core';
 
 
-@NgModule({
-  declarations: [FeaturedComponent, WelcomeComponent]
-})
-
-
-
-
-
 @Pipe({
   name: 'validSection'
 })

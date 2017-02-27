@@ -56,17 +56,18 @@ def angular2Compile() {
     stage 'angular2'
 
     // uncomment these 2 lines and edit the name 'node-4.4.5' according to what you choose in configuration
-    def nodeHome = tool name: 'node-7.2.1', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+    def nodeHome = tool name: 'node-6.9.5', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
     env.PATH = "${nodeHome}/bin:${env.PATH}"
 
 
     dir('app') {
 
         stage 'install modules'
+        sh 'rm -rf node_modules && npm cache clean && npm uninstall --save angular-cli && npm uninstall -g angular-cli && npm i --save @angular/cli && npm i -g @angular/cli'
         sh 'npm install'
         sh 'npm update'
 
-        sh 'ng build --target=production --environment=prod'
+        sh 'ng build --prod --aot'
         sh 'cp -R dist/*  ../src/main/resources/static/'
     }
 

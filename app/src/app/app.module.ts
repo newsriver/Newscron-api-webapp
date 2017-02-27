@@ -7,6 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent, ValidSectionFilter, SortCategory } from './app.component';
 import { AppComponents, AppRoutes } from "./app.routing";
 import { ArticleComponent } from './article/article.component';
+import { CategoryComponent } from './category/category.component';
 import { WelcomeComponent, KeysPipe, CategoryAmmountPipe, EditionPerContinent } from './welcome/welcome.component';
 import {NewscronClientService} from './newscron-client.service';
 import {SectionComponent, SortArticle} from './section/section.component';
@@ -24,6 +25,7 @@ import { MaterialModule } from '@angular/material';
     ValidSectionFilter,
     WelcomeComponent,
     SectionComponent,
+    CategoryComponent,
     AppComponents
   ],
   imports: [
