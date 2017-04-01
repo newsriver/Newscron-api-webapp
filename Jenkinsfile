@@ -67,7 +67,8 @@ def angular2Compile() {
         sh 'npm install'
         sh 'npm update'
 
-        sh 'ng build --prod --aot'
+        //sh 'ng build --prod --aot'
+        sh 'ng build'
         sh 'cp -R dist/*  ../src/main/resources/static/'
     }
 
