@@ -114,5 +114,4 @@ export class Article {
     public imgUrl: string = null;
     public publicationDate: number = null;
     public publisher: string = null;
-
 }
