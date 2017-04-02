@@ -2,7 +2,7 @@
 
 def marathonAppId = '/newscron/newscron-api-webapp'
 def projectName = 'newscron-api-webapp'
-def dockerRegistry = 'docker-registry-v2.newsriver.io:5000'
+def dockerRegistry = 'eu.gcr.io/newsriver-io'
 def marathonURL = 'http://leader.mesos:8080/'
 
 node {
@@ -91,7 +91,7 @@ def deployDockerImage(projectName, dockerRegistry) {
         sh "cp ../newrelic-agent/newrelic-*.jar ."
         sh "cp ../newrelic-agent/newrelic.yml ."
         sh 'cp ../Dockerfile .'
-        docker.withRegistry("https://$dockerRegistry/") {
+        docker.withRegistry("https://$dockerRegistry/", "docker-gcr") {
             stage 'build docker image'
             def image = docker.build("$projectName:latest")
             stage 'upload docker image'
