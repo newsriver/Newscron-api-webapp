@@ -1,8 +1,8 @@
 #!groovy​
 
 def marathonAppId = '/newscron/newscron-api-webapp'
-def projectName = 'newscron-api-webapp'
-def dockerRegistry = 'eu.gcr.io/newsriver-io'
+def projectName = 'newsriver-io/newscron-api-webapp'
+def dockerRegistry = 'gcr.io'
 def marathonURL = 'http://leader.mesos:8080/'
 
 node {
@@ -91,7 +91,7 @@ def deployDockerImage(projectName, dockerRegistry) {
         sh "cp ../newrelic-agent/newrelic-*.jar ."
         sh "cp ../newrelic-agent/newrelic.yml ."
         sh 'cp ../Dockerfile .'
-        docker.withRegistry("https://$dockerRegistry/", "docker-gcr") {
+        docker.withRegistry("https://$dockerRegistry/") {
             stage 'build docker image'
             def image = docker.build("$projectName:latest")
             stage 'upload docker image'
@@ -105,4 +105,5 @@ def initDocker() {
     if (status != 0) {
         sh 'service docker start'
     }
+    sh 'docker login -u _json_key -p "$(cat Newsriver-60566afa2bab.json)" https://gcr.io'
 }

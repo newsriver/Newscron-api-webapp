@@ -1,43 +1,44 @@
 {
-  "id": "/newscron/newscron-api-webapp",
-  "cmd": null,
-  "cpus": 0.5,
-  "mem": 1024,
-  "disk": 0,
-  "instances": 1,
-  "container": {
-    "type": "DOCKER",
-    "volumes": [],
-    "docker": {
-      "image": "docker-registry-v2.newsriver.io:5000/newscron-api:latest",
-      "network": "HOST",
-      "privileged": false,
-      "parameters": [],
-      "forcePullImage": true
+    "id": "/newscron/newscron-api-webapp",
+    "cmd": null,
+    "cpus": 0.5,
+    "mem": 1024,
+    "disk": 0,
+    "instances": 1,
+    "fetch": [{
+        "uri": "file:///etc/docker/docker-grc-auth.tar.gz"
+    }],
+    "container": {
+        "type": "DOCKER",
+        "volumes": [],
+        "docker": {
+            "image": "gcr.io/newsriver-io/newscron-api:1",
+            "network": "HOST",
+            "privileged": false,
+            "parameters": [],
+            "forcePullImage": true
+        }
+    },
+    "env": {
+        "JAVA_OPTS": "-Xms256m -Xmx819m -Dport.http=$PORT"
+    },
+    "acceptedResourceRoles": [
+        "slave_public"
+    ],
+    "healthChecks": [{
+        "path": "/health",
+        "protocol": "HTTP",
+        "portIndex": 0,
+        "gracePeriodSeconds": 300,
+        "intervalSeconds": 60,
+        "timeoutSeconds": 20,
+        "maxConsecutiveFailures": 3,
+        "ignoreHttp1xx": false
+    }],
+    "labels": {
+        "HAPROXY_GROUP": "external",
+        "HAPROXY_0_VHOST": "app.newscron.newsriver.io,app.newscron.com,www.newscron.com,newscron.com",
+        "HAPROXY_0_REDIRECT_TO_HTTPS": "false",
+        "HAPROXY_0_BACKEND_HTTP_OPTIONS": "    option forwardfor header x-forwarded-for\n"
     }
-  },
-  "env": {
-    "JAVA_OPTS": "-Xms256m -Xmx819m -Dport.http=$PORT"
-  },
-  "acceptedResourceRoles": [
-    "slave_public"
-  ],
-  "healthChecks": [
-    {
-      "path": "/health",
-      "protocol": "HTTP",
-      "portIndex": 0,
-      "gracePeriodSeconds": 300,
-      "intervalSeconds": 60,
-      "timeoutSeconds": 20,
-      "maxConsecutiveFailures": 3,
-      "ignoreHttp1xx": false
-    }
-  ],
-  "labels": {
-    "HAPROXY_GROUP": "external",
-    "HAPROXY_0_VHOST": "app.newscron.newsriver.io,app.newscron.com,www.newscron.com,newscron.com",
-    "HAPROXY_0_REDIRECT_TO_HTTPS": "false",
-    "HAPROXY_0_BACKEND_HTTP_OPTIONS": "    option forwardfor header x-forwarded-for\n"
-  }
 }
