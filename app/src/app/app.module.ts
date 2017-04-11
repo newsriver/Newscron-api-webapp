@@ -12,6 +12,8 @@ import { WelcomeComponent, KeysPipe, CategoryAmmountPipe, EditionPerContinent } 
 import {NewscronClientService} from './newscron-client.service';
 import {SectionComponent, SortArticle} from './section/section.component';
 import { MaterialModule } from '@angular/material';
+import {BrowserAnimationsModule}  from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
@@ -29,10 +31,11 @@ import { MaterialModule } from '@angular/material';
     AppComponents
   ],
   imports: [
+    BrowserAnimationsModule,
+    MaterialModule,
     BrowserModule,
     FormsModule,
     HttpModule,
-    MaterialModule,
     RouterModule,
     RouterModule.forRoot(AppRoutes)
   ],

@@ -9,7 +9,7 @@ import {Section, Category, Article} from '../newscron-client.service';
 })
 export class ArticleComponent implements OnInit {
 
-  @Input() article: Article[];
+  @Input() article: Article;
   constructor() { }
 
   ngOnInit() {
