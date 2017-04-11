@@ -62,10 +62,11 @@ def angular2Compile() {
 
     dir('app') {
 
+        stage 'update global modules'
+        sh 'npm cache clean && npm update -g'
         stage 'install modules'
-        sh 'rm -rf node_modules && npm cache clean && npm uninstall --save angular-cli && npm uninstall -g angular-cli && npm i --save @angular/cli && npm i -g @angular/cli'
+        sh 'rm -rf node_modules && rm -rf dist'
         sh 'npm install'
-        sh 'npm update'
 
         sh 'ng build --prod --aot'
         sh 'cp -R dist/*  ../src/main/resources/static/'
