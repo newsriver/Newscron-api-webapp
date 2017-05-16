@@ -1,0 +1,8 @@
+<div class="chunk-header">
+  <h3>Since: {{chunk.timestamp | date:'dd MMM yyyy HH:mm:ss'}}</h3>
+</div>
+<ul>
+  <li *ngFor="let article of chunk.articles; let j = index">
+    <articles [article]="article"></articles>
+  </li>
+</ul>

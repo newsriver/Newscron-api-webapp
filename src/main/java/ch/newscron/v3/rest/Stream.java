@@ -6,16 +6,20 @@ import ch.newscron.extractor.StructuredArticle;
 import ch.newscron.v3.data.Article;
 import ch.newscron.v3.data.Category;
 import ch.newscron.v3.data.Section;
+import ch.newscron.v3.data.StreamChunk;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.sql.DataSource;
@@ -23,8 +27,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -34,9 +39,9 @@ import java.util.Set;
 
 
 @RestController
-public class Featured {
+public class Stream {
 
-    private static final Logger log = Logger.getLogger(Featured.class);
+    private static final Logger log = Logger.getLogger(Stream.class);
 
 
     @Autowired
@@ -45,29 +50,40 @@ public class Featured {
 
 
     @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/v3/featured", method = RequestMethod.POST)
-    public List<Section> featured(@RequestBody List<Category> categories) {
+    @RequestMapping(value = "/v3/stream", method = RequestMethod.POST)
+    public ResponseEntity<StreamChunk> featured(@RequestBody List<Category> categories, @RequestParam(value = "latestId", required = false, defaultValue = "0") long latestId) {
 
-        List<Section> sections = new LinkedList<>();
-
+        StreamChunk chunk = new StreamChunk();
+        chunk.setTimestamp(System.currentTimeMillis());
 
         for (Category category : categories) {
-
-            Section section = featuredCategory(category, 10);
-            section.setCategory(category);
-            sections.add(section);
+            chunk.getArticles().addAll(featuredCategory(category, 10, latestId).getArticles());
         }
 
+        //empty response
+        if (chunk.getArticles().size() == 0) {
+            return new ResponseEntity<StreamChunk>(HttpStatus.NO_CONTENT);
+        }
 
-        return sections;
+        Collections.sort(chunk.getArticles(), new Comparator<Article>() {
+            @Override
+            public int compare(Article o1, Article o2) {
+                return o2.getId().compareTo(o1.getId());
+            }
+        });
+
+        chunk.setLatestId(chunk.getArticles().peekFirst().getId());
+
+        return new ResponseEntity<StreamChunk>(chunk, HttpStatus.OK);
+
     }
 
 
-    private Section featuredCategory(Category category, int limit) {
+    private Section featuredCategory(Category category, int limit, long latestId) {
 
         Section categoryArticles = new Section();
         ArticleFactory articleFactory = ArticleFactory.getInstance();
-        Set<Long> articlesId = featuredArticlesIdsPerCategory(category.getId(), category.getPackages(), limit);
+        Set<Long> articlesId = featuredArticlesIdsPerCategory(category.getId(), category.getPackages(), limit, latestId);
 
         ArrayList<StructuredArticle> articles = articleFactory.getArticles(articlesId);
 
@@ -80,6 +96,7 @@ public class Featured {
             article.setPublicationDate(strArticle.getPublicationDateGMT());
             article.setUrl(strArticle.getUrl());
             article.setPublisher(strArticle.getPublisher());
+            article.setId(strArticle.getArticleID());
 
             categoryArticles.getArticles().add(article);
         }
@@ -87,7 +104,7 @@ public class Featured {
     }
 
 
-    private Set<Long> featuredArticlesIdsPerCategory(int categoryId, List<Integer> packages, int limit) {
+    private Set<Long> featuredArticlesIdsPerCategory(int categoryId, List<Integer> packages, int limit, long latestId) {
 
         HashSet<Long> articleIds = new HashSet<>();
         Connection conn = null;
@@ -119,14 +136,16 @@ public class Featured {
                     "            JOIN NewscronContent.article AS A ON A.id=S.articleId\n" +
                     "            JOIN NewscronContent.topic as T ON T.id=A.topicId\n" +
                     "            WHERE A.categoryID=? AND A.packageID in (?) AND A.cloneID is NULL\n" +
-                    "            AND A.publicationDateGMT > DATE_SUB(now(), Interval 16 Hour)\n" +
+                    "            AND A.id>?\n" +
+                    "            AND A.publicationDateGMT > DATE_SUB(now(), Interval 24 Hour)\n" +
                     "            ORDER BY S.finalScore DESC LIMIT ?;";
 
 
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, categoryId);
             stmt.setString(2, packagesIds);
-            stmt.setInt(3, limit * 20);
+            stmt.setLong(3, latestId);
+            stmt.setInt(4, limit * 20);
 
             rs = stmt.executeQuery();
 
