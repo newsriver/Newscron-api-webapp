@@ -13,6 +13,8 @@ import {NewscronClientService} from './newscron-client.service';
 import {SectionComponent, SortArticle} from './section/section.component';
 import { MaterialModule } from '@angular/material';
 import {BrowserAnimationsModule}  from '@angular/platform-browser/animations';
+import { StreamComponent } from './stream/stream.component';
+import { StreamChunkComponent } from './stream-chunk/stream-chunk.component';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import {BrowserAnimationsModule}  from '@angular/platform-browser/animations';
     WelcomeComponent,
     SectionComponent,
     CategoryComponent,
-    AppComponents
+    AppComponents,
+    StreamComponent,
+    StreamChunkComponent
   ],
   imports: [
     BrowserAnimationsModule,

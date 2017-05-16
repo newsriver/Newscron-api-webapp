@@ -4,6 +4,7 @@ package ch.newscron.v3.data;
  * Created by eliapalme on 13.11.16.
  */
 public class Article {
+    private Long id;
     private String title;
     private String url;
     private String snippet;
@@ -58,5 +59,13 @@ public class Article {
 
     public void setPublicationDate(long publicationDate) {
         this.publicationDate = publicationDate;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

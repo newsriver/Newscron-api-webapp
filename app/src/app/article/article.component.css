@@ -1,5 +1,6 @@
 .article{
   margin-bottom: 5rem;
+  background-color: #fff;
 }
 
 .article .card-block{
@@ -23,10 +24,9 @@ line-height: 3.3rem;
   float: left;
   background-repeat: no-repeat;
   background-size: cover;
-  width: 22rem;
-  height: 18rem;
+  width: 24rem;
+  height: 20rem;
   margin-right: 2rem;
-  margin-top: 0.6rem;
 }
 
 .article span{
@@ -40,7 +40,7 @@ line-height: 3.3rem;
 
 .article p{
   color: #252830;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
   font-family: 'PT Serif', serif;
   font-size: 1.75rem;
 }

@@ -1,0 +1,43 @@
+li{
+  list-style-type:none
+}
+
+ul{
+  padding: 0px;
+}
+
+
+.chunk-header:before {
+    position: absolute;
+    top: 50%;
+    display: block;
+    content: "";
+    width: 100%;
+    height: 1px;
+    background-color: #434857;
+}
+
+
+.chunk-header{
+  position: relative;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 5rem;
+    margin-bottom: 2.5rem;
+    font-weight: 100;
+}
+.chunk-header h3{
+    color: #cfd2da;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 100%;
+    position: relative;
+    z-index: 2;
+    display: inline-block;
+    padding-left: 1em;
+    padding-right: 1em;
+    vertical-align: middle;
+    background-color: #252830;
+  }
