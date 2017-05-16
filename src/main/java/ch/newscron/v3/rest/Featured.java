@@ -7,6 +7,7 @@ import ch.newscron.v3.data.Article;
 import ch.newscron.v3.data.Category;
 import ch.newscron.v3.data.Section;
 import org.apache.commons.dbutils.DbUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,12 +151,11 @@ public class Featured {
 
 
     private String buildSnippet(String text) {
-        String snippet = text.substring(0, 340 > text.length() ? text.length() : 340);
+        String snippet = text.substring(0, 240 > text.length() ? text.length() : 240);
         int index = snippet.lastIndexOf(" ");
-        if (index > 340 / 2) {
-            snippet = snippet.substring(0, index) + "...";
+        if (index > 240 / 2) {
+            snippet = StringUtils.strip(snippet.substring(0, index), ",.:;!?-_/()\\[]\"' \n\r\t") + "...";
         }
-
         return snippet;
     }
 

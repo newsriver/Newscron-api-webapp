@@ -16,12 +16,16 @@
 -->
 
   <div class="card-block">
-    <span>Sport <i class="fa fa-sliders" aria-hidden="true"></i> | {{article.publisher}} <i class="fa fa-ban" aria-hidden="true"></i></span>
+    <!--<span>Sport <i class="fa fa-sliders" aria-hidden="true"></i> | {{article.publisher}} <i class="fa fa-ban" aria-hidden="true"></i></span>-->
+    <a [href]="article.url" target="_blank" *ngIf="article.imgUrl!=null">
+      <div class="img" [ngStyle]="{'background-image': 'url(' + article.imgUrl + ')'}" border="0"></div>
+    </a>
     <a [href]="article.url" target="_blank">
-      <div class="img" [ngStyle]="{'background-image': 'url(' + article.imgUrl + ')'}" border="0" *ngIf="article.imgUrl!=null"></div>
-      <h4>{{article.title}}</h4>
-      <span>{{article.publicationDate | date: 'dd/MM/yyyy HH:mm'}}</span>
-      <p>{{article.snippet}}</p>
+      <div class="text">
+        <h4>{{article.title}}</h4>
+        <span>{{article.publicationDate | date: 'dd/MM/yyyy HH:mm'}} | {{article.publisher}}</span>
+        <p>{{article.snippet}}</p>
+      </div>
     </a>
   </div>
 

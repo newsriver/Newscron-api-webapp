@@ -8,13 +8,14 @@
   text-align: left;
 }
 
-.article h4{
+.article .text h4{
   color: #252830;
 font-weight: 700;
 margin-top: 0rem;
 margin-bottom: 0.4rem;
 font-size: 2.8rem;
 line-height: 3.3rem;
+flex: 1;
 }
 
 
@@ -29,6 +30,13 @@ line-height: 3.3rem;
   margin-right: 2rem;
 }
 
+.article .text{
+  max-height:20rem;
+  display:flex;
+  flex-direction: column;
+}
+
+
 .article span{
   color: #cfd2da;
   display: block;
@@ -38,11 +46,13 @@ line-height: 3.3rem;
   margin-top: 0.6rem;
 }
 
-.article p{
+.article .text  p{
   color: #252830;
   margin-bottom: 0;
   font-family: 'PT Serif', serif;
   font-size: 1.75rem;
+  height: auto;
+  overflow: hidden;
 }
 
 a{
