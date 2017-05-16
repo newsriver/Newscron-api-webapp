@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {Section, Category, Article} from '../newscron-client.service';
+import { CordovaService } from '../cordova.service';
 
 
 @Component({
@@ -10,9 +11,17 @@ import {Section, Category, Article} from '../newscron-client.service';
 export class ArticleComponent implements OnInit {
 
   @Input() article: Article;
-  constructor() { }
+  constructor(public cordovaService: CordovaService) { }
+
 
   ngOnInit() {
   }
+
+
+  public openLinkInBrowser() {
+    this.cordovaService.openLinkInBrowser(this.article.url);
+  }
+
+
 
 }

@@ -15,6 +15,7 @@ import { MaterialModule } from '@angular/material';
 import {BrowserAnimationsModule}  from '@angular/platform-browser/animations';
 import { StreamComponent } from './stream/stream.component';
 import { StreamChunkComponent } from './stream-chunk/stream-chunk.component';
+import { CordovaService } from './cordova.service';
 
 
 @NgModule({
@@ -43,7 +44,7 @@ import { StreamChunkComponent } from './stream-chunk/stream-chunk.component';
     RouterModule,
     RouterModule.forRoot(AppRoutes)
   ],
-  providers: [NewscronClientService],
+  providers: [CordovaService, NewscronClientService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
