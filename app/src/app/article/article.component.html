@@ -15,12 +15,16 @@
   </div>
 -->
 
-  <div *ngIf="cordovaService.onCordova">
-    <h2 style="color:black" (click)="openLinkInBrowser()">Click me</h2>
+  <div class="card-block" *ngIf="cordovaService.onCordova" (click)="openLinkInBrowser()">
+    <h4>{{article.title}}</h4>
+    <span>{{article.publicationDate | date: 'dd/MM/yyyy HH:mm'}} | {{article.publisher}}</span>
+    <div *ngIf="article.imgUrl!=null" class="img" [ngStyle]="{'background-image': 'url(' + article.imgUrl + ')'}" border="0"></div>
+    <p>{{article.snippet}}</p>
   </div>
 
-  <div class="card-block">
-    <a href="#" (click)="openLinkInBrowser()"><h4>{{article.title}}</h4></a>
+
+  <div class="card-block" *ngIf="!cordovaService.onCordova">
+    <a [href]="article.url" target="_blank"><h4>{{article.title}}</h4></a>
     <span>{{article.publicationDate | date: 'dd/MM/yyyy HH:mm'}} | {{article.publisher}}</span>
     <a [href]="article.url" target="_blank" *ngIf="article.imgUrl!=null">
       <div class="img" [ngStyle]="{'background-image': 'url(' + article.imgUrl + ')'}" border="0"></div>
@@ -29,4 +33,5 @@
       <p>{{article.snippet}}</p>
     </a>
   </div>
+
 </div>

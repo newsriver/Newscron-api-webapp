@@ -17,9 +17,11 @@ export class ArticleComponent implements OnInit {
   ngOnInit() {
   }
 
+
   public openLinkInBrowser() {
-    this.cordovaService.cordova.InAppBrowser.open(this.article.url, "_system", "location=yes,enableViewportScale=yes,hidden=no,mediaPlaybackRequiresUserAction=yes");
+    this.cordovaService.openLinkInBrowser(this.article.url);
   }
+
 
 
 }

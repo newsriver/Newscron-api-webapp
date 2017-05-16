@@ -15,13 +15,18 @@ if (environment.production) {
 
 let cordova: CordovaService = new CordovaService();
 
-let bootstrap = () => {
+let onBootstrap = () => {
   platformBrowserDynamic().bootstrapModule(AppModule);
 };
 
+let onResume = () => {
+  cordova.onResume();
+};
+
 if (cordova.onCordova) {
-  alert('cordova');
-  document.addEventListener('deviceready', bootstrap);
+  //alert('cordova');
+  document.addEventListener('deviceready', onBootstrap, false);
+  document.addEventListener('resume', onResume, false);
 } else {
-  bootstrap();
+  onBootstrap();
 }
