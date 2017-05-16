@@ -31,7 +31,7 @@ flex: 1;
 }
 
 .article .text{
-  max-height:20rem;
+  height:20rem;
   display:flex;
   flex-direction: column;
 }
@@ -62,6 +62,10 @@ a{
 @media screen and (max-width: 540px) {
   .article .card-block{
     padding: 1.5rem;
+  }
+
+  .article .text{
+    height:auto;
   }
 
   .article h4{
