@@ -15,6 +15,7 @@ h2{
   margin-bottom: 0rem;
   margin-top: 16rem;
   font-size: 5rem;
+  padding-left: 1.5rem;
 }
 
 @media screen and (max-width: 540px) {

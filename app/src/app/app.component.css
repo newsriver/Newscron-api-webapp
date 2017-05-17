@@ -9,10 +9,20 @@ ul{
   margin-top: 5rem;
 }
 
+.main-container{
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 30px;
+    padding-right: 30px;
+    max-width: 1200px;
+  }
+
 
 @media screen and (max-width: 576px){
-  .container{
-    width: 100%!important;
+  .main-container{
+    max-width: 100%!important;
+    padding-left: 0px;
+    padding-right: 0px;
   }
 }
 
