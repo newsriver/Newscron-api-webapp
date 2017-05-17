@@ -53,16 +53,10 @@ a{
   text-decoration: none;
 }
 
-@media screen and (max-width: 992px) {
-  .article .text{
-    max-height:none;
-  }
-
-}
-
 
 
 @media screen and (max-width: 576px) {
+
 
   .article h4{
      font-size: 2rem;
