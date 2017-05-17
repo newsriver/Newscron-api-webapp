@@ -5,8 +5,8 @@ import { StreamComponent } from './stream/stream.component';
 
 export const AppRoutes: Routes = [
   { path: 'category/:id/:name', component: CategoryComponent },
-  { path: '', component: FeaturedComponent },
-  { path: 'stream', component: StreamComponent }
+  { path: 'top', component: FeaturedComponent },
+  { path: '', component: StreamComponent }
 ];
 
 
