@@ -8,14 +8,13 @@
   text-align: left;
 }
 
-.article .text h4{
+.article h4{
   color: #252830;
 font-weight: 700;
 margin-top: 0rem;
 margin-bottom: 0.4rem;
-font-size: 2.8rem;
-line-height: 3.3rem;
-flex: 1;
+font-size: 2.4rem;
+line-height: 2.8rem;
 }
 
 
@@ -30,12 +29,6 @@ flex: 1;
   margin-right: 2rem;
 }
 
-.article .text{
-  height:20rem;
-  display:flex;
-  flex-direction: column;
-}
-
 
 .article span{
   color: #cfd2da;
@@ -46,27 +39,24 @@ flex: 1;
   margin-top: 0.6rem;
 }
 
-.article .text  p{
+.article  p{
   color: #252830;
   margin-bottom: 0;
   font-family: 'PT Serif', serif;
   font-size: 1.75rem;
   height: auto;
   overflow: hidden;
+  display: inline;
 }
 
 a{
   text-decoration: none;
 }
 
-@media screen and (max-width: 540px) {
-  .article .card-block{
-    padding: 1.5rem;
-  }
 
-  .article .text{
-    height:auto;
-  }
+
+@media screen and (max-width: 576px) {
+
 
   .article h4{
      font-size: 2rem;
