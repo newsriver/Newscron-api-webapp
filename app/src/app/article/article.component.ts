@@ -15,7 +15,7 @@ export class ArticleComponent implements OnInit {
   @Input() article: Article;
   constructor(public cordovaService: CordovaService, private route: ActivatedRoute) {
 
-    if (route.snapshot.url[0].path === "digest") {
+    if (route.snapshot.url[0] != null && route.snapshot.url[0].path != null && route.snapshot.url[0].path === "digest") {
       this.isDigest = true;
     }
 

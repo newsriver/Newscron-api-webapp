@@ -16,7 +16,7 @@ public class HTML5Mode {
         return "forward:/";
     }
 
-    @RequestMapping(value = {"/stream"})
+    @RequestMapping(value = {"/digest"})
     public String readabilityStream(Map<String, Object> model) {
         return "forward:/";
     }
