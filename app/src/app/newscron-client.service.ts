@@ -12,7 +12,7 @@ export class NewscronClientService {
 
   private categories: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
   private bootConfig: Subject<BootstrapConfiguration> = new BehaviorSubject<BootstrapConfiguration>(null);
-  private chunks: StreamChunk[] = [];
+  private digests: Digest[] = [];
 
   //public categories: Observable<Array<Category>> = this._categories.asObservable();
 
@@ -24,9 +24,9 @@ export class NewscronClientService {
       this.categories.next(cat);
     }
 
-    this.chunks = JSON.parse(localStorage.getItem('stream'));
-    if (this.chunks == null) {
-      this.chunks = [];
+    this.digests = JSON.parse(localStorage.getItem('stream'));
+    if (this.digests == null) {
+      this.digests = [];
     }
   }
 
@@ -51,33 +51,33 @@ export class NewscronClientService {
 
   }
 
-  public stream(): StreamChunk[] {
-    return this.chunks;
+  public digestsList(): Digest[] {
+    return this.digests;
   }
 
-  public updateStream(cat: Array<Category>): Observable<boolean> {
+  public loadDigest(cat: Array<Category>): Observable<boolean> {
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    let latestId: number = 0;
+    let timestamp: number = 0;
 
-    if (this.chunks.length > 0) {
+    if (this.digests.length > 0) {
       //this is a check to identify corrupted storage
-      if (this.chunks[0].latestId == undefined) {
-        this.chunks = [];
-        localStorage.setItem('stream', JSON.stringify(this.chunks));
-        latestId = 0;
+      if (this.digests[0].latestId == undefined) {
+        this.digests = [];
+        localStorage.setItem('stream', JSON.stringify(this.digests));
+        timestamp = 0;
       } else {
-        latestId = this.chunks[0].latestId;
+        timestamp = this.digests[0].timestamp;
       }
 
     }
 
-    return this.http.post(this.baseURL + "/stream?latestId=" + latestId, cat, options)
+    return this.http.post(this.baseURL + "/digest?from=" + timestamp, cat, options)
       .map(this.extractData).map(chunk => {
         if (chunk != null) {
-          this.chunks.unshift(chunk);
-          localStorage.setItem('stream', JSON.stringify(this.chunks));
+          this.digests.unshift(chunk);
+          localStorage.setItem('stream', JSON.stringify(this.digests));
           return true;
         } else {
           return false;
@@ -152,7 +152,7 @@ export class Section {
   public articles: Article[];
 }
 
-export class StreamChunk {
+export class Digest {
   public timestamp: number = null;
   public latestId: number = null;
   public articles: Article[];
@@ -167,4 +167,6 @@ export class Article {
   public imgUrl: string = null;
   public publicationDate: number = null;
   public publisher: string = null;
+  public category: string = null;
+  public score: number = null;
 }

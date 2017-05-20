@@ -11,7 +11,8 @@ public class Article {
     private String imgUrl;
     private long publicationDate;
     private String publisher;
-
+    private Long score;
+    private String category;
 
     public String getTitle() {
         return title;
@@ -67,5 +68,21 @@ public class Article {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getScore() {
+        return score;
+    }
+
+    public void setScore(Long score) {
+        this.score = score;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
