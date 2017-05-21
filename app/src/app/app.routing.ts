@@ -1,7 +1,7 @@
 import { RouterModule, Routes } from '@angular/router';
 import { CategoryComponent } from './category/category.component';
 import { FeaturedComponent } from './featured/featured.component';
-import { StreamComponent } from './stream/stream.component';
+import { DigestsListComponent } from './digests-list/digests-list.component';
 
 export const AppRoutes: Routes = [
   { path: 'category/:id/:name', component: CategoryComponent },
@@ -13,5 +13,5 @@ export const AppRoutes: Routes = [
 export const AppComponents: any = [
   CategoryComponent,
   FeaturedComponent,
-  StreamComponent
+  DigestsListComponent
 ];

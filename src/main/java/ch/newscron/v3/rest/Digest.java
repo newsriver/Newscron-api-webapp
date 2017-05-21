@@ -26,12 +26,13 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by eliapalme on 13.11.16.
@@ -39,9 +40,9 @@ import java.util.Set;
 
 
 @RestController
-public class Stream {
+public class Digest {
 
-    private static final Logger log = Logger.getLogger(Stream.class);
+    private static final Logger log = Logger.getLogger(Digest.class);
 
 
     @Autowired
@@ -50,14 +51,14 @@ public class Stream {
 
 
     @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/v3/stream", method = RequestMethod.POST)
-    public ResponseEntity<StreamChunk> featured(@RequestBody List<Category> categories, @RequestParam(value = "latestId", required = false, defaultValue = "0") long latestId) {
+    @RequestMapping(value = "/v3/digest", method = RequestMethod.POST)
+    public ResponseEntity<StreamChunk> featured(@RequestBody List<Category> categories, @RequestParam(value = "after", required = false, defaultValue = "0") long timestamp) {
 
         StreamChunk chunk = new StreamChunk();
         chunk.setTimestamp(System.currentTimeMillis());
 
         for (Category category : categories) {
-            chunk.getArticles().addAll(featuredCategory(category, 10, latestId).getArticles());
+            chunk.getArticles().addAll(featuredCategory(category, 10, timestamp).getArticles());
         }
 
         //empty response
@@ -68,7 +69,7 @@ public class Stream {
         Collections.sort(chunk.getArticles(), new Comparator<Article>() {
             @Override
             public int compare(Article o1, Article o2) {
-                return o2.getId().compareTo(o1.getId());
+                return o2.getScore().compareTo(o1.getScore());
             }
         });
 
@@ -79,13 +80,13 @@ public class Stream {
     }
 
 
-    private Section featuredCategory(Category category, int limit, long latestId) {
+    private Section featuredCategory(Category category, int limit, long timestamp) {
 
         Section categoryArticles = new Section();
         ArticleFactory articleFactory = ArticleFactory.getInstance();
-        Set<Long> articlesId = featuredArticlesIdsPerCategory(category.getId(), category.getPackages(), limit, latestId);
+        HashMap<Long, Long> articlesId = featuredArticlesIdsPerCategory(category.getId(), category.getPackages(), limit, timestamp);
 
-        ArrayList<StructuredArticle> articles = articleFactory.getArticles(articlesId);
+        ArrayList<StructuredArticle> articles = articleFactory.getArticles(articlesId.keySet());
 
         for (StructuredArticle strArticle : articles) {
 
@@ -97,16 +98,17 @@ public class Stream {
             article.setUrl(strArticle.getUrl());
             article.setPublisher(strArticle.getPublisher());
             article.setId(strArticle.getArticleID());
-
+            article.setScore(articlesId.get(article.getId()));
+            article.setCategory(category.getName());
             categoryArticles.getArticles().add(article);
         }
         return categoryArticles;
     }
 
 
-    private Set<Long> featuredArticlesIdsPerCategory(int categoryId, List<Integer> packages, int limit, long latestId) {
+    private HashMap<Long, Long> featuredArticlesIdsPerCategory(int categoryId, List<Integer> packages, int limit, long timestamp) {
 
-        HashSet<Long> articleIds = new HashSet<>();
+        HashMap<Long, Long> articleIds = new HashMap<>();
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -123,38 +125,41 @@ public class Stream {
             conn = this.dataSource.getConnection();
             conn.setReadOnly(true);
 
-            /*String sql = "SELECT A.id, T.id, T.version FROM NewscronContent.articleFeature AS F " +
+            String sql = "SELECT A.id,A.topicId,F.rank as rank FROM NewscronContent.articleFeature AS F " +
                     "JOIN NewscronContent.article AS A ON A.id=F.id " +
-                    "JOIN NewscronContent.topic as T ON T.id=A.topicId " +
+                    /*"JOIN NewscronContent.topic as T ON T.id=A.topicId " + not needed */
                     "WHERE F.categoryID=? AND F.packageID in (?)  " +
-                    "AND cloneOf is NULL " +
-                    "AND F.publicationDate > DATE_SUB(now(), Interval 16 Hour) " +
-                    "ORDER BY F.rank DESC LIMIT ?;";*/
+                    "AND F.cloneOf is NULL " +
+                    "AND F.publicationDate > ? " +
+                    "AND F.publicationDate > DATE_SUB(now(), Interval 24 Hour) " +
+                    "ORDER BY F.rank DESC LIMIT ?;";
 
 
-            String sql = "SELECT A.id, T.id, T.version,S.finalScore FROM NewscronContent.articleScore AS S\n" +
+            /*
+            OLD RANKING
+            String sql = "SELECT A.id, T.id, T.version,S.finalScore as rank FROM NewscronContent.articleScore AS S\n" +
                     "            JOIN NewscronContent.article AS A ON A.id=S.articleId\n" +
                     "            JOIN NewscronContent.topic as T ON T.id=A.topicId\n" +
                     "            WHERE A.categoryID=? AND A.packageID in (?) AND A.cloneID is NULL\n" +
-                    "            AND A.id>?\n" +
+                    "            AND A.publicationDateGMT >?\n" +
                     "            AND A.publicationDateGMT > DATE_SUB(now(), Interval 24 Hour)\n" +
-                    "            ORDER BY S.finalScore DESC LIMIT ?;";
+                    "            ORDER BY S.finalScore DESC LIMIT ?;";*/
 
 
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, categoryId);
             stmt.setString(2, packagesIds);
-            stmt.setLong(3, latestId);
+            stmt.setTimestamp(3, new Timestamp(timestamp));
             stmt.setInt(4, limit * 20);
 
             rs = stmt.executeQuery();
 
             HashSet<Long> topicIds = new HashSet<Long>();
             while (rs.next() && limit > 0) {
-                if (!topicIds.add(rs.getLong("T.id"))) {
+                if (!topicIds.add(rs.getLong("A.topicId"))) {
                     continue;
                 }
-                if (articleIds.add(rs.getLong("A.id"))) {
+                if (articleIds.putIfAbsent(rs.getLong("A.id"), rs.getLong("rank")) == null) {
                     limit--;
                 }
             }

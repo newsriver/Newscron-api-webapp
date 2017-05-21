@@ -13,9 +13,9 @@ import {NewscronClientService} from './newscron-client.service';
 import {SectionComponent, SortArticle} from './section/section.component';
 import { MaterialModule } from '@angular/material';
 import {BrowserAnimationsModule}  from '@angular/platform-browser/animations';
-import { StreamComponent } from './stream/stream.component';
-import { StreamChunkComponent } from './stream-chunk/stream-chunk.component';
 import { CordovaService } from './cordova.service';
+import { DigestsListComponent } from './digests-list/digests-list.component';
+import { DigestComponent } from './digest/digest.component';
 
 
 @NgModule({
@@ -32,8 +32,8 @@ import { CordovaService } from './cordova.service';
     SectionComponent,
     CategoryComponent,
     AppComponents,
-    StreamComponent,
-    StreamChunkComponent
+    DigestsListComponent,
+    DigestComponent
   ],
   imports: [
     BrowserAnimationsModule,
