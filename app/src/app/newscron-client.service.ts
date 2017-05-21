@@ -73,7 +73,7 @@ export class NewscronClientService {
 
     }
 
-    return this.http.post(this.baseURL + "/digest?from=" + timestamp, cat, options)
+    return this.http.post(this.baseURL + "/digest?after=" + timestamp, cat, options)
       .map(this.extractData).map(chunk => {
         if (chunk != null) {
           this.digests.unshift(chunk);
