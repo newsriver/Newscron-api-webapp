@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, Pipe, PipeTransform } from '@angular/core';
-import {NewscronClientService, BootstrapConfiguration, Category} from '../newscron-client.service';
+import {NewscronClientService, BootstrapConfiguration, Category, UserPreferences} from '../newscron-client.service';
 
 
 @Pipe({
@@ -53,7 +53,7 @@ export class EditionPerContinent implements PipeTransform {
 export class WelcomeComponent implements OnInit {
 
   @Output() setWelcomeStep = new EventEmitter();
-
+  public loading: boolean = false;
   public continent: string;
   public step: number = 0;
   public packagesIds: number[] = [];
@@ -72,20 +72,7 @@ export class WelcomeComponent implements OnInit {
 
   ngOnInit() {
     this.step = 1;
-    let categories = this.client.getCategories().getValue();
-    if (categories == null) {
-      this.boot(null);
-    } else {
-      this.categories = categories;
-      for (let p of this.packages) {
-        for (let c of categories) {
-          if (c.packages.indexOf(p.id) > -1) {
-            p.selected = true;
-            break;
-          }
-        }
-      }
-    }
+    this.boot(null);
   }
 
   setContinent(name: string) {
@@ -111,7 +98,9 @@ export class WelcomeComponent implements OnInit {
 
   finish() {
     this.step = -1;
-    this.client.setCategories(this.categories);
+    var preferences: UserPreferences = new UserPreferences();
+    preferences.categories = this.categories;
+    this.client.resetUserPreferences(preferences, true);
     this.setWelcomeStep.emit(this.step);
   }
 
@@ -127,6 +116,7 @@ export class WelcomeComponent implements OnInit {
     }
   }
 
+
   private addPackage(p: number) {
     this.packagesIds.push(p);
     this.boot(this.packagesIds);
@@ -141,8 +131,19 @@ export class WelcomeComponent implements OnInit {
   }
 
 
+  public selectCategory(e) {
+    if (e.target.checked) {
+      this.categories[e.target.value].amount = 5;
+    } else {
+      this.categories[e.target.value].amount = 0;
+    }
+  }
+
+
   private boot(packagesIds: number[]) {
+    this.loading = true;
     this.client.boot(packagesIds).subscribe(bootConfig => {
+      this.loading = false;
       if (bootConfig != null) {
         this.categories = bootConfig.categories;
       }

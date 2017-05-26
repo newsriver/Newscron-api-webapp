@@ -10,8 +10,8 @@ export class NewscronClientService {
   private baseURL: string = "http://app.newscron.com/v3";
   //private baseURL: string = "http://localhost:9092/v3";
 
-  private categories: BehaviorSubject<Array<Category>> = new BehaviorSubject<Array<Category>>(null);
-  private bootConfig: Subject<BootstrapConfiguration> = new BehaviorSubject<BootstrapConfiguration>(null);
+  private userPreferences: UserPreferences = null;
+  private refresh: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   private digests: Digest[] = [];
 
   //public categories: Observable<Array<Category>> = this._categories.asObservable();
@@ -19,18 +19,25 @@ export class NewscronClientService {
 
 
   constructor( @Inject(Http) private http: Http) {
-    let cat: Array<Category> = JSON.parse(localStorage.getItem('categories'));
-    if (cat != null) {
-      this.categories.next(cat);
+    this.userPreferences = JSON.parse(localStorage.getItem('userPreferences'));
+    if (this.userPreferences != null) {
+      this.refresh.next(true);
     }
 
-    this.digests = JSON.parse(localStorage.getItem('stream'));
+    this.digests = JSON.parse(localStorage.getItem('digests'));
     if (this.digests == null) {
       this.digests = [];
     }
   }
 
-  public category(cat: Category): Observable<Section> {
+  public category(categoryId: number): Observable<Section> {
+    var cat: Category = null;
+    for (let category of this.getUserPreferences().categories) {
+      if (category.id == categoryId) {
+        cat = category;
+        break;
+      }
+    }
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
@@ -41,12 +48,12 @@ export class NewscronClientService {
   }
 
 
-  public featured(cat: Array<Category>): Observable<Section[]> {
+  public featured(): Observable<Section[]> {
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post(this.baseURL + "/featured", cat, options)
+    return this.http.post(this.baseURL + "/featured", this.getUserPreferences().categories, options)
       .map(this.extractData);
 
   }
@@ -55,7 +62,7 @@ export class NewscronClientService {
     return this.digests;
   }
 
-  public loadDigest(cat: Array<Category>): Observable<boolean> {
+  public assembleDigest(): Observable<Digest> {
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
@@ -65,7 +72,7 @@ export class NewscronClientService {
       //this is a check to identify corrupted storage
       if (this.digests[0].latestId == undefined) {
         this.digests = [];
-        localStorage.setItem('stream', JSON.stringify(this.digests));
+        localStorage.setItem('digests', JSON.stringify(this.digests));
         timestamp = 0;
       } else {
         timestamp = this.digests[0].timestamp;
@@ -73,17 +80,18 @@ export class NewscronClientService {
 
     }
 
-    return this.http.post(this.baseURL + "/digest?after=" + timestamp, cat, options)
-      .map(this.extractData).map(chunk => {
-        if (chunk != null) {
-          this.digests.unshift(chunk);
-          localStorage.setItem('stream', JSON.stringify(this.digests));
-          return true;
+
+    return this.http.post(this.baseURL + "/digest?after=" + timestamp, this.getUserPreferences().categories, options)
+      .map(this.extractData).map(digest => {
+        if (digest != null) {
+          this.digests.unshift(digest);
+          localStorage.setItem('digests', JSON.stringify(this.digests));
+          return digest;
         } else {
-          return false;
+          return null;
         }
       })
-      .catch(error => { alert('nocontent'); return error; });
+      .catch(error => { return error; });
 
   }
 
@@ -92,30 +100,39 @@ export class NewscronClientService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    this.http.post(this.baseURL + "/boot", packagesIds, options)
-      .map(this.extractData).subscribe(bootConfig => {
-        this.categories.next(bootConfig.categories);
-        this.bootConfig.next(bootConfig);
+    return this.http.post(this.baseURL + "/boot", packagesIds, options)
+      .map(this.extractData).map(bootConfig => {
+        var preferences: UserPreferences = new UserPreferences();
+        preferences.categories = bootConfig.categories;
+        this.resetUserPreferences(preferences, false);
+        return bootConfig;
       });
-
-
-    return this.bootConfig;
   }
 
 
 
 
 
-  public setCategories(categories: Category[]) {
-    this.categories.next(categories);
-    localStorage.setItem('categories', JSON.stringify(categories));
+  public resetUserPreferences(userPreferences: UserPreferences, save: boolean) {
+    this.userPreferences = userPreferences;
+    if (save) {
+      localStorage.setItem('userPreferences', JSON.stringify(userPreferences));
+    }
+    //re-setting the  categoris will also delete all current digests
+    this.digests = [];
+    localStorage.setItem('digests', JSON.stringify(this.digests));
+    this.refresh.next(true);
   }
 
 
 
 
-  public getCategories(): BehaviorSubject<Array<Category>> {
-    return this.categories;
+  public getUserPreferences(): UserPreferences {
+    return this.userPreferences;
+  }
+
+  public refreshListener(): BehaviorSubject<boolean> {
+    return this.refresh;
   }
 
 
@@ -138,6 +155,11 @@ export class BootstrapConfiguration {
   public localPackagesIds: number[];
   public countryId: number;
 }
+
+export class UserPreferences {
+  public categories: Category[] = null;
+}
+
 
 
 export class Category {

@@ -58,7 +58,7 @@ public class Digest {
         chunk.setTimestamp(System.currentTimeMillis());
 
         for (Category category : categories) {
-            chunk.getArticles().addAll(featuredCategory(category, 10, timestamp).getArticles());
+            chunk.getArticles().addAll(featuredCategory(category, category.getAmount(), timestamp).getArticles());
         }
 
         //empty response

@@ -47,7 +47,7 @@ public class Settings {
 
     }*/
 
-    
+
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/v3/boot", method = RequestMethod.POST)
     public BootstrapConfiguration bootsrapConfig(HttpServletRequest httpRequest, @RequestBody(required = false) List<Integer> packagesIds) {
@@ -191,7 +191,7 @@ public class Settings {
                 Category category = new Category();
                 category.setId(rs.getInt("id"));
                 category.setName(rs.getString("name"));
-                category.setAmount(5 * Math.round((rs.getFloat("defaultAmount") * 3.5f) / 5f));  //multiple of 5
+                category.setAmount(3 * Math.round((rs.getFloat("defaultAmount")) / 3f));  //multiple of 5
                 categories.add(category);
             }
         } catch (Exception e) {

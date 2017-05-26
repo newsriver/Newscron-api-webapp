@@ -9,9 +9,8 @@
     <nav class="sidebar-nav" style="padding: 50px; position:relative">
       <ul class="nav nav-pills nav-stacked" style="position:relative">
 
-        <li><a routerLink='/top' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">Top News</a></li>
-
-        <li><a routerLink='' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">Top News2</a></li>
+        <li><a routerLink='/' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">Top News</a></li>
+        <!--<li><a routerLink='' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">Top News2</a></li>!-->
         <li class="nav-header ">Categories</li>
         <li *ngFor="let category of categories | sortCategory ">
           <a [routerLink]="[ 'category', category.id,category.name] " [routerLinkActive]="[ 'active-link'] " (click)="menu.close()">{{category.name}}</a>
@@ -43,8 +42,8 @@
         <div class="col-sm-3 hidden-sm-down sidebar">
           <nav class="sidebar-nav ">
             <ul class="nav nav-pills nav-stacked " [style.position]="welcomeStep==1 ? 'relative': 'fixed' ">
-              <li><a routerLink='/top' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} ">Top News</a></li>
-              <li><a routerLink='/' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">Top News2</a></li>
+              <li><a routerLink='/' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} ">Top News</a></li>
+              <!--<li><a routerLink='/' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">Top News2</a></li>-->
 
               <li class="nav-header ">Categories</li>
               <li *ngFor="let category of categories | sortCategory ">

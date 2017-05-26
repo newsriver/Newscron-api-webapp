@@ -1,7 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 @import 'app/welcome/custom-component-theme.scss';
+
+
+
 
 html, body{
   height: 100%;
@@ -25,4 +28,12 @@ html, body{
 
 button:focus{
   outline: none!important;
+}
+
+.loading-bar{
+  position: fixed!important;
+  top: 45px;
+  z-index: 50;
+  left: 0px;
+  right: 0px;
 }
