@@ -34,7 +34,6 @@ html, body, material-app, md-sidenav-container {
 
 
 
-
 .app-content {
   padding-top: 50px; /* report the same value in featured.component.css .header class and in  featured.component.ts padding variable */
 }

@@ -1,8 +1,4 @@
-<div class="loading" *ngIf="loading">
-  <h2>&nbsp;</h2>
-  <hr class="aky">
-  <div class="img"></div>
-</div>
+<md-progress-bar mode="indeterminate" class="loading-bar" *ngIf="loading"></md-progress-bar>
 <div class="wrap">
   <div class="header" *ngIf="currentSectionName!=null" [style.width.px]="headerWidth">
     <h2>{{currentSectionName}}</h2>

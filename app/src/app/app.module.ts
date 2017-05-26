@@ -17,7 +17,6 @@ import { CordovaService } from './cordova.service';
 import { DigestsListComponent } from './digests-list/digests-list.component';
 import { DigestComponent } from './digest/digest.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,

@@ -73,9 +73,7 @@
   border-style: solid;
 }
 
-.modal-actions button:hover{
-  color: #1CA8D9;
-}
+
 
 .custom-control-indicator{
   margin-top: 6px;
@@ -95,13 +93,7 @@
   text-align: left;
 }
 
-.statcard:hover{
-  background-color: white;
-  color: #1BC98E;
-}
-.statcard:hover .statcard-desc{
-  color: #1BC98E;
-}
+
 
 .custom-control-indicator{
   background-color: white;
@@ -121,9 +113,7 @@
 }
 
 
-.statcard:hover .delta-indicator{
-  color: #1BC98E;
-}
+
 
 .fixed-bar{
     bottom: 0px;
@@ -141,6 +131,22 @@
 .fixed-bar div{
   max-width: 1200px;
   margin: auto;
+}
+
+@media (hover:hover) {
+  .statcard:hover{
+    background-color: white;
+    color: #1BC98E;
+  }
+  .statcard:hover .statcard-desc{
+    color: #1BC98E;
+  }
+  .statcard:hover .delta-indicator{
+    color: #1BC98E;
+  }
+  .modal-actions button:hover{
+    color: #1CA8D9;
+  }
 }
 
 

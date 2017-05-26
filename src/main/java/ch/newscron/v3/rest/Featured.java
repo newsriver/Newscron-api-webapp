@@ -53,7 +53,7 @@ public class Featured {
 
         for (Category category : categories) {
 
-            Section section = featuredCategory(category, 10);
+            Section section = featuredCategory(category, category.getAmount());
             section.setCategory(category);
             sections.add(section);
         }
