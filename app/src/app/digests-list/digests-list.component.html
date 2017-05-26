@@ -1,5 +1,9 @@
+<md-progress-bar mode="indeterminate" class="loading-bar" *ngIf="loading"></md-progress-bar>
 <ul>
   <li *ngFor="let digest of digests; let j = index">
     <digest [digest]="digest"></digest>
+  </li>
+  <li style="text-align: center;" *ngIf="this.counter < this.digestsData.length">
+    <button md-raised-button (click)="loadDigest()">Load Previous Digest</button>
   </li>
 </ul>

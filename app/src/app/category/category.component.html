@@ -1,12 +1,12 @@
 <div class="loading" *ngIf="loading">
-    <h2>
+  <h2>
     {{name}}
   </h2>
-    <hr class="aky">
-    <div class="img"></div>
+  <hr/>
+  <md-progress-bar mode="indeterminate" class="loading-bar"></md-progress-bar>
 </div>
 <ul>
-    <li>
-        <section [section]="section" *ngIf="section!=null"></section>
-    </li>
+  <li>
+    <section [section]="section" *ngIf="section!=null"></section>
+  </li>
 </ul>

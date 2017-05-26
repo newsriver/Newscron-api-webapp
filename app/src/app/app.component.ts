@@ -52,11 +52,18 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.client.getCategories().subscribe(categories => {
-      if (categories == null) {
-        this.welcomeStep = 1;
-      } else {
-        this.categories = categories
+    if (this.client.getUserPreferences() == null) {
+      this.welcomeStep = 1;
+    }
+
+
+    this.client.refreshListener().subscribe(refresh => {
+      if (refresh) {
+        if (this.client.getUserPreferences() == null) {
+          this.welcomeStep = 1;
+        } else {
+          this.categories = this.client.getUserPreferences().categories;
+        }
       }
     });
   }

@@ -23,12 +23,12 @@ export class FeaturedComponent implements OnInit {
 
   ngOnInit() {
     this.headerWidth = this.el.nativeElement.getBoundingClientRect().width + 1;
-    this.client.getCategories().subscribe(categories => {
-      if (categories != null) {
+    this.client.refreshListener().subscribe(refresh => {
+      if (refresh) {
         this.sections = [];
         this.positions = [];
         this.loading = true;
-        this.client.featured(categories).subscribe(sections => {
+        this.client.featured().subscribe(sections => {
           this.sections = sections;
           this.loading = false;
         });
