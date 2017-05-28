@@ -3,10 +3,10 @@ package ch.newscron.v3.data;
 /**
  * Created by eliapalme on 28.05.17.
  */
-public class Category {
+public class Publisher {
 
     private String name;
-    private int id;
+    private Long id;
 
     public String getName() {
         return name;
@@ -16,11 +16,11 @@ public class Category {
         this.name = name;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }

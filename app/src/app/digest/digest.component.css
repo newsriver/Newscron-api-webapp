@@ -5,6 +5,17 @@ li{
 ul{
   padding: 0px;
 }
+h2{
+  margin-top: 2rem;
+  margin-bottom: 0rem;
+  font-size: 5rem;
+  padding-left: 1.5rem;
+}
+@media screen and (max-width: 540px) {
+  h2{
+    font-size: 2.5rem;
+  }
+}
 
 
 .chunk-header:before {
@@ -40,4 +51,22 @@ ul{
     padding-right: 1em;
     vertical-align: middle;
     background-color: #252830;
+  }
+
+  :host {
+    display: block;
+  }
+
+  .header{
+    position: fixed;
+    top: 50px;
+    width: inherit;
+    z-index: 2;
+    background: #252830;
+  }
+
+
+  .wrap{
+      position: relative;
+      width: 100%;
   }

@@ -10,14 +10,14 @@ public class BootstrapConfiguration {
 
     private List<Integer> packagesIds;
     private List<Integer> localPackagesIds;
-    private List<Category> categories;
+    private List<CategoryPreference> categories;
 
 
-    public List<Category> getCategories() {
+    public List<CategoryPreference> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<Category> categories) {
+    public void setCategories(List<CategoryPreference> categories) {
         this.categories = categories;
     }
 

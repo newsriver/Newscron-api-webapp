@@ -4,6 +4,8 @@ import ch.newscron.data.article.v2.ArticleFactory;
 import ch.newscron.extractor.StructuredArticle;
 import ch.newscron.v3.data.Article;
 import ch.newscron.v3.data.Category;
+import ch.newscron.v3.data.CategoryPreference;
+import ch.newscron.v3.data.Publisher;
 import ch.newscron.v3.data.Section;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.log4j.Level;
@@ -42,20 +44,24 @@ public class CategoryArticles {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/v3/category", method = RequestMethod.POST)
-    public Section featured(@RequestBody Category category) {
+    public Section featured(@RequestBody CategoryPreference category) {
 
         return categoryArticles(category, 50);
 
     }
 
 
-    private Section categoryArticles(Category category, int limit) {
+    private Section categoryArticles(CategoryPreference categoryPreference, int limit) {
 
         Section categoryArticles = new Section();
+        Category category = new Category();
+        category.setId(categoryPreference.getId());
+        category.setName(categoryPreference.getName());
         categoryArticles.setCategory(category);
 
+
         ArticleFactory articleFactory = ArticleFactory.getInstance();
-        Set<Long> articlesId = categoryArticlesIds(category.getId(), category.getPackages(), limit);
+        Set<Long> articlesId = categoryArticlesIds(categoryPreference.getId(), categoryPreference.getPackages(), limit);
 
         ArrayList<StructuredArticle> articles = articleFactory.getArticles(articlesId);
 
@@ -67,7 +73,13 @@ public class CategoryArticles {
             article.setImgUrl(strArticle.getImageSrc());
             article.setPublicationDate(strArticle.getPublicationDateGMT());
             article.setUrl(strArticle.getUrl());
-            article.setPublisher(strArticle.getPublisher());
+
+            article.setCategory(category);
+
+            Publisher publisher = new Publisher();
+            publisher.setId(strArticle.getPublisherId());
+            publisher.setName(strArticle.getPublisher());
+            article.setPublisher(publisher);
 
             categoryArticles.getArticles().add(article);
         }

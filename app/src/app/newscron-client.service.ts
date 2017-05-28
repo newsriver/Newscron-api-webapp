@@ -19,7 +19,12 @@ export class NewscronClientService {
 
 
   constructor( @Inject(Http) private http: Http) {
-    this.userPreferences = JSON.parse(localStorage.getItem('userPreferences'));
+    let prefJson = JSON.parse(localStorage.getItem('userPreferences'));
+    if (prefJson != null) {
+      let preferences: UserPreferences = Object.assign(new UserPreferences(), prefJson);
+      this.userPreferences = preferences;
+    }
+
     if (this.userPreferences != null) {
       this.refresh.next(true);
     }
@@ -31,7 +36,7 @@ export class NewscronClientService {
   }
 
   public category(categoryId: number): Observable<Section> {
-    var cat: Category = null;
+    var cat: CategoryPreference = null;
     for (let category of this.getUserPreferences().categories) {
       if (category.id == categoryId) {
         cat = category;
@@ -70,7 +75,7 @@ export class NewscronClientService {
 
     if (this.digests.length > 0) {
       //this is a check to identify corrupted storage
-      if (this.digests[0].latestId == undefined) {
+      if (this.digests[0].timestamp == undefined) {
         this.digests = [];
         localStorage.setItem('digests', JSON.stringify(this.digests));
         timestamp = 0;
@@ -116,7 +121,7 @@ export class NewscronClientService {
   public resetUserPreferences(userPreferences: UserPreferences, save: boolean) {
     this.userPreferences = userPreferences;
     if (save) {
-      localStorage.setItem('userPreferences', JSON.stringify(userPreferences));
+      localStorage.setItem('userPreferences', JSON.stringify(this.userPreferences));
     }
     //re-setting the  categoris will also delete all current digests
     this.digests = [];
@@ -124,8 +129,15 @@ export class NewscronClientService {
     this.refresh.next(true);
   }
 
-
-
+  public publishersOptOut(publisher: Publisher, categoryOptOut: Category) {
+    for (let category of this.getUserPreferences().categories) {
+      if (category.id == categoryOptOut.id) {
+        category.publishersOptOut.push(publisher);
+        localStorage.setItem('userPreferences', JSON.stringify(this.userPreferences));
+        break;
+      }
+    }
+  }
 
   public getUserPreferences(): UserPreferences {
     return this.userPreferences;
@@ -150,23 +162,40 @@ export class NewscronClientService {
 }
 
 export class BootstrapConfiguration {
-  public categories: Category[];
+  public categories: CategoryPreference[];
   public packagesIds: number[] = [];
   public localPackagesIds: number[];
   public countryId: number;
 }
 
 export class UserPreferences {
-  public categories: Category[] = null;
+  public categories: CategoryPreference[] = null;
+
+
+  public getCategory(id: number): CategoryPreference {
+    for (let category of this.categories) {
+      if (category.id == id) {
+        return category;
+      }
+    }
+    return null;
+  }
 }
 
+export class Publisher {
 
-
+  public name: string;
+  public id: number;
+}
 export class Category {
   public name: string = null;
   public id: number;
+}
+
+export class CategoryPreference extends Category {
   public amount: number;
   public packages: number[];
+  public publishersOptOut: Publisher[] = [];
 }
 
 export class Section {
@@ -176,8 +205,7 @@ export class Section {
 
 export class Digest {
   public timestamp: number = null;
-  public latestId: number = null;
-  public articles: Article[];
+  public sections: Section[];
 }
 
 
@@ -188,7 +216,7 @@ export class Article {
   public snippet: string = null;
   public imgUrl: string = null;
   public publicationDate: number = null;
-  public publisher: string = null;
+  public publisher: Publisher = null;
   public category: string = null;
   public score: number = null;
 }

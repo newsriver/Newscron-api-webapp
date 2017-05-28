@@ -2,7 +2,7 @@ package ch.newscron.v3.rest;
 
 
 import ch.newscron.v3.data.BootstrapConfiguration;
-import ch.newscron.v3.data.Category;
+import ch.newscron.v3.data.CategoryPreference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.dbutils.DbUtils;
@@ -79,8 +79,8 @@ public class Settings {
         categoryPackages.addAll(configuration.getPackagesIds());
         categoryPackages.addAll(configuration.getLocalPackagesIds());
 
-        List<Category> categories = getCategories(categoryPackages);
-        for (Category category : categories) {
+        List<CategoryPreference> categories = getCategories(categoryPackages);
+        for (CategoryPreference category : categories) {
             category.setPackages(categoryPackages);
         }
         configuration.setCategories(categories);
@@ -165,9 +165,9 @@ public class Settings {
         return 33;
     }
 
-    protected List<Category> getCategories(List<Integer> packages) {
+    protected List<CategoryPreference> getCategories(List<Integer> packages) {
 
-        List<Category> categories = new LinkedList<>();
+        List<CategoryPreference> categories = new LinkedList<>();
 
         String packagesIds = "";
         for (Integer packageId : packages) {
@@ -188,7 +188,7 @@ public class Settings {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Category category = new Category();
+                CategoryPreference category = new CategoryPreference();
                 category.setId(rs.getInt("id"));
                 category.setName(rs.getString("name"));
                 category.setAmount(3 * Math.round((rs.getFloat("defaultAmount")) / 3f));  //multiple of 5

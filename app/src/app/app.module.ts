@@ -6,7 +6,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent, ValidSectionFilter, SortCategory } from './app.component';
 import { AppComponents, AppRoutes } from "./app.routing";
-import { ArticleComponent } from './article/article.component';
+import { ArticleComponent, PublisherDialog, CategoryDialog } from './article/article.component';
 import { CategoryComponent } from './category/category.component';
 import { WelcomeComponent, KeysPipe, CategoryAmmountPipe, EditionPerContinent } from './welcome/welcome.component';
 import {NewscronClientService} from './newscron-client.service';
@@ -21,6 +21,8 @@ import { DigestComponent } from './digest/digest.component';
   declarations: [
     AppComponent,
     ArticleComponent,
+    PublisherDialog,
+    CategoryDialog,
     KeysPipe,
     SortCategory,
     SortArticle,
@@ -42,6 +44,10 @@ import { DigestComponent } from './digest/digest.component';
     HttpModule,
     RouterModule,
     RouterModule.forRoot(AppRoutes)
+  ],
+  entryComponents: [
+    PublisherDialog,
+    CategoryDialog
   ],
   providers: [CordovaService, NewscronClientService],
   bootstrap: [AppComponent]
