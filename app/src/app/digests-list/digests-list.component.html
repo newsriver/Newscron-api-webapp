@@ -1,5 +1,5 @@
 <md-progress-bar mode="indeterminate" class="loading-bar" *ngIf="loading"></md-progress-bar>
-<ul>
+<ul *ngIf="!loading">
   <li *ngFor="let digest of digests; let j = index">
     <digest [digest]="digest"></digest>
   </li>

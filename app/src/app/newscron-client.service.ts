@@ -7,8 +7,8 @@ import { Observable, BehaviorSubject, Subject } from 'rxjs/Rx';
 export class NewscronClientService {
 
 
-  private baseURL: string = "http://app.newscron.com/v3";
-  //private baseURL: string = "http://localhost:9092/v3";
+  //private baseURL: string = "http://app.newscron.com/v3";
+  private baseURL: string = "http://localhost:9092/v3";
 
   private userPreferences: UserPreferences = null;
   private refresh: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
@@ -70,7 +70,7 @@ export class NewscronClientService {
 
     if (this.digests.length > 0) {
       //this is a check to identify corrupted storage
-      if (this.digests[0].latestId == undefined) {
+      if (this.digests[0].timestamp == undefined) {
         this.digests = [];
         localStorage.setItem('digests', JSON.stringify(this.digests));
         timestamp = 0;
@@ -175,8 +175,7 @@ export class Section {
 
 export class Digest {
   public timestamp: number = null;
-  public latestId: number = null;
-  public articles: Article[];
+  public sections: Section[];
 }
 
 
