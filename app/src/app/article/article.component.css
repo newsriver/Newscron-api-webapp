@@ -53,6 +53,15 @@ a{
   text-decoration: none;
 }
 
+.mat-menu-item span{
+  font-weight: 400;
+}
+.mat-menu-item .fa{
+  width: 19px;
+  text-align: center;
+  margin-right: 5px;
+}
+
 
 
 @media screen and (max-width: 576px) {

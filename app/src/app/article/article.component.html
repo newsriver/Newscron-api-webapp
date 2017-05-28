@@ -17,26 +17,28 @@
 -->
 
 
-  <div class="card-block" *ngIf="cordovaService.onCordova" (click)="openLinkInBrowser()">
-    <!--<div style="display: flex;flex-direction: row;     margin-bottom: 1.5rem;">
+  <div class="card-block" *ngIf="cordovaService.onCordova">
+    <div style="display: flex;flex-direction: row;  margin-bottom: 1.5rem;" *ngIf="isDigest">
       <div style="flex: 3;">
         <img src="http://www.tio.ch/favicon.ico" style="max-height: 28px; margin-right:5px; float:left;" />
         <h6 style="color:black; margin:0px;">{{article.publisher}}</h6>
-        <h6 style="color:#666; margin:0px; margin-top:2px;">Entertainmet · {{article.publicationDate | date: 'dd/MM/yyyy HH:mm'}}</h6>
+        <h6 style="color:#666; margin:0px; margin-top:2px;">{{article.category}} · {{article.score}}</h6>
       </div>
 
       <div style="flex: 1;text-align: right;">
-        <i class="fa fa-sliders" aria-hidden="true" style="color:#666;"></i>
+        <button md-icon-button [mdMenuTriggerFor]="menu" style="font-size:20px; margin-top:-15px;"><i class="fa fa-sliders" aria-hidden="true" style="color:#666;"></i></button>
+        <md-menu #menu="mdMenu">
+          <button md-menu-item (click)="categoryDialog(article.category)"><span><i class="fa fa-cog" aria-hidden="true"></i> Manage Category</span></button>
+          <button md-menu-item (click)="publisherDialog(article.publisher,article.category)"><span><i class="fa fa-newspaper-o" aria-hidden="true"></i> Remove Publisher</span></button>
+        </md-menu>
       </div>
-    </div>-->
-    <div class="img" [ngStyle]="{'background-image': 'url(' + article.imgUrl + ')'}" border="0" *ngIf="article.imgUrl!=null"></div>
-
-
-    <h4>{{article.title}}</h4>
-    <span>{{article.publicationDate | date: 'dd/MM/yyyy HH:mm'}} | {{article.publisher}}</span>
-    <p>{{article.snippet}}</p>
-
-
+    </div>
+    <div (click)="openLinkInBrowser()">
+      <div class="img" [ngStyle]="{'background-image': 'url(' + article.imgUrl + ')'}" border="0" *ngIf="article.imgUrl!=null"></div>
+      <h4>{{article.title}}</h4>
+      <span *ngIf="!isDigest">{{article.publicationDate | date: 'dd/MM/yyyy HH:mm'}} | {{article.publisher}}</span>
+      <p>{{article.snippet}}</p>
+    </div>
   </div>
 
 
@@ -49,7 +51,11 @@
       </div>
 
       <div style="flex: 1;text-align: right;">
-        <i class="fa fa-sliders" aria-hidden="true" style="color:#666;"></i>
+        <button md-icon-button [mdMenuTriggerFor]="menu" style="font-size:20px; margin-top:-15px;"><i class="fa fa-sliders" aria-hidden="true" style="color:#666;"></i></button>
+        <md-menu #menu="mdMenu">
+          <button md-menu-item (click)="categoryDialog(article.category)"><span><i class="fa fa-cog" aria-hidden="true"></i> Manage Category</span></button>
+          <button md-menu-item (click)="publisherDialog(article.publisher,article.category)"><span><i class="fa fa-newspaper-o" aria-hidden="true"></i> Remove Publisher</span></button>
+        </md-menu>
       </div>
     </div>
     <a [href]="article.url" target="_blank" *ngIf="article.imgUrl!=null">

@@ -1,0 +1,9 @@
+<h1 md-dialog-title>Remove Publisher</h1>
+<div md-dialog-content>
+  Remove any article from {{data.publisher}} for category {{data.category}}?
+  <md-checkbox class="mat-primary" [(ngModel)]="removeall" style="display: block;">Remove for all categories.</md-checkbox>
+</div>
+<div md-dialog-actions align='end'>
+  <div><button md-button class="mat-primary" (click)="save()">Remove</button></div>
+  <div><button md-button class="mat-primary" (click)="dialogRef.close('cancel')">Cancel</button></div>
+</div>
