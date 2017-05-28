@@ -10,9 +10,9 @@ public class Article {
     private String snippet;
     private String imgUrl;
     private long publicationDate;
-    private String publisher;
+    private Publisher publisher;
     private Long score;
-    private String category;
+    private Category category;
 
     public String getTitle() {
         return title;
@@ -46,14 +46,6 @@ public class Article {
         this.imgUrl = imgUrl;
     }
 
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
     public long getPublicationDate() {
         return publicationDate;
     }
@@ -78,11 +70,19 @@ public class Article {
         this.score = score;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
     }
 }

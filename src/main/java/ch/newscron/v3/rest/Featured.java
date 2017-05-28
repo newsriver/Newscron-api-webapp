@@ -5,6 +5,8 @@ import ch.newscron.data.article.v2.ArticleFactory;
 import ch.newscron.extractor.StructuredArticle;
 import ch.newscron.v3.data.Article;
 import ch.newscron.v3.data.Category;
+import ch.newscron.v3.data.CategoryPreference;
+import ch.newscron.v3.data.Publisher;
 import ch.newscron.v3.data.Section;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -46,15 +48,14 @@ public class Featured {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/v3/featured", method = RequestMethod.POST)
-    public List<Section> featured(@RequestBody List<Category> categories) {
+    public List<Section> featured(@RequestBody List<CategoryPreference> categoryPreferences) {
 
         List<Section> sections = new LinkedList<>();
 
 
-        for (Category category : categories) {
+        for (CategoryPreference categoryPreference : categoryPreferences) {
 
-            Section section = featuredCategory(category, category.getAmount());
-            section.setCategory(category);
+            Section section = featuredCategory(categoryPreference);
             sections.add(section);
         }
 
@@ -63,15 +64,22 @@ public class Featured {
     }
 
 
-    private Section featuredCategory(Category category, int limit) {
+    private Section featuredCategory(CategoryPreference categoryPreference) {
 
         Section categoryArticles = new Section();
+
+        Category category = new Category();
+        category.setName(categoryPreference.getName());
+        category.setId(categoryPreference.getId());
+        categoryArticles.setCategory(category);
+
         ArticleFactory articleFactory = ArticleFactory.getInstance();
-        Set<Long> articlesId = featuredArticlesIdsPerCategory(category.getId(), category.getPackages(), limit);
+        Set<Long> articlesId = featuredArticlesIdsPerCategory(categoryPreference);
 
         ArrayList<StructuredArticle> articles = articleFactory.getArticles(articlesId);
 
         for (StructuredArticle strArticle : articles) {
+
 
             Article article = new Article();
             article.setTitle(strArticle.getTitle());
@@ -79,7 +87,13 @@ public class Featured {
             article.setImgUrl(strArticle.getImageSrc());
             article.setPublicationDate(strArticle.getPublicationDateGMT());
             article.setUrl(strArticle.getUrl());
-            article.setPublisher(strArticle.getPublisher());
+
+
+            Publisher publisher = new Publisher();
+            publisher.setId(strArticle.getPublisherId());
+            publisher.setName(strArticle.getPublisher());
+            article.setPublisher(publisher);
+            article.setCategory(category);
 
             categoryArticles.getArticles().add(article);
         }
@@ -87,7 +101,7 @@ public class Featured {
     }
 
 
-    private Set<Long> featuredArticlesIdsPerCategory(int categoryId, List<Integer> packages, int limit) {
+    private Set<Long> featuredArticlesIdsPerCategory(CategoryPreference categoryPreference) {
 
         HashSet<Long> articleIds = new HashSet<>();
         Connection conn = null;
@@ -95,11 +109,11 @@ public class Featured {
         ResultSet rs = null;
 
         String packagesIds = "";
-        for (Integer packageId : packages) {
+        for (Integer packageId : categoryPreference.getPackages()) {
             packagesIds += packageId + ",";
         }
         packagesIds += "-1";
-
+        int limit = categoryPreference.getAmount();
         try {
 
 
@@ -124,7 +138,7 @@ public class Featured {
 
 
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, categoryId);
+            stmt.setInt(1, categoryPreference.getId());
             stmt.setString(2, packagesIds);
             stmt.setInt(3, limit * 20);
 

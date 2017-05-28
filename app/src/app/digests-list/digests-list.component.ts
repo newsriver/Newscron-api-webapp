@@ -25,7 +25,8 @@ export class DigestsListComponent implements OnInit {
     this.client.refreshListener().subscribe(refresh => {
       if (refresh) {
         this.digestsData = this.client.digestsList();
-        this.loadDigest();
+        this.digests = [];
+        this.loadDigest(2);
 
         this.client.assembleDigest().subscribe(digest => {
           this.loading = false;
@@ -41,10 +42,12 @@ export class DigestsListComponent implements OnInit {
     });
   }
 
-  loadDigest() {
-    if (this.counter < this.digestsData.length) {
-      this.digests.push(this.digestsData[this.counter]);
-      this.counter++;
+  loadDigest(count: number) {
+    for (let i = 0; i < count; i++) {
+      if (this.counter < this.digestsData.length) {
+        this.digests.push(this.digestsData[this.counter]);
+        this.counter++;
+      }
     }
   }
 

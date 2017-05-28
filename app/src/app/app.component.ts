@@ -1,7 +1,7 @@
 import { NgModule, OnInit, Component } from '@angular/core';
 import {FeaturedComponent} from './featured/featured.component';
 import {WelcomeComponent} from './welcome/welcome.component';
-import {NewscronClientService, BootstrapConfiguration, Section, Category, Article} from './newscron-client.service';
+import {NewscronClientService, BootstrapConfiguration, Section, CategoryPreference, Article} from './newscron-client.service';
 import {Injectable, Pipe, PipeTransform} from '@angular/core';
 
 
@@ -9,11 +9,15 @@ import {Injectable, Pipe, PipeTransform} from '@angular/core';
   name: 'validSection'
 })
 export class ValidSectionFilter implements PipeTransform {
+
+  constructor(public client: NewscronClientService) {
+
+  }
+
   transform(items: Array<Section>, args: any[]): Array<Section> {
     items = items.filter(item => item.articles.length > 0);
-    items = items.filter(item => item.category.amount > 0);
     items.sort((a: Section, b: Section) => {
-      return b.category.amount - a.category.amount;
+      return this.client.getUserPreferences().getCategory(b.category.id).amount - this.client.getUserPreferences().getCategory(a.category.id).amount;
     });
     return items;
   }
@@ -25,9 +29,9 @@ export class ValidSectionFilter implements PipeTransform {
   pure: false
 })
 export class SortCategory {
-  transform(array: Array<Category>, args: string): Array<Category> {
+  transform(array: Array<CategoryPreference>, args: string): Array<CategoryPreference> {
     array = array.filter(item => item.amount > 0)
-    array.sort((a: Category, b: Category) => {
+    array.sort((a: CategoryPreference, b: CategoryPreference) => {
       return b.amount - a.amount;
     });
     return array;
@@ -44,7 +48,7 @@ export class SortCategory {
 export class AppComponent implements OnInit {
 
   public bootConfig: BootstrapConfiguration;
-  public categories: Category[] = [];
+  public categories: CategoryPreference[] = [];
   public welcomeStep: number = 0;
 
   constructor(private client: NewscronClientService) {

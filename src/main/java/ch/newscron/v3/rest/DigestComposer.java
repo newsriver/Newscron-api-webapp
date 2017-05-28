@@ -5,7 +5,9 @@ import ch.newscron.data.article.v2.ArticleFactory;
 import ch.newscron.extractor.StructuredArticle;
 import ch.newscron.v3.data.Article;
 import ch.newscron.v3.data.Category;
+import ch.newscron.v3.data.CategoryPreference;
 import ch.newscron.v3.data.Digest;
+import ch.newscron.v3.data.Publisher;
 import ch.newscron.v3.data.Section;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -53,14 +55,14 @@ public class DigestComposer {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/v3/digest", method = RequestMethod.POST)
-    public ResponseEntity<ch.newscron.v3.data.Digest> featured(@RequestBody List<Category> categories, @RequestParam(value = "after", required = false, defaultValue = "0") long timestamp) {
+    public ResponseEntity<ch.newscron.v3.data.Digest> featured(@RequestBody List<CategoryPreference> categories, @RequestParam(value = "after", required = false, defaultValue = "0") long timestamp) {
 
         Digest digest = new Digest();
         digest.setTimestamp(System.currentTimeMillis());
         List<Section> sections = new LinkedList<>();
         int articles = 0;
-        for (Category category : categories) {
-            Section section = featuredCategory(category, category.getAmount(), timestamp);
+        for (CategoryPreference category : categories) {
+            Section section = featuredCategory(category, timestamp);
             Collections.sort(section.getArticles(), new Comparator<Article>() {
                 @Override
                 public int compare(Article o1, Article o2) {
@@ -83,12 +85,18 @@ public class DigestComposer {
     }
 
 
-    private Section featuredCategory(Category category, int limit, long timestamp) {
+    private Section featuredCategory(CategoryPreference categoryPreference, long timestamp) {
 
         Section categoryArticles = new Section();
+
+        Category category = new Category();
+        category.setId(categoryPreference.getId());
+        category.setName(categoryPreference.getName());
+
         categoryArticles.setCategory(category);
+
         ArticleFactory articleFactory = ArticleFactory.getInstance();
-        HashMap<Long, Long> articlesId = featuredArticlesIdsPerCategory(category.getId(), category.getPackages(), limit, timestamp);
+        HashMap<Long, Long> articlesId = featuredArticlesIdsPerCategory(categoryPreference, timestamp);
 
         ArrayList<StructuredArticle> articles = articleFactory.getArticles(articlesId.keySet());
 
@@ -100,17 +108,23 @@ public class DigestComposer {
             article.setImgUrl(strArticle.getImageSrc());
             article.setPublicationDate(strArticle.getPublicationDateGMT());
             article.setUrl(strArticle.getUrl());
-            article.setPublisher(strArticle.getPublisher());
             article.setId(strArticle.getArticleID());
             article.setScore(articlesId.get(article.getId()));
-            article.setCategory(category.getName());
+            article.setCategory(category);
+
+            Publisher publisher = new Publisher();
+            publisher.setId(strArticle.getPublisherId());
+            publisher.setName(strArticle.getPublisher());
+            article.setPublisher(publisher);
+
             categoryArticles.getArticles().add(article);
+
         }
         return categoryArticles;
     }
 
 
-    private HashMap<Long, Long> featuredArticlesIdsPerCategory(int categoryId, List<Integer> packages, int limit, long timestamp) {
+    private HashMap<Long, Long> featuredArticlesIdsPerCategory(CategoryPreference category, long timestamp) {
 
         HashMap<Long, Long> articleIds = new HashMap<>();
         Connection conn = null;
@@ -118,11 +132,20 @@ public class DigestComposer {
         ResultSet rs = null;
 
         String packagesIds = "";
-        for (Integer packageId : packages) {
+        for (Integer packageId : category.getPackages()) {
             packagesIds += packageId + ",";
         }
         packagesIds += "-1";
 
+        String publishersOptOut = "";
+        if (category.getPublishersOptOut() != null) {
+            for (Publisher publisher : category.getPublishersOptOut()) {
+                publishersOptOut += publisher.getId() + ",";
+            }
+        }
+        publishersOptOut += "-1";
+
+        int limit = category.getAmount();
         try {
 
 
@@ -132,10 +155,10 @@ public class DigestComposer {
             String sql = "SELECT A.id,A.topicId,F.rank as rank FROM NewscronContent.articleFeature AS F " +
                     "JOIN NewscronContent.article AS A ON A.id=F.id " +
                     /*"JOIN NewscronContent.topic as T ON T.id=A.topicId " + not needed */
-                    "WHERE F.categoryID=? AND F.packageID in (?)  " +
+                    "WHERE F.categoryID=? AND F.packageID in (?)  AND F.publisherId NOT in (?)" +
                     "AND F.cloneOf is NULL " +
                     "AND F.publicationDate > ? " +
-                    "AND F.publicationDate > DATE_SUB(now(), Interval 24 Hour) " +
+                    "AND F.publicationDate > DATE_SUB(now(), Interval 36 Hour) " +
                     "ORDER BY F.rank DESC LIMIT ?;";
 
 
@@ -151,10 +174,11 @@ public class DigestComposer {
 
 
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, categoryId);
+            stmt.setInt(1, category.getId());
             stmt.setString(2, packagesIds);
-            stmt.setTimestamp(3, new Timestamp(timestamp));
-            stmt.setInt(4, limit * 20);
+            stmt.setString(3, publishersOptOut);
+            stmt.setTimestamp(4, new Timestamp(timestamp));
+            stmt.setInt(5, limit * 20);
 
             rs = stmt.executeQuery();
 

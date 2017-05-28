@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
-import {Section, Category, Article} from '../newscron-client.service';
+import {Section, Category, Article, Publisher} from '../newscron-client.service';
 import { CordovaService } from '../cordova.service';
 import { Router, ActivatedRoute} from '@angular/router';
 import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
+import {NewscronClientService} from '../newscron-client.service';
 
 @Component({
   selector: 'articles',
@@ -31,7 +32,7 @@ export class ArticleComponent implements OnInit {
     this.cordovaService.openLinkInBrowser(this.article.url);
   }
 
-  publisherDialog(publisher: string, category: string) {
+  publisherDialog(publisher: Publisher, category: Category) {
     let dialogRef = this.dialog.open(PublisherDialog, {
       data: { "publisher": publisher, "category": category }
     }
@@ -41,7 +42,7 @@ export class ArticleComponent implements OnInit {
     });
   }
 
-  categoryDialog(category: string) {
+  categoryDialog(category: Category) {
     let dialogRef = this.dialog.open(CategoryDialog, {
       data: { "category": category }
     }
@@ -62,11 +63,12 @@ export class ArticleComponent implements OnInit {
 export class PublisherDialog {
 
   public removeall: boolean = false;
-  constructor(public dialogRef: MdDialogRef<PublisherDialog>, @Inject(MD_DIALOG_DATA) public data: any) {
+  constructor(public dialogRef: MdDialogRef<PublisherDialog>, @Inject(MD_DIALOG_DATA) public data: any, private client: NewscronClientService) {
 
   }
 
   save() {
+    this.client.publishersOptOut(this.data.publisher, this.data.category);
     this.dialogRef.close('close');
   }
 }
