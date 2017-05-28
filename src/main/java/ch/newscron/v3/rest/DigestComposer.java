@@ -5,8 +5,8 @@ import ch.newscron.data.article.v2.ArticleFactory;
 import ch.newscron.extractor.StructuredArticle;
 import ch.newscron.v3.data.Article;
 import ch.newscron.v3.data.Category;
+import ch.newscron.v3.data.Digest;
 import ch.newscron.v3.data.Section;
-import ch.newscron.v3.data.StreamChunk;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Level;
@@ -32,6 +32,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -40,9 +41,9 @@ import java.util.List;
 
 
 @RestController
-public class Digest {
+public class DigestComposer {
 
-    private static final Logger log = Logger.getLogger(Digest.class);
+    private static final Logger log = Logger.getLogger(DigestComposer.class);
 
 
     @Autowired
@@ -52,30 +53,32 @@ public class Digest {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/v3/digest", method = RequestMethod.POST)
-    public ResponseEntity<StreamChunk> featured(@RequestBody List<Category> categories, @RequestParam(value = "after", required = false, defaultValue = "0") long timestamp) {
+    public ResponseEntity<ch.newscron.v3.data.Digest> featured(@RequestBody List<Category> categories, @RequestParam(value = "after", required = false, defaultValue = "0") long timestamp) {
 
-        StreamChunk chunk = new StreamChunk();
-        chunk.setTimestamp(System.currentTimeMillis());
-
+        Digest digest = new Digest();
+        digest.setTimestamp(System.currentTimeMillis());
+        List<Section> sections = new LinkedList<>();
+        int articles = 0;
         for (Category category : categories) {
-            chunk.getArticles().addAll(featuredCategory(category, category.getAmount(), timestamp).getArticles());
+            Section section = featuredCategory(category, category.getAmount(), timestamp);
+            Collections.sort(section.getArticles(), new Comparator<Article>() {
+                @Override
+                public int compare(Article o1, Article o2) {
+                    return o2.getScore().compareTo(o1.getScore());
+                }
+            });
+
+            sections.add(section);
+            articles += section.getArticles().size();
         }
+        digest.setSections(sections);
 
         //empty response
-        if (chunk.getArticles().size() == 0) {
-            return new ResponseEntity<StreamChunk>(HttpStatus.NO_CONTENT);
+        if (articles == 0) {
+            return new ResponseEntity<ch.newscron.v3.data.Digest>(HttpStatus.NO_CONTENT);
         }
 
-        Collections.sort(chunk.getArticles(), new Comparator<Article>() {
-            @Override
-            public int compare(Article o1, Article o2) {
-                return o2.getScore().compareTo(o1.getScore());
-            }
-        });
-
-        chunk.setLatestId(chunk.getArticles().peekFirst().getId());
-
-        return new ResponseEntity<StreamChunk>(chunk, HttpStatus.OK);
+        return new ResponseEntity<ch.newscron.v3.data.Digest>(digest, HttpStatus.OK);
 
     }
 
@@ -83,6 +86,7 @@ public class Digest {
     private Section featuredCategory(Category category, int limit, long timestamp) {
 
         Section categoryArticles = new Section();
+        categoryArticles.setCategory(category);
         ArticleFactory articleFactory = ArticleFactory.getInstance();
         HashMap<Long, Long> articlesId = featuredArticlesIdsPerCategory(category.getId(), category.getPackages(), limit, timestamp);
 

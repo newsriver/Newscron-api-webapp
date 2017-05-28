@@ -1,8 +1,14 @@
 <div class="chunk-header">
   <h3>Since: {{digest.timestamp | date:'dd MMM yyyy HH:mm:ss'}}</h3>
 </div>
-<ul>
-  <li *ngFor="let article of digest.articles; let j = index">
-    <articles [article]="article"></articles>
+<div class="wrap">
+  <div class="header" *ngIf="currentSectionName!=null" [style.width.px]="headerWidth">
+    <h2>{{currentSectionName}}</h2>
+    <hr class="aky">
+  </div>
+</div>
+<ul class="content">
+  <li *ngFor="let section of (digest.sections | validSection)">
+    <section [section]="section" (sectionPosition)="sectionPosition($event)"></section>
   </li>
 </ul>
