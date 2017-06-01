@@ -6,6 +6,11 @@ import ch.newscron.v3.data.CategoryPreference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.dbutils.DbUtils;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,6 +36,10 @@ import java.util.List;
  */
 @RestController
 public class Settings {
+
+
+    private static final int HTTP_TIMEOUT_SHORT = 500;
+    private static final int SOKET_TIMEOUT_SHORT = 500;
 
     private static final Logger log = Logger.getLogger(Settings.class);
     private static ObjectMapper mapper = new ObjectMapper();
@@ -58,20 +66,24 @@ public class Settings {
 
         if (packagesIds == null) {
             UserLocation location = null;
-            try {
-                String requestIp = httpRequest.getHeader("x-forwarded-for");
-                if (requestIp == null) {
-                    requestIp = httpRequest.getRemoteAddr();
-                }
-                location = mapper.readValue(new URL("http://ip-api.com/json/" + requestIp), UserLocation.class);
+
+            String requestIp = httpRequest.getHeader("x-forwarded-for");
+            if (requestIp == null) {
+                requestIp = httpRequest.getRemoteAddr();
+            }
+            location = ipLocation(requestIp);
+            if (location != null) {
                 Integer countryId = fittingCountryId(location.countryCode);
                 packagesIds = fittingPackagesId(countryId);
-            } catch (MalformedURLException e) {
-                log.fatal("Unable to identify user location", e);
-            } catch (IOException e) {
-                log.fatal("Unable to identify user location", e);
             }
         }
+
+        //Add use packages if location was not established
+        if (packagesIds == null || packagesIds.size() == 0) {
+            packagesIds = new LinkedList<>(Arrays.asList(42, 43, 44, 45, 46, 47, 48));
+        }
+
+
         configuration.setPackagesIds(packagesIds);
         configuration.setLocalPackagesIds(fittingSubPackagesId(configuration.getPackagesIds()));
 
@@ -85,6 +97,30 @@ public class Settings {
         }
         configuration.setCategories(categories);
         return configuration;
+    }
+
+
+    private UserLocation ipLocation(String requestIp) {
+
+
+        RequestConfig defaultRequestConfig = RequestConfig.custom()
+                .setExpectContinueEnabled(true)
+                .setConnectTimeout(HTTP_TIMEOUT_SHORT)
+                .setSocketTimeout(new Integer(SOKET_TIMEOUT_SHORT))
+                .setMaxRedirects(10)
+                .build();
+        UserLocation location = null;
+
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(defaultRequestConfig).build()) {
+            HttpGet httpGetContentLoad = new HttpGet("http://ip-api.com/json/" + requestIp);
+            try (CloseableHttpResponse response = httpClient.execute(httpGetContentLoad)) {
+                location = mapper.readValue(response.getEntity().getContent(), UserLocation.class);
+            }
+        } catch (IOException e) {
+            log.fatal("Unable to identify user location", e);
+        }
+
+        return location;
     }
 
     private List<Integer> fittingPackagesId(int countryId) {
@@ -139,7 +175,6 @@ public class Settings {
         }
         return packages;
     }
-
 
     private int fittingCountryId(String countryCode) {
         ResultSet rs = null;
