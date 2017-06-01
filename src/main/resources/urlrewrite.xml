@@ -22,7 +22,7 @@
         <name>Domain Name Check</name>
         <condition name="host" operator="notequal">newscron.com</condition>
         <from>(.*)</from>
-        <to type="redirect">https://newscron.com$1</to>
+        <to type="redirect">http://newscron.com$1</to>
     </rule>
 
 
