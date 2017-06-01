@@ -12,6 +12,19 @@
         <to>/</to>
     </rule>
 
+    <!-- This is to redirect the old app path -->
+    <rule>
+        <from>/app</from>
+        <to>/</to>
+    </rule>
+
+    <rule>
+        <name>Domain Name Check</name>
+        <condition name="host" operator="notequal">newscron.com</condition>
+        <from>(.*)</from>
+        <to type="redirect">https://newscron.com$1</to>
+    </rule>
+
 
     <!-- This is to manage article sharing -->
     <rule match-type="regex">
