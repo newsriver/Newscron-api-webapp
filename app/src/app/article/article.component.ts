@@ -12,13 +12,13 @@ import {NewscronClientService} from '../newscron-client.service';
 })
 export class ArticleComponent implements OnInit {
 
-  public isDigest = false;
+  public isDigest = true;
 
   @Input() article: Article;
   constructor(public cordovaService: CordovaService, private route: ActivatedRoute, public dialog: MdDialog) {
 
-    if (route.snapshot.url[0] == null || route.snapshot.url[0].path == null) {
-      this.isDigest = true;
+    if (route.snapshot.url[0] != null && route.snapshot.url[0].path != null && route.snapshot.url[0].path === "top") {
+      this.isDigest = false;
     }
 
   }
