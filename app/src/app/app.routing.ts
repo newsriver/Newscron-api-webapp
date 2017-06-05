@@ -6,6 +6,7 @@ import { DigestsListComponent } from './digests-list/digests-list.component';
 export const AppRoutes: Routes = [
   { path: 'category/:id/:name', component: CategoryComponent },
   { path: 'top', component: FeaturedComponent },
+  { path: '**', redirectTo: '/', pathMatch: 'full' },
   { path: '', component: DigestsListComponent }
 ];
 

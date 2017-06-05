@@ -52,21 +52,3 @@ h2{
     vertical-align: middle;
     background-color: #252830;
   }
-
-  :host {
-    display: block;
-  }
-
-  .header{
-    position: fixed;
-    top: 50px;
-    width: inherit;
-    z-index: 2;
-    background: #252830;
-  }
-
-
-  .wrap{
-      position: relative;
-      width: 100%;
-  }

@@ -17,6 +17,19 @@ font-size: 2.4rem;
 line-height: 2.8rem;
 }
 
+.article .content{
+  margin: -2rem;
+  padding: 2rem;
+  margin-top: 0px;
+  padding-top: 0px;
+}
+
+.article .content::after {
+   content: " ";
+   display: block;
+   height: 0;
+   clear: both;
+}
 
 
 
