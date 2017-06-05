@@ -33,14 +33,7 @@ export class CategoryAmmountPipe implements PipeTransform {
   }
 }
 
-@Pipe({
-  name: 'editionPerContinent'
-})
-export class EditionPerContinent implements PipeTransform {
-  transform(items: Array<Package>, arg: string): Array<Package> {
-    return items.filter(item => item.continent === arg);
-  }
-}
+
 
 
 @Component({
