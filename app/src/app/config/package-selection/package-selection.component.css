@@ -1,0 +1,52 @@
+@media screen and (min-width: 960px) {
+.twocol {
+-moz-column-count: 3;
+-webkit-column-count: 3;
+column-count: 3;
+}
+}
+
+@media screen and (max-width: 960px) and (min-width: 540px) {
+.twocol {
+-moz-column-count: 2;
+-webkit-column-count: 2;
+column-count: 2;
+}
+}
+
+@media screen and (max-width: 540px) {
+.twocol {
+-moz-column-count: 1;
+-webkit-column-count: 1;
+column-count: 1;
+}
+}
+
+
+.statcard{
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.statcard i {
+  float: right;
+  font-size: 4rem;
+  margin-top: 0.8rem;
+}
+
+
+.custom-control-indicator{
+  margin-top: 6px;
+  background-color: white;
+}
+
+.custom-control-description{
+  margin-left: 20px;
+  white-space: nowrap;
+  font-size: 20px;
+}
+
+
+#editions{
+  margin-top: 3rem;
+}
