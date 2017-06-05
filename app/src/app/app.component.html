@@ -1,1 +1,79 @@
-<router-outlet></router-outlet>
+<!-- NOTE: also see custom css in the main app.component.css files due to a bug -->
+<md-sidenav-container>
+  <!-- Menu -->
+  <md-sidenav mode="over" class="mat-sidenav" #menu (open)="welcomeStep;">
+    <nav class="navbar navbar-light bg-faded">
+      <button md-button (click)="menu.close()" style="color:black"><i class="fa fa-chevron-left" aria-hidden="true"></i> Close
+      </button>
+    </nav>
+    <nav class="sidebar-nav" style="padding: 50px; position:relative">
+      <ul class="nav nav-pills nav-stacked" style="position:relative">
+
+        <li><a routerLink='' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">News Digest</a></li>
+        <!--<li><a routerLink='/top' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">Top News</a></li>-->
+        <li class="nav-header ">Categories</li>
+        <li *ngFor="let category of categories | sortCategory ">
+          <a [routerLink]="[ 'category', category.id,category.name] " [routerLinkActive]="[ 'active-link'] " (click)="menu.close()">{{category.name}}</a>
+        </li>
+
+
+        <li class=" nav-header ">Other</li>
+
+        <li>
+          <a (click)="setUp();menu.close()">Set-up</a>
+        </li>
+      </ul>
+    </nav>
+  </md-sidenav>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-light bg-faded">
+    <button class="navbar-toggler navbar-toggler-left visible-xs" type="button" (click)="menu.open()" *ngIf="this.welcomeStep <= 0">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="app-content">
+    <welcome *ngIf="this.welcomeStep > 0" (setWelcomeStep)="setWelcomeStep($event)"></welcome>
+
+    <div class="main-container" [hidden]="this.welcomeStep > 1">
+      <div class="row">
+        <div class="col-sm-3 hidden-sm-down sidebar">
+          <nav class="sidebar-nav ">
+            <ul class="nav nav-pills nav-stacked " [style.position]="welcomeStep==1 ? 'relative': 'fixed' ">
+              <li><a routerLink='/' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">News Digest</a></li>
+              <!--<li><a routerLink='/top' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">Top News</a></li>-->
+
+              <li class="nav-header ">Categories</li>
+              <li *ngFor="let category of categories | sortCategory ">
+                <a [routerLink]="[ 'category', category.id,category.name] " [routerLinkActive]="[ 'active-link'] ">{{category.name}}</a>
+              </li>
+
+
+              <li class=" nav-header ">Other</li>
+
+              <li>
+                <a (click)="menu.close();setUp()">Set-up</a>
+              </li>
+              <!-- <li>
+                              <a>Request Newspaper</a>
+                          </li>
+                          <li>
+                              <a>Report Problem</a>
+                          </li>
+                          --->
+            </ul>
+            <hr class="visible-xs m-t ">
+          </nav>
+        </div>
+        <div class="col-xs-12 col-sm-9 content">
+
+          <router-outlet></router-outlet>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</md-sidenav-container>

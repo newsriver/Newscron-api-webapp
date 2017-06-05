@@ -29,7 +29,17 @@
   margin-bottom: 0px!important;
 }
 
+.bt h1 {
+    margin-bottom: 5px;
+    font-size: 40px;
+    line-height: 1;
+}
 
+.bt p {
+    font-weight: 300;
+    line-height: 1.4;
+    color: #9fdcf3;
+}
 .bw {
     max-width: 1200px;
     margin-right: auto;
@@ -65,9 +75,35 @@
 
 
 
+.custom-control-indicator{
+  margin-top: 6px;
+}
+
+.custom-control-description{
+  margin-left: 20px;
+  white-space: nowrap;
+}
+
+#editions{
+  margin-top: 3rem;
+}
+
+.statcard{
+  margin-bottom: 1rem;
+  text-align: left;
+}
 
 
 
+.custom-control-indicator{
+  background-color: white;
+}
+
+.statcard i {
+  float: right;
+  font-size: 4rem;
+  margin-top: 0.8rem;
+}
 
 .delta-indicator{
   float: right;
@@ -136,45 +172,4 @@ column-count: 2;
 -webkit-column-count: 1;
 column-count: 1;
 }
-}
-
-/*may not needed*/
-.bt h1 {
-    margin-bottom: 5px;
-    font-size: 40px;
-    line-height: 1;
-}
-
-.bt p {
-    font-weight: 300;
-    line-height: 1.4;
-    color: #9fdcf3;
-}
-
-.custom-control-indicator{
-  background-color: white;
-}
-
-.statcard i {
-  float: right;
-  font-size: 4rem;
-  margin-top: 0.8rem;
-}
-
-.statcard{
-  margin-bottom: 1rem;
-  text-align: left;
-}
-
-.custom-control-indicator{
-  margin-top: 6px;
-}
-
-.custom-control-description{
-  margin-left: 20px;
-  white-space: nowrap;
-}
-
-#editions{
-  margin-top: 3rem;
 }
