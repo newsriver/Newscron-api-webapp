@@ -1,0 +1,77 @@
+
+.active-link{
+  color: #252830!important;
+  background-color: #1CA8DD!important;
+}
+
+ul{
+  position: fixed;
+  margin-top: 5rem;
+}
+
+.main-container{
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 30px;
+    padding-right: 30px;
+    max-width: 1200px;
+  }
+
+
+@media screen and (max-width: 576px){
+  .main-container{
+    max-width: 100%!important;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}
+
+
+
+.app-content {
+  padding-top: 50px; /* report the same value in featured.component.css .header class and in  featured.component.ts padding variable */
+}
+
+
+.navbar-toggler{
+  padding: 18px;
+  padding-right: 22px;
+  padding-left: 22px;
+}
+
+
+:host /deep/ .navbar{
+  position: fixed;
+  width: 100%;
+  border-radius: 0px;
+  z-index: 10;
+}
+
+.mat-sidenav {
+  min-width: 200px;
+  z-index: 12;
+  background-color: #252830;
+}
+
+:host /deep/ .mat-sidenav-shown{
+  z-index: 11!important;
+}
+
+/* disable scroll of content when sidebar is open */
+:host /deep/ .mat-sidenav-opened{
+  height: 100%!important;
+}
+
+:host /deep/ md-sidenav-container{
+  transform:none!important;
+  background-color: transparent!important;
+  overflow: hidden;
+  height: auto!important;
+}
+
+
+:host /deep/ .mat-sidenav-content{
+  transform:none!important;
+  overflow: visible!important;
+}
+/* end work around */

@@ -1,0 +1,49 @@
+
+.main{
+  background-color: #1ca8dd;
+  background-image: linear-gradient(to bottom, #137499, #1ca8dd);
+  height: 100%;
+}
+
+:host /deep/ .navbar{
+  position: fixed;
+  width: 100%;
+  border-radius: 0px;
+  z-index: 10;
+}
+
+.mat-sidenav {
+  min-width: 200px;
+  z-index: 12;
+  background-color: #252830;
+}
+
+.back{
+font-size: 30px;
+height: 38px;
+}
+
+.back i{
+line-height: 38px;
+}
+
+.app-content {
+  padding-top: 100px;
+}
+
+.main-container{
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 30px;
+    padding-right: 30px;
+    max-width: 1200px;
+  }
+
+
+@media screen and (max-width: 576px){
+  .main-container{
+    max-width: 100%!important;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}
