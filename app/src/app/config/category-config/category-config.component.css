@@ -7,6 +7,22 @@
   margin-bottom: 20px;
 }
 
+.mat-ink-bar{
+    background-color: white!important;
+}
+
+.mat-tab-header {
+    border-bottom: 1px solid rgba(1, 1, 1, 0.6)!important;
+}
+
 hr{
       border-top: 1px solid #fff;
+}
+
+li{
+  list-style-type:none
+}
+
+ul{
+  padding: 0px;
 }

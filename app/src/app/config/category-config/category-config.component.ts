@@ -10,6 +10,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 export class CategoryConfigComponent implements OnInit {
 
   public category: CategoryPreference = null;
+  public preferences: UserPreferences = null;
 
 
   constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router) {
@@ -18,7 +19,12 @@ export class CategoryConfigComponent implements OnInit {
 
   ngOnInit() {
     let categoryId: number = this.route.snapshot.params['id'];
-    this.category = this.client.getUserPreferences().getCategory(categoryId);
+    this.preferences = this.client.getUserPreferences();
+    this.category = this.preferences.getCategory(categoryId);
+  }
+
+  private onPackageChange() {
+    this.client.setUserPreferences(this.preferences);
   }
 
 }

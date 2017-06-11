@@ -2,8 +2,16 @@
 .main{
   background-color: #1ca8dd;
   background-image: linear-gradient(to bottom, #137499, #1ca8dd);
-  height: 100%;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  margin-bottom: 0px!important;
+  min-height: 100%;
 }
+
+
+
 
 :host /deep/ .navbar{
   position: fixed;
@@ -12,11 +20,6 @@
   z-index: 10;
 }
 
-.mat-sidenav {
-  min-width: 200px;
-  z-index: 12;
-  background-color: #252830;
-}
 
 .back{
 font-size: 30px;
@@ -37,7 +40,7 @@ line-height: 38px;
     padding-left: 30px;
     padding-right: 30px;
     max-width: 1200px;
-  }
+}
 
 
 @media screen and (max-width: 576px){
