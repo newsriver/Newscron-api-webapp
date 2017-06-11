@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NewscronClientService, BootstrapConfiguration, CategoryPreference, UserPreferences} from '../../newscron-client.service';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-category-config',
@@ -8,11 +9,16 @@ import {NewscronClientService, BootstrapConfiguration, CategoryPreference, UserP
 })
 export class CategoryConfigComponent implements OnInit {
 
+  public category: CategoryPreference = null;
 
 
-  constructor(private client: NewscronClientService) { }
+  constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router) {
+
+  }
 
   ngOnInit() {
+    let categoryId: number = this.route.snapshot.params['id'];
+    this.category = this.client.getUserPreferences().getCategory(categoryId);
   }
 
 }
