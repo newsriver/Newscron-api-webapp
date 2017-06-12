@@ -58,7 +58,7 @@ public class Search {
     public ResponseEntity<Section> featured(@RequestBody List<CategoryPreference> categories, @RequestParam(value = "search", required = false, defaultValue = "") String searchPhrase) {
 
         Section section = new Section();
-
+       /*
         int articles = 0;
         for (CategoryPreference category : categories) {
             Section section = featuredCategory(category, timestamp);
@@ -77,9 +77,9 @@ public class Search {
         //empty response
         if (articles == 0) {
             return new ResponseEntity<section>(HttpStatus.NO_CONTENT);
-        }
+        }*/
 
-        return new ResponseEntity<section>(digest, HttpStatus.OK);
+        return new ResponseEntity<Section>(section, HttpStatus.OK);
 
     }
 
@@ -88,14 +88,14 @@ public class Search {
 
         Section categoryArticles = new Section();
 
-        Category category = new Category();
+        /*Category category = new Category();
         category.setId(categoryPreference.getId());
         category.setName(categoryPreference.getName());
 
         categoryArticles.setCategory(category);
 
         ArticleFactory articleFactory = ArticleFactory.getInstance();
-        HashMap<Long, Long> articlesId = featuredArticlesIdsPerCategory(categoryPreference, timestamp);
+        //HashMap<Long, Long> articlesId = featuredArticlesIdsPerCategory(categoryPreference, timestamp);
 
         ArrayList<StructuredArticle> articles = articleFactory.getArticles(articlesId.keySet());
 
@@ -118,7 +118,7 @@ public class Search {
 
             categoryArticles.getArticles().add(article);
 
-        }
+        }*/
         return categoryArticles;
     }
 
