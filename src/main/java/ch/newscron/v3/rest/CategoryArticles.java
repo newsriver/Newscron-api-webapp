@@ -24,7 +24,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -61,7 +60,7 @@ public class CategoryArticles {
 
 
         ArticleFactory articleFactory = ArticleFactory.getInstance();
-        Set<Long> articlesId = categoryArticlesIds(categoryPreference.getId(), categoryPreference.getPackages(), limit);
+        Set<Long> articlesId = categoryArticlesIds(categoryPreference, limit);
 
         ArrayList<StructuredArticle> articles = articleFactory.getArticles(articlesId);
 
@@ -87,7 +86,7 @@ public class CategoryArticles {
     }
 
 
-    private Set<Long> categoryArticlesIds(int categoryId, List<Integer> packages, int limit) {
+    private Set<Long> categoryArticlesIds(CategoryPreference category, int limit) {
 
         HashSet<Long> articleIds = new HashSet<>();
         Connection conn = null;
@@ -95,10 +94,18 @@ public class CategoryArticles {
         ResultSet rs = null;
 
         String packagesIds = "";
-        for (Integer packageId : packages) {
+        for (Integer packageId : category.getPackages()) {
             packagesIds += packageId + ",";
         }
         packagesIds += "-1";
+
+        String publishersOptOut = "";
+        if (category.getPublishersOptOut() != null) {
+            for (Publisher publisher : category.getPublishersOptOut()) {
+                publishersOptOut += publisher.getId() + ",";
+            }
+        }
+        publishersOptOut += "-1";
 
         try {
 
@@ -108,14 +115,13 @@ public class CategoryArticles {
 
             String sql = "SELECT A.id, T.id, T.version FROM NewscronContent.article AS A \n" +
                     "            JOIN NewscronContent.topic as T ON T.id=A.topicId\n" +
-                    "            WHERE A.categoryID=? AND A.packageID in (?) AND A.cloneID is NULL\n" +
+                    "            WHERE A.categoryID=? AND A.packageID in (" + packagesIds + ") AND A.publisherId NOT in (" + publishersOptOut + ") AND A.cloneID is NULL\n" +
                     "            ORDER BY A.publicationDateGMT DESC LIMIT ?;";
 
 
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, categoryId);
-            stmt.setString(2, packagesIds);
-            stmt.setInt(3, limit * 20);
+            stmt.setInt(1, category.getId());
+            stmt.setInt(2, limit * 20);
 
             rs = stmt.executeQuery();
 

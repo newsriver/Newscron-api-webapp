@@ -132,15 +132,14 @@ public class Featured {
             String sql = "SELECT A.id, T.id, T.version,S.finalScore FROM NewscronContent.articleScore AS S\n" +
                     "            JOIN NewscronContent.article AS A ON A.id=S.articleId\n" +
                     "            JOIN NewscronContent.topic as T ON T.id=A.topicId\n" +
-                    "            WHERE A.categoryID=? AND A.packageID in (?) AND A.cloneID is NULL\n" +
+                    "            WHERE A.categoryID=? AND A.packageID in (" + packagesIds + ") AND A.cloneID is NULL\n" +
                     "            AND A.publicationDateGMT > DATE_SUB(now(), Interval 16 Hour)\n" +
                     "            ORDER BY S.finalScore DESC LIMIT ?;";
 
 
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, categoryPreference.getId());
-            stmt.setString(2, packagesIds);
-            stmt.setInt(3, limit * 20);
+            stmt.setInt(2, limit * 20);
 
             rs = stmt.executeQuery();
 

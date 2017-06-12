@@ -155,7 +155,7 @@ public class DigestComposer {
             String sql = "SELECT A.id,A.topicId,F.rank as rank FROM NewscronContent.articleFeature AS F " +
                     "JOIN NewscronContent.article AS A ON A.id=F.id " +
                     /*"JOIN NewscronContent.topic as T ON T.id=A.topicId " + not needed */
-                    "WHERE F.categoryID=? AND F.packageID in (?)  AND F.publisherId NOT in (?)" +
+                    "WHERE F.categoryID=? AND F.packageID in (" + packagesIds + ")  AND F.publisherId NOT in (" + publishersOptOut + ")" +
                     "AND F.cloneOf is NULL " +
                     "AND F.publicationDate > ? " +
                     "AND F.publicationDate > DATE_SUB(now(), Interval 36 Hour) " +
@@ -175,10 +175,8 @@ public class DigestComposer {
 
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, category.getId());
-            stmt.setString(2, packagesIds);
-            stmt.setString(3, publishersOptOut);
-            stmt.setTimestamp(4, new Timestamp(timestamp));
-            stmt.setInt(5, limit * 20);
+            stmt.setTimestamp(2, new Timestamp(timestamp));
+            stmt.setInt(3, limit * 20);
 
             rs = stmt.executeQuery();
 
