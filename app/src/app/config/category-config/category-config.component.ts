@@ -23,7 +23,12 @@ export class CategoryConfigComponent implements OnInit {
     this.category = this.preferences.getCategory(categoryId);
   }
 
-  private onPackageChange() {
+  public onPackageChange() {
+    this.client.setUserPreferences(this.preferences);
+  }
+
+  public undoPublisherOptOut(index:number){
+    this.category.publishersOptOut.splice(index, 1);
     this.client.setUserPreferences(this.preferences);
   }
 
