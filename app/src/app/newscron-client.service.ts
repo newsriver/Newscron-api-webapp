@@ -142,6 +142,11 @@ export class NewscronClientService {
     return this.userPreferences;
   }
 
+  public setUserPreferences(preferences: UserPreferences) {
+    this.userPreferences = preferences;
+    localStorage.setItem('userPreferences', JSON.stringify(this.userPreferences));
+  }
+
   public refreshListener(): BehaviorSubject<boolean> {
     return this.refresh;
   }

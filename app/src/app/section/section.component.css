@@ -16,6 +16,8 @@ h2{
   margin-top: 16rem;
   font-size: 5rem;
   padding-left: 1.5rem;
+  display: flex;
+  flex-direction: row;
 }
 
 @media screen and (max-width: 540px) {
