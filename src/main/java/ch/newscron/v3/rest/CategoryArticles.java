@@ -124,8 +124,7 @@ public class CategoryArticles {
             conn = this.dataSource.getConnection();
             conn.setReadOnly(true);
 
-            String sql = "SELECT A.id, T.id, T.version FROM NewscronContent.article AS A \n" +
-                    "            JOIN NewscronContent.topic as T ON T.id=A.topicId\n" +
+            String sql = "SELECT A.id, A.topicId FROM NewscronContent.article AS A \n" +
                     "            WHERE A.categoryID=? AND A.packageID in (" + packagesIds + ") AND A.publisherId NOT in (" + publishersOptOut + ") AND A.cloneID is NULL\n" +
                     "            ORDER BY A.publicationDateGMT DESC LIMIT ?;";
 
@@ -138,7 +137,7 @@ public class CategoryArticles {
 
             HashSet<Long> topicIds = new HashSet<Long>();
             while (rs.next() && limit > 0) {
-                if (!topicIds.add(rs.getLong("T.id"))) {
+                if (!topicIds.add(rs.getLong("A.topicId"))) {
                     continue;
                 }
                 if (articleIds.add(rs.getLong("A.id"))) {
