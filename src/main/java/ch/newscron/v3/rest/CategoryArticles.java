@@ -125,8 +125,8 @@ public class CategoryArticles {
             conn.setReadOnly(true);
 
             String sql = "SELECT A.id, A.topicId FROM NewscronContent.article AS A \n" +
-                    "            WHERE A.categoryID=? AND A.packageID in (" + packagesIds + ") AND A.publisherId NOT in (" + publishersOptOut + ") AND A.cloneID is NULL\n" +
-                    "            ORDER BY A.publicationDateGMT DESC LIMIT ?;";
+                    " WHERE A.publicationDateGMT > DATE_SUB(now(), Interval 7 DAY) AND A.categoryID=? AND A.packageID in (" + packagesIds + ") AND A.publisherId NOT in (" + publishersOptOut + ") AND A.cloneID is NULL\n" +
+                    " ORDER BY A.publicationDateGMT DESC LIMIT ?;";
 
 
             stmt = conn.prepareStatement(sql);
