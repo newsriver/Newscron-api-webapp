@@ -22,6 +22,8 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -52,17 +54,21 @@ public class CategoryArticles {
 
     private Section categoryArticles(CategoryPreference categoryPreference, int limit) {
 
+        Instant start = Instant.now();
         Section categoryArticles = new Section();
         Category category = new Category();
         category.setId(categoryPreference.getId());
         category.setName(categoryPreference.getName());
         categoryArticles.setCategory(category);
 
-
+        Instant query_start = Instant.now();
         ArticleFactory articleFactory = ArticleFactory.getInstance();
         Set<Long> articlesId = categoryArticlesIds(categoryPreference, limit);
+        Instant query_end = Instant.now();
 
+        Instant getArticles_start = Instant.now();
         ArrayList<StructuredArticle> articles = articleFactory.getArticles(articlesId);
+        Instant getArticles_end = Instant.now();
 
         for (StructuredArticle strArticle : articles) {
 
@@ -82,6 +88,11 @@ public class CategoryArticles {
 
             categoryArticles.getArticles().add(article);
         }
+        Instant end = Instant.now();
+
+        System.out.println("Category timing total:" + Duration.between(start, end) + " query:" + Duration.between(query_start, query_end) + " fetch:" + Duration.between(getArticles_start, getArticles_end));
+
+
         return categoryArticles;
     }
 
