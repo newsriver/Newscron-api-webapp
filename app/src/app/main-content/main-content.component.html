@@ -47,7 +47,7 @@
 
               <li class="nav-header ">Categories</li>
               <li *ngFor="let category of categories | sortCategory ">
-                <a [routerLink]="[ 'category', category.id,category.name] " [routerLinkActive]="[ 'active-link'] ">{{category.name}}</a>
+                <a [routerLink]="[ '/category', category.id,category.name] " [routerLinkActive]="[ 'active-link'] ">{{category.name}}</a>
               </li>
 
 

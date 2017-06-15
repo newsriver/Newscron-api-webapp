@@ -56,6 +56,7 @@ export class MainContentComponent implements OnInit {
   }
 
   ngOnInit() {
+
     if (this.client.getUserPreferences() == null) {
       this.welcomeStep = 1;
     }
