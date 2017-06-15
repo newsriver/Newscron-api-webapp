@@ -42,15 +42,6 @@ export class ArticleComponent implements OnInit {
     });
   }
 
-  categoryDialog(category: Category) {
-    let dialogRef = this.dialog.open(CategoryDialog, {
-      data: { "category": category }
-    }
-    );
-    dialogRef.afterClosed().subscribe(result => {
-      //this.selectedOption = result;
-    });
-  }
 
 }
 
@@ -69,23 +60,6 @@ export class PublisherDialog {
 
   save() {
     this.client.publishersOptOut(this.data.publisher, this.data.category);
-    this.dialogRef.close('close');
-  }
-}
-
-@Component({
-  selector: 'category-dialog',
-  templateUrl: './category-dialog.html',
-  styleUrls: ['./dialog.css']
-})
-export class CategoryDialog {
-
-  public removeall: boolean = false;
-  constructor(public dialogRef: MdDialogRef<CategoryDialog>, @Inject(MD_DIALOG_DATA) public data: any) {
-
-  }
-
-  save() {
     this.dialogRef.close('close');
   }
 }

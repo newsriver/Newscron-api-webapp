@@ -6,7 +6,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AppComponents, AppRoutes } from "./app.routing";
-import { ArticleComponent, PublisherDialog, CategoryDialog } from './article/article.component';
+import { ArticleComponent, PublisherDialog } from './article/article.component';
 import { CategoryComponent } from './category/category.component';
 import { WelcomeComponent, KeysPipe, CategoryAmmountPipe } from './welcome/welcome.component';
 import {NewscronClientService} from './newscron-client.service';
@@ -17,16 +17,15 @@ import { CordovaService } from './cordova.service';
 import { DigestsListComponent } from './digests-list/digests-list.component';
 import { DigestComponent } from './digest/digest.component';
 import { CategoryConfigComponent } from './config/category-config/category-config.component';
-import { MainContentComponent,ValidSectionFilter, SortCategory } from './main-content/main-content.component';
+import { MainContentComponent, ValidSectionFilter, SortCategory } from './main-content/main-content.component';
 import { ConfigComponent } from './config/config.component';
-import { PackageSelectionComponent,EditionPerContinent } from './config/package-selection/package-selection.component';
+import { PackageSelectionComponent, EditionPerContinent } from './config/package-selection/package-selection.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ArticleComponent,
     PublisherDialog,
-    CategoryDialog,
     KeysPipe,
     SortCategory,
     SortArticle,
@@ -55,7 +54,6 @@ import { PackageSelectionComponent,EditionPerContinent } from './config/package-
   ],
   entryComponents: [
     PublisherDialog,
-    CategoryDialog
   ],
   providers: [CordovaService, NewscronClientService],
   bootstrap: [AppComponent]
