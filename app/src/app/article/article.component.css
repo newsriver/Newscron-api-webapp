@@ -65,6 +65,15 @@ line-height: 2.8rem;
   display: inline;
 }
 
+.snippet >>> span{
+    color: #fff;
+    font-weight: 700;
+    background-color: #373a3c;
+    padding: 3px;
+    border-radius: 3px;
+    margin: 2px;
+}
+
 a{
   text-decoration: none;
 }

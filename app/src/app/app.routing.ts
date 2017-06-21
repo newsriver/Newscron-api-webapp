@@ -5,6 +5,7 @@ import { DigestsListComponent } from './digests-list/digests-list.component';
 import { CategoryConfigComponent } from './config/category-config/category-config.component';
 import { ConfigComponent } from './config/config.component';
 import { MainContentComponent } from './main-content/main-content.component';
+import { SearchComponent } from './search/search.component';
 
 
 
@@ -14,6 +15,7 @@ export const AppRoutes: Routes = [
     children: [
       { path: '', component: DigestsListComponent },
       { path: 'top', component: FeaturedComponent },
+      { path: 'search', component: SearchComponent },
       { path: 'category/:id/:name', component: CategoryComponent }
     ]
   },

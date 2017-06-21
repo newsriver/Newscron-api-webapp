@@ -4,6 +4,16 @@ import { CordovaService } from '../cordova.service';
 import { Router, ActivatedRoute} from '@angular/router';
 import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
 import {NewscronClientService} from '../newscron-client.service';
+import {Pipe, PipeTransform} from '@angular/core';
+
+
+@Pipe({ name: 'escapeHtml', pure: false })
+export class EscapeHtmlPipe implements PipeTransform {
+  transform(value: string, args: any[] = []) {
+    if (value == null) return "";
+    return value.replace(new RegExp("<highlighted>", 'g'), "<span>").replace(new RegExp("</highlighted>", 'g'), "</span>")
+  }
+}
 
 @Component({
   selector: 'articles',

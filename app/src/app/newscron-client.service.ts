@@ -7,8 +7,8 @@ import { Observable, BehaviorSubject, Subject } from 'rxjs/Rx';
 export class NewscronClientService {
 
 
-  private baseURL: string = "http://app.newscron.com/v3";
-  //private baseURL: string = "http://localhost:9092/v3";
+  //private baseURL: string = "http://app.newscron.com/v3";
+  private baseURL: string = "http://localhost:9092/v3";
 
   private userPreferences: UserPreferences = null;
   private refresh: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
@@ -48,6 +48,17 @@ export class NewscronClientService {
     let options = new RequestOptions({ headers: headers });
 
     return this.http.post(this.baseURL + "/category", cat, options)
+      .map(this.extractData);
+
+  }
+
+
+  public search(search: string): Observable<Section> {
+
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.get(this.baseURL + "/search?search=" + search, options)
       .map(this.extractData);
 
   }

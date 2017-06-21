@@ -1,0 +1,15 @@
+<div class="loading" *ngIf="loading">
+  <h2>
+    {{name}}
+  </h2>
+  <hr/>
+  <md-progress-bar mode="indeterminate" class="loading-bar"></md-progress-bar>
+</div>
+<ul>
+  <li>
+    <section [section]="section" *ngIf="section!=null"></section>
+  </li>
+</ul>
+<h4 *ngIf="section!=null && section.articles.length == 0" style="margin-top:5rem;">
+  No results found!
+</h4>

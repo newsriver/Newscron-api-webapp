@@ -6,7 +6,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AppComponents, AppRoutes } from "./app.routing";
-import { ArticleComponent, PublisherDialog } from './article/article.component';
+import { ArticleComponent, PublisherDialog, EscapeHtmlPipe } from './article/article.component';
 import { CategoryComponent } from './category/category.component';
 import { WelcomeComponent, KeysPipe, CategoryAmmountPipe } from './welcome/welcome.component';
 import {NewscronClientService} from './newscron-client.service';
@@ -20,12 +20,14 @@ import { CategoryConfigComponent } from './config/category-config/category-confi
 import { MainContentComponent, ValidSectionFilter, SortCategory } from './main-content/main-content.component';
 import { ConfigComponent } from './config/config.component';
 import { PackageSelectionComponent, EditionPerContinent } from './config/package-selection/package-selection.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ArticleComponent,
     PublisherDialog,
+    EscapeHtmlPipe,
     KeysPipe,
     SortCategory,
     SortArticle,
@@ -41,7 +43,8 @@ import { PackageSelectionComponent, EditionPerContinent } from './config/package
     CategoryConfigComponent,
     MainContentComponent,
     ConfigComponent,
-    PackageSelectionComponent
+    PackageSelectionComponent,
+    SearchComponent
   ],
   imports: [
     BrowserAnimationsModule,
