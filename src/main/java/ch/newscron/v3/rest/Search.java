@@ -9,8 +9,18 @@ import ch.newscron.v3.data.CategoryPreference;
 import ch.newscron.v3.data.Digest;
 import ch.newscron.v3.data.Publisher;
 import ch.newscron.v3.data.Section;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +35,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.sql.DataSource;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,6 +58,11 @@ import java.util.List;
 @RestController
 public class Search {
 
+    private static final int HTTP_TIMEOUT_SHORT = 5000;
+    private static final int SOKET_TIMEOUT_SHORT = 5000;
+    private static final String NEWSRIVER_API_URL = "https://api.newsriver.io/v2/search?sortBy=discoverDate&sortOrder=DESC&limit=15&query=";
+    private static final String NEWSRIVER_API_TOKEN = "sBBqsGXiYgF0Db5OV5tAw6DW7BpOpuMs5WCfGSNgf3xsm9_tCBPN-sUd129X9sh5";
+    private static ObjectMapper mapper = new ObjectMapper();
     private static final Logger log = Logger.getLogger(Search.class);
 
 
@@ -55,85 +73,161 @@ public class Search {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/v3/search", method = RequestMethod.POST)
-    public ResponseEntity<Section> featured(@RequestBody List<CategoryPreference> categories, @RequestParam(value = "search", required = false, defaultValue = "") String searchPhrase) {
+    public ResponseEntity<Section> featured(@RequestBody List<CategoryPreference> categories, @RequestParam(value = "search", required = false, defaultValue = "") String search) {
 
-        Section section = new Section();
-       /*
-        int articles = 0;
-        for (CategoryPreference category : categories) {
-            Section section = featuredCategory(category, timestamp);
-            Collections.sort(section.getArticles(), new Comparator<Article>() {
-                @Override
-                public int compare(Article o1, Article o2) {
-                    return o2.getScore().compareTo(o1.getScore());
-                }
-            });
-
-            sections.add(section);
-            articles += section.getArticles().size();
-        }
-        digest.setSections(sections);
+        Section section = search(search);
 
         //empty response
-        if (articles == 0) {
-            return new ResponseEntity<section>(HttpStatus.NO_CONTENT);
-        }*/
+        if (section.getArticles().isEmpty()) {
+            return new ResponseEntity<Section>(HttpStatus.NO_CONTENT);
+        }
 
         return new ResponseEntity<Section>(section, HttpStatus.OK);
 
     }
 
 
-    private Section search(CategoryPreference categoryPreference, String searchPhrase) {
+    private Section search(String search) {
 
-        Section categoryArticles = new Section();
+        Section searchArticles = new Section();
 
-        /*Category category = new Category();
-        category.setId(categoryPreference.getId());
-        category.setName(categoryPreference.getName());
 
-        categoryArticles.setCategory(category);
+        RequestConfig defaultRequestConfig = RequestConfig.custom()
+                .setExpectContinueEnabled(true)
+                .setConnectTimeout(HTTP_TIMEOUT_SHORT)
+                .setSocketTimeout(new Integer(SOKET_TIMEOUT_SHORT))
+                .setMaxRedirects(3)
+                .build();
 
-        ArticleFactory articleFactory = ArticleFactory.getInstance();
-        //HashMap<Long, Long> articlesId = featuredArticlesIdsPerCategory(categoryPreference, timestamp);
+        List<NewsriverArticle> newsriverArticles = new LinkedList<>();
+        try (CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(defaultRequestConfig).build()) {
+            HttpGet httpGetContentLoad = new HttpGet(NEWSRIVER_API_URL + search);
+            httpGetContentLoad.addHeader("Authorization",NEWSRIVER_API_TOKEN);
 
-        ArrayList<StructuredArticle> articles = articleFactory.getArticles(articlesId.keySet());
+            try (CloseableHttpResponse response = httpClient.execute(httpGetContentLoad)) {
+                newsriverArticles = mapper.readValue(response.getEntity().getContent(), new TypeReference<List<NewsriverArticle>>() { });
+            }
+        } catch (IOException e) {
+            log.fatal("Unable to identify user location", e);
+        }
 
-        for (StructuredArticle strArticle : articles) {
+        for (NewsriverArticle strArticle : newsriverArticles) {
 
             Article article = new Article();
             article.setTitle(strArticle.getTitle());
-            article.setSnippet(buildSnippet(strArticle.getText()));
-            article.setImgUrl(strArticle.getImageSrc());
-            article.setPublicationDate(strArticle.getPublicationDateGMT());
+            article.setSnippet(strArticle.getHighlight());
+            //article.setImgUrl(strArticle.getImageSrc());
+            //article.setPublicationDate(strArticle.getPublicationDateGMT());
             article.setUrl(strArticle.getUrl());
-            article.setId(strArticle.getArticleID());
-            article.setScore(articlesId.get(article.getId()));
-            article.setCategory(category);
+            //article.setId(strArticle.getArticleID());
+            //article.setScore(articlesId.get(article.getId()));
+            //article.setCategory(category);
 
             Publisher publisher = new Publisher();
-            publisher.setId(strArticle.getPublisherId());
-            publisher.setName(strArticle.getPublisher());
+            //publisher.setId(strArticle.getPublisherId());
+            publisher.setName(strArticle.getWebsite().getName());
             article.setPublisher(publisher);
 
-            categoryArticles.getArticles().add(article);
+            searchArticles.getArticles().add(article);
 
-        }*/
-        return categoryArticles;
-    }
-
-
-
-
-
-    private String buildSnippet(String text) {
-        String snippet = text.substring(0, 240 > text.length() ? text.length() : 240);
-        int index = snippet.lastIndexOf(" ");
-        if (index > 240 / 2) {
-            snippet = StringUtils.strip(snippet.substring(0, index), ",.:;!?-_/()\\[]\"' \n\r\t") + "...";
         }
-        return snippet;
+
+
+        return searchArticles;
     }
+
+
+
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    private static class NewsriverArticle {
+        private String publishDate;
+        private String discoverDate;
+        private String title;
+        private String language;
+        private String url;
+        private String highlight;
+        private NewsriverWebsite website;
+
+        public String getPublishDate() {
+            return publishDate;
+        }
+
+        public void setPublishDate(String publishDate) {
+            this.publishDate = publishDate;
+        }
+
+        public String getDiscoverDate() {
+            return discoverDate;
+        }
+
+        public void setDiscoverDate(String discoverDate) {
+            this.discoverDate = discoverDate;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getLanguage() {
+            return language;
+        }
+
+        public void setLanguage(String language) {
+            this.language = language;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public String getHighlight() {
+            return highlight;
+        }
+
+        public void setHighlight(String highlight) {
+            this.highlight = highlight;
+        }
+
+        public NewsriverWebsite getWebsite() {
+            return website;
+        }
+
+        public void setWebsite(NewsriverWebsite website) {
+            this.website = website;
+        }
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    private static class NewsriverWebsite {
+        private String name;
+        private String iconURL;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getIconURL() {
+            return iconURL;
+        }
+
+        public void setIconURL(String iconURL) {
+            this.iconURL = iconURL;
+        }
+    }
+
 
 }
 
