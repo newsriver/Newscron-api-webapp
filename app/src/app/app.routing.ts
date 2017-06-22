@@ -15,7 +15,7 @@ export const AppRoutes: Routes = [
     children: [
       { path: '', component: DigestsListComponent },
       { path: 'top', component: FeaturedComponent },
-      { path: 'search', component: SearchComponent },
+      { path: 'search/:searchPhrase', component: SearchComponent },
       { path: 'category/:id/:name', component: CategoryComponent }
     ]
   },

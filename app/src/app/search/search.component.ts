@@ -9,9 +9,8 @@ import {NewscronClientService, Section, Category, Article} from '../newscron-cli
 })
 export class SearchComponent implements OnInit {
 
-  public categoryId: number;
+  public searchPhrase: string;
   public section: Section;
-  public name: string;
   public loading: boolean = true;
   constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router) {
 
@@ -22,12 +21,11 @@ export class SearchComponent implements OnInit {
     //we need to subscribe to the params changes as the router is not reloading the componet on param changes
     this.route.params.subscribe(params => {
 
-      this.categoryId = params.id;
-      this.name = params.name;
+      this.searchPhrase = params.searchPhrase;
 
       this.loading = true;
       this.section = null;
-      this.client.search("text:Microsoft").subscribe(section => {
+      this.client.search("text:\"" + this.searchPhrase + "\"").subscribe(section => {
         this.section = section;
         this.loading = false;
       });

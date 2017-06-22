@@ -1,5 +1,12 @@
 import 'hammerjs';
 import { BrowserModule } from '@angular/platform-browser';
+import {MdProgressSpinnerModule} from '@angular/material';
+import {MdMenuModule} from '@angular/material';
+import {MdDialogModule} from '@angular/material';
+import {MdButtonModule} from '@angular/material';
+import {MdSidenavModule} from '@angular/material';
+import {MdSnackBarModule} from '@angular/material';
+import {NoopAnimationsModule}  from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -11,8 +18,7 @@ import { CategoryComponent } from './category/category.component';
 import { WelcomeComponent, KeysPipe, CategoryAmmountPipe } from './welcome/welcome.component';
 import {NewscronClientService} from './newscron-client.service';
 import {SectionComponent, SortArticle} from './section/section.component';
-import { MaterialModule } from '@angular/material';
-import {BrowserAnimationsModule}  from '@angular/platform-browser/animations';
+
 import { CordovaService } from './cordova.service';
 import { DigestsListComponent } from './digests-list/digests-list.component';
 import { DigestComponent } from './digest/digest.component';
@@ -47,8 +53,13 @@ import { SearchComponent } from './search/search.component';
     SearchComponent
   ],
   imports: [
-    BrowserAnimationsModule,
-    MaterialModule,
+    NoopAnimationsModule,
+    MdMenuModule,
+    MdSidenavModule,
+    MdProgressSpinnerModule,
+    MdDialogModule,
+    MdButtonModule,
+    MdSnackBarModule,
     BrowserModule,
     FormsModule,
     HttpModule,

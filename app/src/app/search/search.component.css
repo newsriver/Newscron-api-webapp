@@ -16,3 +16,8 @@ h2{
 hr{
   margin-top: 1rem;
 }
+
+.progress-spinner{
+  margin: auto;
+    margin-top: 5rem;
+}
