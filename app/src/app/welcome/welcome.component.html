@@ -13,8 +13,8 @@
 <div class="bt bt-background" *ngIf="this.step==1">
   <a (click)="close()"><i class="fa fa-times-circle close" aria-hidden="true"></i></a>
   <div class="bw">
-    <h1>Welome to Newscron</h1>
-    <p>Select your editions</p>
+    <h1>Welome to Newscron 3.0</h1>
+    <p>Select a region</p>
     <div class="row" id="editions">
 
       <div class="col-lg-4 col-md-6">
@@ -47,8 +47,8 @@
 <div class="bt" *ngIf="this.step==2">
   <a (click)="close()"><i class="fa fa-times-circle close" aria-hidden="true"></i></a>
   <div class="bw" style="padding-bottom: 120px;">
-    <h1>Select local editions</h1>
-    <p>FOR {{continent}}</p>
+    <h1>{{continent}}</h1>
+    <p>Select editions</p>
 
     <!--
     <div class="twocol">
@@ -68,8 +68,8 @@
   </div>
   <div class="fixed-bar">
     <div>
-      <button type="button" class="btn btn-lg btn-pill btn-default left" (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</button>
-      <button type="button" class="btn btn-lg btn-pill btn-default" (click)="next()" style="float:right;" [disabled]="!hasOnePackage()">Next <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+      <button md-raised-button style="" (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</button>
+      <button md-raised-button style="float:right;" (click)="next()" [disabled]="!hasOnePackage()">Next <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
     </div>
   </div>
 </div>
@@ -78,7 +78,7 @@
   <a (click)="close()"><i class="fa fa-times-circle close" aria-hidden="true"></i></a>
   <div class="bw" style="padding-bottom: 120px;">
     <h1>Tune it</h1>
-    <p>Categories</p>
+    <p>Select categories</p>
 
     <div class="twocol">
       <div *ngFor="let category of categories let i = index;">
@@ -100,8 +100,8 @@
   </div>
   <div class="fixed-bar">
     <div>
-      <button type="button" class="btn btn-lg btn-pill btn-default left" (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</button>
-      <button type="button" class="btn btn-lg btn-pill btn-default" (click)="finish()" style="float:right;">Save <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+      <button md-raised-button style="" (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</button>
+      <button md-raised-button style="float:right;" (click)="finish()">Save <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
     </div>
   </div>
 </div>

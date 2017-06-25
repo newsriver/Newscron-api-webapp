@@ -30,6 +30,7 @@
 }
 
 
+
 .bw {
     max-width: 1200px;
     margin-right: auto;
@@ -44,6 +45,7 @@
   border-top: 1px;
   border-top-style: solid;
 }
+
 
 
 .modal-actions button{
@@ -84,12 +86,10 @@
     margin-top: 3rem;
     position: fixed;
     width: 100%;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-bottom: 30px;
-    padding-top: 30px;
+    padding: 15px;
     z-index: 3;
-    background-color: rgba(28,168,221,0.75);
+    background-color: rgba(247, 247, 249,0.85);
+    color: black;
 }
 
 .fixed-bar div{
@@ -140,7 +140,7 @@ column-count: 1;
 
 /*may not needed*/
 .bt h1 {
-    margin-bottom: 5px;
+    margin-bottom: 3rem;
     font-size: 40px;
     line-height: 1;
 }
@@ -173,8 +173,4 @@ column-count: 1;
 .custom-control-description{
   margin-left: 20px;
   white-space: nowrap;
-}
-
-#editions{
-  margin-top: 3rem;
 }

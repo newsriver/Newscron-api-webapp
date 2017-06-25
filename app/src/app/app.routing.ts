@@ -6,6 +6,7 @@ import { CategoryConfigComponent } from './config/category-config/category-confi
 import { ConfigComponent } from './config/config.component';
 import { MainContentComponent } from './main-content/main-content.component';
 import { SearchComponent } from './search/search.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 
 
@@ -16,7 +17,7 @@ export const AppRoutes: Routes = [
       { path: '', component: DigestsListComponent },
       { path: 'top', component: FeaturedComponent },
       { path: 'search/:language/:searchPhrase', component: SearchComponent },
-      { path: 'category/:id/:name', component: CategoryComponent }
+      { path: 'category/:id/:name', component: CategoryComponent },
     ]
   },
   {
@@ -24,6 +25,9 @@ export const AppRoutes: Routes = [
     children: [
       { path: 'category/:id', component: CategoryConfigComponent }
     ]
+  },
+  {
+    path: 'welcome', component: WelcomeComponent
   },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];
