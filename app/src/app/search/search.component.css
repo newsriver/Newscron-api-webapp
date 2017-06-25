@@ -6,12 +6,6 @@ ul{
   padding: 0px;
 }
 
-h2{
-  margin-top: 2rem;
-  margin-bottom: 0rem;
-  font-size: 5rem;
-  padding-left: 1.5rem;
-}
 
 hr{
   margin-top: 1rem;
@@ -26,10 +20,41 @@ hr{
     position: absolute;
     top: 0;
     right: 0;
-    padding: 9px 30px;
+    padding: 14px 30px;
     color: #b7bcc8;
     background-color: transparent;
     border: 0;
     line-height: 0;
-    font-size: 5rem;
+    font-size: 3rem;
+}
+
+.searchPhrase{
+  font-size:3rem;
+  height: auto;
+}
+
+.search-label{
+  color:white;
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin: 0px!important;
+}
+
+
+@media screen and (max-width: 540px) {
+  .searchPhrase{
+    font-size:2rem;
+  }
+
+  .sarchButton {
+    font-size: 2rem;
+    padding: 11px 25px;
+  }
+  .form-group {
+      margin: 0px;
+  }
+
+  .search-label{
+  font-size: 1.5rem;
+  }
 }
