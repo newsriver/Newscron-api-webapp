@@ -12,7 +12,7 @@
       <label for="language" style="color:white; font-size: 2.5rem; font-weight: 300;">Language</label>
     </div>
     <div class="col-xs-6 col-sm-8">
-      <select class="custom-select" style="margin-left: 10px; margin-right: 10px; height: auto;" [(ngModel)]="language" (ngModelChange)="search($event)" name="language">
+      <select class="custom-select" style="margin-left: 10px; margin-right: 10px; height: auto;" [(ngModel)]="language" (ngModelChange)="search(null)" name="language">
         <option value="null" disabled>-- Most Used --</option>
         <option value="" selected>Any</option>
         <option value="EN">English</option>
