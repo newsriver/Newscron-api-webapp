@@ -31,9 +31,9 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  public search(e) {
-    if (e) {
-      e.preventDefault();
+  public search(event: any) {
+    if (event) {
+      event.preventDefault();
     }
     this.router.navigate(['/search', this.language, this.searchPhrase]);
   }
