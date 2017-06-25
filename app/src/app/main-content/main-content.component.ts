@@ -3,6 +3,7 @@ import {FeaturedComponent} from '../featured/featured.component';
 import {WelcomeComponent} from '../welcome/welcome.component';
 import {NewscronClientService, BootstrapConfiguration, Section, CategoryPreference, Article} from '../newscron-client.service';
 import {Injectable, Pipe, PipeTransform} from '@angular/core';
+import { Router } from '@angular/router';
 
 
 @Pipe({
@@ -51,7 +52,7 @@ export class MainContentComponent implements OnInit {
   public categories: CategoryPreference[] = [];
   public welcomeStep: number = 0;
 
-  constructor(private client: NewscronClientService) {
+  constructor(private client: NewscronClientService, public router: Router) {
 
   }
 
@@ -74,6 +75,11 @@ export class MainContentComponent implements OnInit {
   }
 
 
+  public isSearch() {
+    return this.router.url.startsWith('/search');
+  }
+
+
   public setWelcomeStep(step: number) {
     this.welcomeStep = step;
   }
@@ -81,6 +87,11 @@ export class MainContentComponent implements OnInit {
   public setUp() {
     this.welcomeStep = 1;
     window.scrollTo(0, 0);
+  }
+
+  public searchPhrase: string;
+  public search(e) {
+    this.router.navigate(['/search', '', this.searchPhrase]);
   }
 
 

@@ -7,6 +7,12 @@
       </button>
     </nav>
     <nav class="sidebar-nav" style="padding: 50px; position:relative">
+      <form (submit)="search($event)" style="margin-bottom: 30px; position: relative;">
+        <input class="form-control" type="text" placeholder="Search..." [(ngModel)]="searchPhrase" name="searchPhrase">
+        <button type="submit" class="sarchButton">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+      </form>
       <ul class="nav nav-pills nav-stacked" style="position:relative">
 
         <li><a routerLink='' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">News Digest</a></li>
@@ -40,8 +46,15 @@
     <div class="main-container" [hidden]="this.welcomeStep > 1">
       <div class="row">
         <div class="col-sm-3 hidden-sm-down sidebar">
-          <nav class="sidebar-nav ">
+          <nav class="sidebar-nav">
+            <form (submit)="search($event)" style="margin-bottom: 30px; position: relative;" *ngIf="!isSearch()">
+              <input class="form-control" type="text" placeholder="Search..." [(ngModel)]="searchPhrase" name="searchPhrase">
+              <button type="submit" class="sarchButton">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </button>
+            </form>
             <ul class="nav nav-pills nav-stacked " [style.position]="welcomeStep==1 ? 'relative': 'fixed' ">
+              <li class="active-route" *ngIf="isSearch()">Search</li>
               <li><a routerLink='/' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">News Digest</a></li>
               <!--<li><a routerLink='/top' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">Top News</a></li>-->
 

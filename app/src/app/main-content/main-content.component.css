@@ -4,9 +4,31 @@
   background-color: #1CA8DD!important;
 }
 
-ul{
-  position: fixed;
-  margin-top: 5rem;
+.active-route{
+  border-radius: 4px;
+  color: #252830!important;
+  background-color: #1CA8DD!important;
+  position: relative;
+    display: block;
+    padding: 7px 15px;
+    margin-bottom: 15px;
+}
+
+.sidebar-nav{
+    margin-top: 5rem;
+    position: fixed;
+}
+
+
+.sarchButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 9px 10px;
+    color: #b7bcc8;
+    background-color: transparent;
+    border: 0;
+    line-height: 0;
 }
 
 .main-container{

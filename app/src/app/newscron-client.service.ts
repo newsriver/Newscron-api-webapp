@@ -53,6 +53,17 @@ export class NewscronClientService {
   }
 
 
+  public search(search: string): Observable<Section> {
+
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.get(this.baseURL + "/search?search=" + search, options)
+      .map(this.extractData);
+
+  }
+
+
   public featured(): Observable<Section[]> {
 
     let headers = new Headers({ 'Content-Type': 'application/json' });

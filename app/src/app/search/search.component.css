@@ -21,3 +21,15 @@ hr{
   margin: auto;
     margin-top: 5rem;
 }
+
+.sarchButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 9px 30px;
+    color: #b7bcc8;
+    background-color: transparent;
+    border: 0;
+    line-height: 0;
+    font-size: 5rem;
+}

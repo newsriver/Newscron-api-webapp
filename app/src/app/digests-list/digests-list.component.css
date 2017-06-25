@@ -39,3 +39,8 @@ hr{
     position: relative;
     width: 100%;
 }
+
+.progress-spinner{
+  margin: auto;
+    margin-top: 5rem;
+}

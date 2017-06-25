@@ -1,12 +1,17 @@
-<h2>
+<div class="section">
+  <div *ngIf="section && section.category">
+    <h2>
   {{section.category.name}}
   <div style="flex: 1;text-align: right; padding-right: 20px;">
     <a [routerLink]="[ '/config/category', section.category.id]" md-icon-button style="font-size:20px; margin-top:-15px;"><i class="fa fa-sliders" aria-hidden="true" style="color:white;"></i></a>
   </div>
-</h2>
-<hr class="aky">
-<ul>
-  <li *ngFor="let article of section.articles | sortArticle ; let j = index">
-    <articles [article]="article"></articles>
-  </li>
-</ul>
+  </h2>
+    <hr class="aky">
+  </div>
+
+  <ul>
+    <li *ngFor="let article of section.articles | sortArticle ; let j = index">
+      <articles [article]="article"></articles>
+    </li>
+  </ul>
+</div>
