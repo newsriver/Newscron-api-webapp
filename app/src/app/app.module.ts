@@ -27,6 +27,9 @@ import { MainContentComponent, ValidSectionFilter, SortCategory } from './main-c
 import { ConfigComponent } from './config/config.component';
 import { PackageSelectionComponent, EditionPerContinent } from './config/package-selection/package-selection.component';
 import { SearchComponent } from './search/search.component';
+import { RegionComponent } from './welcome/region/region.component';
+import { EditionComponent } from './welcome/edition/edition.component';
+import { CategoriesComponent } from './welcome/categories/categories.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +53,10 @@ import { SearchComponent } from './search/search.component';
     MainContentComponent,
     ConfigComponent,
     PackageSelectionComponent,
-    SearchComponent
+    SearchComponent,
+    RegionComponent,
+    EditionComponent,
+    CategoriesComponent
   ],
   imports: [
     NoopAnimationsModule,

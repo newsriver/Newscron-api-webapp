@@ -9,99 +9,28 @@
         <button type="button" class="btn-link modal-action" (click)="next()"><strong>Next</strong></button>
     </div>
 </div>-->
-<md-progress-bar mode="indeterminate" class="loading-bar" *ngIf="loading"></md-progress-bar>
+<!--
 <div class="bt bt-background" *ngIf="this.step==1">
   <a (click)="close()"><i class="fa fa-times-circle close" aria-hidden="true"></i></a>
-  <div class="bw">
-    <h1>Welome to Newscron 3.0</h1>
-    <p>Select a region</p>
-    <div class="row" id="editions">
 
-      <div class="col-lg-4 col-md-6">
-        <button class="btn btn-block statcard statcard-success p-a-md" (click)="setContinent('EUROPE')">
-                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
-                    <h3 class="statcard-number">EUROPE</h3>
-                    <span class="statcard-desc">13 editions</span>
-                </button>
-      </div>
-      <div class="col-lg-4 col-md-6">
-        <button class="btn btn-block statcard statcard-success p-a-md" (click)="setContinent('NORTH_AMERICA')">
-                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
-                    <h3 class="statcard-number">NORTH AMERICA</h3>
-                    <span class="statcard-desc">1 editions</span>
-                </button>
-      </div>
-      <div class="col-lg-4 col-md-6">
-        <button type="button" class="btn btn-block statcard statcard-success p-a-md" (click)="setContinent('SOUTH_AMERICA')">
-                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
-                    <h3 class="statcard-number">SOUTH AMERICA</h3>
-                    <span class="statcard-desc">18 editions</span>
-                </button>
-      </div>
-    </div>
-  </div>
 </div>
-
-<div class="bt bt-background full" *ngIf="this.step>1"></div>
-
-<div class="bt" *ngIf="this.step==2">
-  <a (click)="close()"><i class="fa fa-times-circle close" aria-hidden="true"></i></a>
-  <div class="bw" style="padding-bottom: 120px;">
-    <h1>{{continent}}</h1>
-    <p>Select editions</p>
-
-    <!--
-    <div class="twocol">
-      <div *ngFor="let package of packages | editionPerContinent:continent let i = index;">
-        <label class="custom-control custom-checkbox statcard statcard-success p-a-md" style="padding: 15px!important;width: 100%;">
-                    <input type="checkbox" [(ngModel)]="package.selected" class="custom-control-input" value="{{package.id}}" (change)="selectEdition($event)">
-                    <span class="custom-control-indicator" style=" top: 12px;left: 12px; width: 22px; height: 22px;"></span>
-                    <span class="custom-control-description statcard-number" style="margin-left: 30px;">{{package.name}}</span>
-                </label>
-      </div>
-    </div>
-    -->
-
-    <package-selection [continent]="continent" [packagesIds]="packagesIds" (onChange)="onPackageChange($event)"></package-selection>
-
-
+-->
+<div class="welcome">
+  <md-progress-bar mode="indeterminate" class="loading-bar" *ngIf="loading"></md-progress-bar>
+  <div *ngIf="this.step==1">
+    <welcome-region (onChange)="setContinent($event)"></welcome-region>
   </div>
-  <div class="fixed-bar">
+  <div *ngIf="this.step==2">
+    <welcome-edition [continent]="continent" [packagesIds]="packagesIds" (onChange)="onPackageChange($event)"></welcome-edition>
+  </div>
+  <div *ngIf="this.step==3">
+    <welcome-categories [categories]="categories" (onChange)="selectCategory($event)"></welcome-categories>
+  </div>
+  <div class="fixed-bar" *ngIf="this.step>1">
     <div>
       <button md-raised-button style="" (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</button>
-      <button md-raised-button style="float:right;" (click)="next()" [disabled]="!hasOnePackage()">Next <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
-    </div>
-  </div>
-</div>
-
-<div class="bt" *ngIf="this.step==3">
-  <a (click)="close()"><i class="fa fa-times-circle close" aria-hidden="true"></i></a>
-  <div class="bw" style="padding-bottom: 120px;">
-    <h1>Tune it</h1>
-    <p>Select categories</p>
-
-    <div class="twocol">
-      <div *ngFor="let category of categories let i = index;">
-        <!--<div class="custom-control custom-checkbox statcard statcard-success p-a-md" style="padding: 15px!important;width: 100%;">
-          <h3 class="statcard-number">{{category.name}}
-                      <small class="delta-indicator">{{category.amount | categoryAmmount}}</small>
-                    </h3>
-          <md-slider min="0" max="25" step="5" value="10" tick-interval="1" [(ngModel)]="category.amount"></md-slider>
-
-        </div>-->
-
-        <label class="custom-control custom-checkbox statcard statcard-success p-a-md" style="padding: 15px!important;width: 100%;">
-                      <input type="checkbox" (change)="selectCategory($event)" value="{{i}}" class="custom-control-input" checked>
-                      <span class="custom-control-indicator" style=" top: 12px;left: 12px; width: 22px; height: 22px;"></span>
-                      <span class="custom-control-description statcard-number" style="margin-left: 30px;">{{category.name}}</span>
-          </label>
-      </div>
-    </div>
-  </div>
-  <div class="fixed-bar">
-    <div>
-      <button md-raised-button style="" (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</button>
-      <button md-raised-button style="float:right;" (click)="finish()">Save <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+      <button *ngIf="this.step==2" md-raised-button style="float:right;" [disabled]="!hasOnePackage()" (click)="next()">Next <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+      <button *ngIf="this.step==3" md-raised-button style="float:right;" (click)="finish()">Save <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
     </div>
   </div>
 </div>
@@ -112,8 +41,5 @@
         <p>You are all set, ready to read the best news aggregated from hundreds of publishers and to cotribute indentifing the most relevant ones.</p>
 
     </div>
-    <div class="modal-actions">
-        <button type="button" class="btn btn-lg btn-pill btn-default">Default</button>
-        <button type="button" class="btn-link modal-action" (click)="finish()"><strong>Finish</strong></button>
-    </div>
+
 </div>-->

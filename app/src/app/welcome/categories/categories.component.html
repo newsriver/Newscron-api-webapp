@@ -1,0 +1,22 @@
+<div class="welcome-step">
+  <h1>Tune it</h1>
+  <p>Select categories</p>
+
+  <div class="twocol">
+    <div *ngFor="let category of categories let i = index;">
+      <!--<div class="custom-control custom-checkbox statcard statcard-success p-a-md" style="padding: 15px!important;width: 100%;">
+      <h3 class="statcard-number">{{category.name}}
+                  <small class="delta-indicator">{{category.amount | categoryAmmount}}</small>
+                </h3>
+      <md-slider min="0" max="25" step="5" value="10" tick-interval="1" [(ngModel)]="category.amount"></md-slider>
+
+    </div>-->
+
+      <label class="custom-control custom-checkbox statcard statcard-success p-a-md" style="padding: 15px!important;width: 100%;">
+                  <input type="checkbox" (change)="selectCategory($event)" value="{{i}}" class="custom-control-input" checked>
+                  <span class="custom-control-indicator" style=" top: 12px;left: 12px; width: 22px; height: 22px;"></span>
+                  <span class="custom-control-description statcard-number" style="margin-left: 30px;">{{category.name}}</span>
+      </label>
+    </div>
+  </div>
+</div>

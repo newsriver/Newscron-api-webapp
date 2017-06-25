@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, Pipe, PipeTransform } from '@angular/core';
 import {NewscronClientService, BootstrapConfiguration, CategoryPreference, UserPreferences} from '../newscron-client.service';
-
+import { Router } from '@angular/router';
 
 @Pipe({
   name: 'keys'
@@ -49,9 +49,8 @@ export class WelcomeComponent implements OnInit {
   public step: number = 0;
   public packagesIds: number[] = [];
   public categories: CategoryPreference[] = [];
-  public continents: Continent[] = JSON.parse('[{"title":"Europe","id":"EUROPE","size":"13"}]');
 
-  constructor(private client: NewscronClientService) {
+  constructor(private client: NewscronClientService, private router: Router) {
 
   }
 
@@ -87,6 +86,8 @@ export class WelcomeComponent implements OnInit {
     preferences.categories = this.categories;
     this.client.resetUserPreferences(preferences, true);
     this.setWelcomeStep.emit(this.step);
+    this.router.navigate(['/']);
+
   }
 
   public hasOnePackage() {

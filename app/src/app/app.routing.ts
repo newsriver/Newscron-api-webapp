@@ -7,6 +7,9 @@ import { ConfigComponent } from './config/config.component';
 import { MainContentComponent } from './main-content/main-content.component';
 import { SearchComponent } from './search/search.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { CategoriesComponent } from './welcome/categories/categories.component';
+import { EditionComponent } from './welcome/edition/edition.component';
+import { RegionComponent } from './welcome/region/region.component';
 
 
 
@@ -27,7 +30,7 @@ export const AppRoutes: Routes = [
     ]
   },
   {
-    path: 'welcome', component: WelcomeComponent
+    path: 'welcome', component: WelcomeComponent,
   },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];
