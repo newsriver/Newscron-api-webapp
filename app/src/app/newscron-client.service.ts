@@ -59,7 +59,8 @@ export class NewscronClientService {
     let options = new RequestOptions({ headers: headers });
 
     return this.http.get(this.baseURL + "/search?search=" + search, options)
-      .map(this.extractData);
+      .map(this.extractData)
+      .catch(error => { return error; });
 
   }
 

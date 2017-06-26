@@ -118,6 +118,6 @@
     <section [section]="section" *ngIf="section!=null"></section>
   </li>
 </ul>
-<h4 *ngIf="section!=null && section.articles.length == 0" style="margin-top:5rem;">
+<h4 *ngIf="section==null && !loading && searchPhrase.length>0" style="margin-top:5rem;">
   No results found!
 </h4>
