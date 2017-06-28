@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, Pipe, PipeTransform } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Pipe, PipeTransform, Inject } from '@angular/core';
 import {NewscronClientService, BootstrapConfiguration, CategoryPreference, UserPreferences} from '../newscron-client.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
 
 @Pipe({
   name: 'keys'
@@ -50,19 +51,27 @@ export class WelcomeComponent implements OnInit {
   public packagesIds: number[] = [];
   public categories: CategoryPreference[] = [];
 
-  constructor(private client: NewscronClientService, private router: Router) {
+  constructor(private client: NewscronClientService, private router: Router, private route: ActivatedRoute, public dialog: MdDialog) {
 
   }
 
   ngOnInit() {
-    this.step = 1;
-    this.boot(null);
-  }
+    this.step = 1
+    this.route.params.subscribe(params => {
+      this.continent = params.continent;
+      if (this.continent != null) {
+        this.step = 2;
+        this.setWelcomeStep.emit(this.step);
+      }
+    });
 
-  setContinent(name: string) {
-    this.continent = name;
-    this.step++;
-    this.setWelcomeStep.emit(this.step);
+    if (this.client.hasPreferences()) {
+      let dialogRef = this.dialog.open(ResetConfirmationDialoug, {
+        data: {}
+      }
+      );
+    }
+    this.boot(null);
   }
 
   close() {
@@ -122,6 +131,25 @@ export class WelcomeComponent implements OnInit {
   }
 
 }
+
+@Component({
+  selector: 'resetconfirm-dialog',
+  templateUrl: './reset-confirmation-dialog.html',
+  styleUrls: ['./dialog.css']
+})
+export class ResetConfirmationDialoug {
+
+  public removeall: boolean = false;
+  constructor(public dialogRef: MdDialogRef<ResetConfirmationDialoug>, @Inject(MD_DIALOG_DATA) public data: any, private router: Router) {
+
+  }
+
+  cancel() {
+    this.router.navigate(['/']);
+    this.dialogRef.close('close');
+  }
+}
+
 
 export class Package {
   public id: number;

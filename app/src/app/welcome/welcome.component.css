@@ -6,6 +6,11 @@
   background-color: #1ca8dd;
   background-image: linear-gradient(to bottom, #137499, #1ca8dd);
   min-height:100%;
+
+}
+.welcome-body{
+  margin: auto;
+  max-width: 1200px;
 }
 
 .close{
@@ -65,7 +70,6 @@
 }
 
 .fixed-bar div{
-  max-width: 1200px;
   margin: auto;
 }
 

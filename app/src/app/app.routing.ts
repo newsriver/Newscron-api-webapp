@@ -30,6 +30,9 @@ export const AppRoutes: Routes = [
     ]
   },
   {
+    path: 'welcome/:continent', component: WelcomeComponent,
+  },
+  {
     path: 'welcome', component: WelcomeComponent,
   },
   { path: '**', redirectTo: '/', pathMatch: 'full' },

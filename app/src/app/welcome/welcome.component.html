@@ -1,30 +1,15 @@
-<!--<div class="bt bt-background" *ngIf="this.step==-1">
-    <div class="bw">
-        <h1>Welcome to Newscron</h1>
-        <p>Democrating access to news, togheter we are smarter!
-            <br/> Configure Newscron to provide you with news you truley care.
-            <br/> Collaborate with the comunity to hilight important news and ban inapropriate content.</p>
-    </div>
-    <div class="modal-actions">
-        <button type="button" class="btn-link modal-action" (click)="next()"><strong>Next</strong></button>
-    </div>
-</div>-->
-<!--
-<div class="bt bt-background" *ngIf="this.step==1">
-  <a (click)="close()"><i class="fa fa-times-circle close" aria-hidden="true"></i></a>
-
-</div>
--->
 <div class="welcome">
   <md-progress-bar mode="indeterminate" class="loading-bar" *ngIf="loading"></md-progress-bar>
-  <div *ngIf="this.step==1">
-    <welcome-region (onChange)="setContinent($event)"></welcome-region>
-  </div>
-  <div *ngIf="this.step==2">
-    <welcome-edition [continent]="continent" [packagesIds]="packagesIds" (onChange)="onPackageChange($event)"></welcome-edition>
-  </div>
-  <div *ngIf="this.step==3">
-    <welcome-categories [categories]="categories" (onChange)="selectCategory($event)"></welcome-categories>
+  <div class="welcome-body">
+    <div *ngIf="this.step==1">
+      <welcome-region></welcome-region>
+    </div>
+    <div *ngIf="this.step==2">
+      <welcome-edition [continent]="continent" [packagesIds]="packagesIds" (onChange)="onPackageChange($event)"></welcome-edition>
+    </div>
+    <div *ngIf="this.step==3">
+      <welcome-categories [categories]="categories" (onChange)="selectCategory($event)"></welcome-categories>
+    </div>
   </div>
   <div class="fixed-bar" *ngIf="this.step>1">
     <div>
@@ -33,13 +18,5 @@
       <button *ngIf="this.step==3" md-raised-button style="float:right;" (click)="finish()">Save <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
     </div>
   </div>
+
 </div>
-
-<!--<div class="bt" *ngIf="this.step==3">
-    <div class="bw">
-        <h1>Done</h1>
-        <p>You are all set, ready to read the best news aggregated from hundreds of publishers and to cotribute indentifing the most relevant ones.</p>
-
-    </div>
-
-</div>-->

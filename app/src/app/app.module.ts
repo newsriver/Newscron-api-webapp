@@ -15,7 +15,7 @@ import { AppComponent } from './app.component';
 import { AppComponents, AppRoutes } from "./app.routing";
 import { ArticleComponent, PublisherDialog, EscapeHtmlPipe } from './article/article.component';
 import { CategoryComponent } from './category/category.component';
-import { WelcomeComponent, KeysPipe, CategoryAmmountPipe } from './welcome/welcome.component';
+import { WelcomeComponent, ResetConfirmationDialoug, KeysPipe, CategoryAmmountPipe } from './welcome/welcome.component';
 import {NewscronClientService} from './newscron-client.service';
 import {SectionComponent, SortArticle} from './section/section.component';
 
@@ -44,6 +44,7 @@ import { CategoriesComponent } from './welcome/categories/categories.component';
     EditionPerContinent,
     ValidSectionFilter,
     WelcomeComponent,
+    ResetConfirmationDialoug,
     SectionComponent,
     CategoryComponent,
     AppComponents,
@@ -73,7 +74,7 @@ import { CategoriesComponent } from './welcome/categories/categories.component';
     RouterModule.forRoot(AppRoutes)
   ],
   entryComponents: [
-    PublisherDialog,
+    PublisherDialog, ResetConfirmationDialoug
   ],
   providers: [CordovaService, NewscronClientService],
   bootstrap: [AppComponent]

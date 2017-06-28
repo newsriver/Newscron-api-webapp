@@ -153,6 +153,10 @@ export class NewscronClientService {
     return this.userPreferences;
   }
 
+  public hasPreferences(): Boolean {
+    return localStorage.getItem('userPreferences') != null;
+  }
+
   public setUserPreferences(preferences: UserPreferences) {
     this.userPreferences = preferences;
     localStorage.setItem('userPreferences', JSON.stringify(this.userPreferences));

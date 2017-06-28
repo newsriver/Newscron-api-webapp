@@ -4,6 +4,7 @@ import {WelcomeComponent} from '../welcome/welcome.component';
 import {NewscronClientService, BootstrapConfiguration, Section, CategoryPreference, Article} from '../newscron-client.service';
 import {Injectable, Pipe, PipeTransform} from '@angular/core';
 import { Router } from '@angular/router';
+import { CordovaService } from '../cordova.service';
 
 
 @Pipe({
@@ -18,7 +19,9 @@ export class ValidSectionFilter implements PipeTransform {
   transform(items: Array<Section>, args: any[]): Array<Section> {
     items = items.filter(item => item.articles.length > 0);
     items.sort((a: Section, b: Section) => {
-      return this.client.getUserPreferences().getCategory(b.category.id).amount - this.client.getUserPreferences().getCategory(a.category.id).amount;
+      let cata = this.client.getUserPreferences().getCategory(a.category.id);
+      let catb = this.client.getUserPreferences().getCategory(b.category.id);
+      return (catb == null ? 0 : catb.amount) - (cata == null ? 0 : cata.amount);
     });
     return items;
   }
@@ -50,23 +53,31 @@ export class MainContentComponent implements OnInit {
 
   public bootConfig: BootstrapConfiguration;
   public categories: CategoryPreference[] = [];
-  public welcomeStep: number = 0;
+  public displayWelcome: boolean = false;
 
-  constructor(private client: NewscronClientService, public router: Router) {
+  constructor(private client: NewscronClientService, public router: Router, public cordovaService: CordovaService) {
 
   }
 
   ngOnInit() {
 
+
+
     if (this.client.getUserPreferences() == null) {
-      this.welcomeStep = 1;
+
+      if (this.cordovaService.onCordova) {
+        this.router.navigate(['/welcome']);
+      } else {
+        this.displayWelcome = true;
+      }
+
     }
 
 
     this.client.refreshListener().subscribe(refresh => {
       if (refresh) {
         if (this.client.getUserPreferences() == null) {
-          this.welcomeStep = 1;
+          this.displayWelcome = true;
         } else {
           this.categories = this.client.getUserPreferences().categories;
         }
@@ -79,15 +90,6 @@ export class MainContentComponent implements OnInit {
     return this.router.url.startsWith('/search');
   }
 
-
-  public setWelcomeStep(step: number) {
-    this.welcomeStep = step;
-  }
-
-  public setUp() {
-    this.welcomeStep = 1;
-    window.scrollTo(0, 0);
-  }
 
   public searchPhrase: string;
   public search(e) {
