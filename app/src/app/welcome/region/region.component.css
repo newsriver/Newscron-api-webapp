@@ -1,0 +1,30 @@
+
+
+
+.statcard i {
+  float: right;
+  font-size: 4rem;
+  margin-top: 0.8rem;
+}
+
+.statcard{
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+
+@media (hover:hover) {
+  .statcard:hover{
+    background-color: white;
+    color: #1BC98E;
+  }
+  .statcard:hover .statcard-desc{
+    color: #1BC98E;
+  }
+  .statcard:hover .delta-indicator{
+    color: #1BC98E;
+  }
+  .modal-actions button:hover{
+    color: #1CA8D9;
+  }
+}

@@ -1,7 +1,7 @@
 <!-- NOTE: also see custom css in the main app.component.css files due to a bug -->
 <md-sidenav-container>
   <!-- Menu -->
-  <md-sidenav mode="over" class="mat-sidenav" #menu (open)="welcomeStep;">
+  <md-sidenav mode="over" class="mat-sidenav" #menu>
     <nav class="navbar navbar-light bg-faded">
       <button md-button (click)="menu.close()" style="color:black"><i class="fa fa-chevron-left" aria-hidden="true"></i> Close
       </button>
@@ -24,9 +24,8 @@
 
 
         <li class=" nav-header ">Other</li>
-
         <li>
-          <a (click)="setUp();menu.close()">Set-up</a>
+          <a [routerLink]="['/welcome']">Reset</a>
         </li>
       </ul>
     </nav>
@@ -34,26 +33,26 @@
 
   <!-- Navigation Bar -->
   <nav class="navbar navbar-light bg-faded">
-    <button class="navbar-toggler navbar-toggler-left visible-xs" type="button" (click)="menu.open()" *ngIf="this.welcomeStep <= 0">
+    <button class="navbar-toggler navbar-toggler-left visible-xs" type="button" (click)="menu.open()">
       <span class="navbar-toggler-icon"></span>
     </button>
   </nav>
 
   <!-- Main Content -->
   <div class="app-content">
-    <welcome *ngIf="this.welcomeStep > 0" (setWelcomeStep)="setWelcomeStep($event)"></welcome>
+    <welcome *ngIf="displayWelcome"></welcome>
 
-    <div class="main-container" [hidden]="this.welcomeStep > 1">
+    <div class="main-container">
       <div class="row">
         <div class="col-sm-3 hidden-sm-down sidebar">
-          <nav class="sidebar-nav">
+          <nav class="sidebar-nav" *ngIf="categories.length>0">
             <form (submit)="search($event); menu.close();" style="margin-bottom: 30px; position: relative;" *ngIf="!isSearch()">
               <input class="form-control" type="text" placeholder="Search..." [(ngModel)]="searchPhrase" name="searchPhrase">
               <button type="submit" class="sarchButton">
                 <i class="fa fa-search" aria-hidden="true"></i>
               </button>
             </form>
-            <ul class="nav nav-pills nav-stacked " [style.position]="welcomeStep==1 ? 'relative': 'fixed' ">
+            <ul class="nav nav-pills nav-stacked">
               <li class="active-route" *ngIf="isSearch()">Search</li>
               <li><a routerLink='/' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">News Digest</a></li>
               <!--<li><a routerLink='/top' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">Top News</a></li>-->
@@ -67,7 +66,7 @@
               <li class=" nav-header ">Other</li>
 
               <li>
-                <a (click)="menu.close();setUp()">Set-up</a>
+                <a [routerLink]="['/welcome/']">Reset</a>
               </li>
               <!-- <li>
                               <a>Request Newspaper</a>

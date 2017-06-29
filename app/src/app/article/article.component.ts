@@ -38,6 +38,8 @@ export class ArticleComponent implements OnInit {
   }
 
 
+
+
   public openLinkInBrowser() {
     this.cordovaService.openLinkInBrowser(this.article.url);
   }

@@ -1,0 +1,14 @@
+h1{
+  color:black;
+}
+
+
+.mat-dialog-content{
+  color:black;
+  padding-bottom: 10px;
+}
+
+.mat-dialog-actions{
+  color:black;
+  flex-wrap: wrap;
+}

@@ -15,7 +15,7 @@ import { AppComponent } from './app.component';
 import { AppComponents, AppRoutes } from "./app.routing";
 import { ArticleComponent, PublisherDialog, EscapeHtmlPipe } from './article/article.component';
 import { CategoryComponent } from './category/category.component';
-import { WelcomeComponent, KeysPipe, CategoryAmmountPipe } from './welcome/welcome.component';
+import { WelcomeComponent, ResetConfirmationDialoug, KeysPipe, CategoryAmmountPipe } from './welcome/welcome.component';
 import {NewscronClientService} from './newscron-client.service';
 import {SectionComponent, SortArticle} from './section/section.component';
 
@@ -27,6 +27,9 @@ import { MainContentComponent, ValidSectionFilter, SortCategory } from './main-c
 import { ConfigComponent } from './config/config.component';
 import { PackageSelectionComponent, EditionPerContinent } from './config/package-selection/package-selection.component';
 import { SearchComponent } from './search/search.component';
+import { RegionComponent } from './welcome/region/region.component';
+import { EditionComponent } from './welcome/edition/edition.component';
+import { CategoriesComponent } from './welcome/categories/categories.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,7 @@ import { SearchComponent } from './search/search.component';
     EditionPerContinent,
     ValidSectionFilter,
     WelcomeComponent,
+    ResetConfirmationDialoug,
     SectionComponent,
     CategoryComponent,
     AppComponents,
@@ -50,7 +54,10 @@ import { SearchComponent } from './search/search.component';
     MainContentComponent,
     ConfigComponent,
     PackageSelectionComponent,
-    SearchComponent
+    SearchComponent,
+    RegionComponent,
+    EditionComponent,
+    CategoriesComponent
   ],
   imports: [
     NoopAnimationsModule,
@@ -67,7 +74,7 @@ import { SearchComponent } from './search/search.component';
     RouterModule.forRoot(AppRoutes)
   ],
   entryComponents: [
-    PublisherDialog,
+    PublisherDialog, ResetConfirmationDialoug
   ],
   providers: [CordovaService, NewscronClientService],
   bootstrap: [AppComponent]
