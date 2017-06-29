@@ -65,7 +65,7 @@ export class WelcomeComponent implements OnInit {
       }
     });
 
-    if (this.client.hasPreferences()) {
+    if (this.client.hasPreferences() && this.step == 1) {
       let dialogRef = this.dialog.open(ResetConfirmationDialoug, {
         data: {}
       }
