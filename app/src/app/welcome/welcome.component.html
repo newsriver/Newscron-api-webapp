@@ -50,6 +50,7 @@
     <h1>Select local editions</h1>
     <p>FOR {{continent}}</p>
 
+    <!--
     <div class="twocol">
       <div *ngFor="let package of packages | editionPerContinent:continent let i = index;">
         <label class="custom-control custom-checkbox statcard statcard-success p-a-md" style="padding: 15px!important;width: 100%;">
@@ -59,6 +60,11 @@
                 </label>
       </div>
     </div>
+    -->
+
+    <package-selection [continent]="continent" [packagesIds]="packagesIds" (onChange)="onPackageChange($event)"></package-selection>
+
+
   </div>
   <div class="fixed-bar">
     <div>

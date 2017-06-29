@@ -37,7 +37,7 @@
       <div class="img" [ngStyle]="{'background-image': 'url(' + article.imgUrl + ')'}" border="0" *ngIf="article.imgUrl!=null"></div>
       <h4>{{article.title}}</h4>
       <span *ngIf="!isDigest">{{article.publicationDate | date: 'dd/MM/yyyy HH:mm'}} | {{article.publisher.name}}</span>
-      <p>{{article.snippet}}</p>
+      <p [innerHTML]="article.snippet | escapeHtml" class="snippet"></p>
     </div>
   </div>
 
@@ -64,7 +64,7 @@
         <div class="img" [ngStyle]="{'background-image': 'url(' + article.imgUrl + ')'}" border="0" *ngIf="article.imgUrl!=null"></div>
         <h4>{{article.title}}</h4>
         <span *ngIf="!isDigest">{{article.publicationDate | date: 'dd/MM/yyyy HH:mm'}} | {{article.publisher.name}}</span>
-        <p>{{article.snippet}}</p>
+        <p [innerHTML]="article.snippet | escapeHtml" class="snippet"></p>
       </div>
     </a>
   </div>

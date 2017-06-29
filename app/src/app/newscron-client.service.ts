@@ -53,6 +53,18 @@ export class NewscronClientService {
   }
 
 
+  public search(search: string): Observable<Section> {
+
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.get(this.baseURL + "/search?search=" + search, options)
+      .map(this.extractData)
+      .catch(error => { return error; });
+
+  }
+
+
   public featured(): Observable<Section[]> {
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -141,6 +153,11 @@ export class NewscronClientService {
 
   public getUserPreferences(): UserPreferences {
     return this.userPreferences;
+  }
+
+  public setUserPreferences(preferences: UserPreferences) {
+    this.userPreferences = preferences;
+    localStorage.setItem('userPreferences', JSON.stringify(this.userPreferences));
   }
 
   public refreshListener(): BehaviorSubject<boolean> {

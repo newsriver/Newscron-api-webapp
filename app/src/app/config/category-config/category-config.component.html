@@ -1,0 +1,27 @@
+<h1>{{category.name}} - Configuration</h1>
+<hr/>
+
+
+
+<h3 style="margin-top: 6rem;">OptedOut Publishers</h3>
+<p *ngIf="category.publishersOptOut.length==0">No publishers have been opted out for this category.</p>
+<ul>
+  <li *ngFor="let publisher of category.publishersOptOut; let j = index">
+    <button md-button style="min-width:20px" (click)="undoPublisherOptOut(j)"><i class="fa fa-undo" aria-hidden="true"></i></button> {{publisher.name}}
+  </li>
+</ul>
+
+
+
+<h3 style="margin-top: 6rem;">Regions</h3>
+<md-tab-group>
+  <md-tab label="EUROPE">
+    <package-selection continent="EUROPE" [packagesIds]="category.packages" (onChange)="onPackageChange($event)"></package-selection>
+  </md-tab>
+  <md-tab label="NORTH AMERICA">
+    <package-selection continent="NORTH_AMERICA" [packagesIds]="category.packages" (onChange)="onPackageChange($event)"></package-selection>
+  </md-tab>
+  <md-tab label="SOUTH AMERICA">
+    <package-selection continent="SOUTH_AMERICA" [packagesIds]="category.packages" (onChange)="onPackageChange($event)"></package-selection>
+  </md-tab>
+</md-tab-group>

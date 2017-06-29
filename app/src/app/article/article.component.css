@@ -35,11 +35,14 @@ line-height: 2.8rem;
 
 .article .img{
   float: left;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-repeat: no-repeat,no-repeat;
+  background-size: cover,cover;
+  background-position: center center, center center;
   width: 24rem;
   height: 20rem;
   margin-right: 2rem;
+  background-image: url('/assets/img/placeholder-image.png');
+  background-color: lightgray;
 }
 
 
@@ -60,6 +63,15 @@ line-height: 2.8rem;
   height: auto;
   overflow: hidden;
   display: inline;
+}
+
+.snippet >>> span{
+    color: #fff;
+    font-weight: 700;
+    background-color: #373a3c;
+    padding: 3px;
+    border-radius: 3px;
+    margin: 2px;
 }
 
 a{

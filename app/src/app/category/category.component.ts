@@ -18,17 +18,21 @@ export class CategoryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.categoryId = this.route.snapshot.params['id'];
-    this.name = this.route.snapshot.params['name'];
 
-    this.loading = true;
-    this.section = null;
-    this.client.category(this.categoryId).subscribe(section => {
-      this.section = section;
-      this.loading = false;
+    //we need to subscribe to the params changes as the router is not reloading the componet on param changes
+    this.route.params.subscribe(params => {
+
+      this.categoryId = params.id;
+      this.name = params.name;
+
+      this.loading = true;
+      this.section = null;
+      this.client.category(this.categoryId).subscribe(section => {
+        this.section = section;
+        this.loading = false;
+      });
+
     });
-
-
 
   }
 }

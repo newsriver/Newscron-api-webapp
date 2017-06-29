@@ -22,9 +22,10 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -53,17 +54,21 @@ public class CategoryArticles {
 
     private Section categoryArticles(CategoryPreference categoryPreference, int limit) {
 
+        Instant start = Instant.now();
         Section categoryArticles = new Section();
         Category category = new Category();
         category.setId(categoryPreference.getId());
         category.setName(categoryPreference.getName());
         categoryArticles.setCategory(category);
 
-
+        Instant query_start = Instant.now();
         ArticleFactory articleFactory = ArticleFactory.getInstance();
-        Set<Long> articlesId = categoryArticlesIds(categoryPreference.getId(), categoryPreference.getPackages(), limit);
+        Set<Long> articlesId = categoryArticlesIds(categoryPreference, limit);
+        Instant query_end = Instant.now();
 
+        Instant getArticles_start = Instant.now();
         ArrayList<StructuredArticle> articles = articleFactory.getArticles(articlesId);
+        Instant getArticles_end = Instant.now();
 
         for (StructuredArticle strArticle : articles) {
 
@@ -83,11 +88,16 @@ public class CategoryArticles {
 
             categoryArticles.getArticles().add(article);
         }
+        Instant end = Instant.now();
+
+        System.out.println("Category timing total:" + Duration.between(start, end) + " query:" + Duration.between(query_start, query_end) + " fetch:" + Duration.between(getArticles_start, getArticles_end));
+
+
         return categoryArticles;
     }
 
 
-    private Set<Long> categoryArticlesIds(int categoryId, List<Integer> packages, int limit) {
+    private Set<Long> categoryArticlesIds(CategoryPreference category, int limit) {
 
         HashSet<Long> articleIds = new HashSet<>();
         Connection conn = null;
@@ -95,10 +105,18 @@ public class CategoryArticles {
         ResultSet rs = null;
 
         String packagesIds = "";
-        for (Integer packageId : packages) {
+        for (Integer packageId : category.getPackages()) {
             packagesIds += packageId + ",";
         }
         packagesIds += "-1";
+
+        String publishersOptOut = "";
+        if (category.getPublishersOptOut() != null) {
+            for (Publisher publisher : category.getPublishersOptOut()) {
+                publishersOptOut += publisher.getId() + ",";
+            }
+        }
+        publishersOptOut += "-1";
 
         try {
 
@@ -106,22 +124,20 @@ public class CategoryArticles {
             conn = this.dataSource.getConnection();
             conn.setReadOnly(true);
 
-            String sql = "SELECT A.id, T.id, T.version FROM NewscronContent.article AS A \n" +
-                    "            JOIN NewscronContent.topic as T ON T.id=A.topicId\n" +
-                    "            WHERE A.categoryID=? AND A.packageID in (?) AND A.cloneID is NULL\n" +
-                    "            ORDER BY A.publicationDateGMT DESC LIMIT ?;";
+            String sql = "SELECT A.id, A.topicId FROM NewscronContent.article AS A \n" +
+                    " WHERE A.publicationDateGMT > DATE_SUB(now(), Interval 7 DAY) AND A.categoryID=? AND A.packageID in (" + packagesIds + ") AND A.publisherId NOT in (" + publishersOptOut + ") AND A.cloneID is NULL\n" +
+                    " ORDER BY A.publicationDateGMT DESC LIMIT ?;";
 
 
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, categoryId);
-            stmt.setString(2, packagesIds);
-            stmt.setInt(3, limit * 20);
+            stmt.setInt(1, category.getId());
+            stmt.setInt(2, limit * 20);
 
             rs = stmt.executeQuery();
 
             HashSet<Long> topicIds = new HashSet<Long>();
             while (rs.next() && limit > 0) {
-                if (!topicIds.add(rs.getLong("T.id"))) {
+                if (!topicIds.add(rs.getLong("A.topicId"))) {
                     continue;
                 }
                 if (articleIds.add(rs.getLong("A.id"))) {

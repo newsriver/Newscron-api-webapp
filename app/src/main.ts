@@ -24,7 +24,6 @@ let onResume = () => {
 };
 
 if (cordova.onCordova) {
-  //alert('cordova');
   document.addEventListener('deviceready', onBootstrap, false);
   document.addEventListener('resume', onResume, false);
 } else {

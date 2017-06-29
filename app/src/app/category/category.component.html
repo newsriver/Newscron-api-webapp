@@ -3,10 +3,14 @@
     {{name}}
   </h2>
   <hr/>
-  <md-progress-bar mode="indeterminate" class="loading-bar"></md-progress-bar>
+  <md-progress-spinner mode="indeterminate" class="progress-spinner"></md-progress-spinner>
 </div>
 <ul>
   <li>
     <section [section]="section" *ngIf="section!=null"></section>
   </li>
 </ul>
+<h4 *ngIf="section!=null && section.articles.length == 0" style="margin-top:5rem;">
+  In the past week no articles for this category have been published.
+
+</h4>

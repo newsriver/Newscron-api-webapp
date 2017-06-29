@@ -1,0 +1,60 @@
+li{
+  list-style-type:none
+}
+
+ul{
+  padding: 0px;
+}
+
+
+hr{
+  margin-top: 1rem;
+}
+
+.progress-spinner{
+  margin: auto;
+    margin-top: 5rem;
+}
+
+.sarchButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 14px 30px;
+    color: #b7bcc8;
+    background-color: transparent;
+    border: 0;
+    line-height: 0;
+    font-size: 3rem;
+}
+
+.searchPhrase{
+  font-size:3rem;
+  height: auto;
+}
+
+.search-label{
+  color:white;
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin: 0px!important;
+}
+
+
+@media screen and (max-width: 540px) {
+  .searchPhrase{
+    font-size:2rem;
+  }
+
+  .sarchButton {
+    font-size: 2rem;
+    padding: 11px 25px;
+  }
+  .form-group {
+      margin: 0px;
+  }
+
+  .search-label{
+  font-size: 1.5rem;
+  }
+}

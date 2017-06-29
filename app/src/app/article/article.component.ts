@@ -4,6 +4,16 @@ import { CordovaService } from '../cordova.service';
 import { Router, ActivatedRoute} from '@angular/router';
 import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
 import {NewscronClientService} from '../newscron-client.service';
+import {Pipe, PipeTransform} from '@angular/core';
+
+
+@Pipe({ name: 'escapeHtml', pure: false })
+export class EscapeHtmlPipe implements PipeTransform {
+  transform(value: string, args: any[] = []) {
+    if (value == null) return "";
+    return value.replace(new RegExp("<highlighted>", 'g'), "<span>").replace(new RegExp("</highlighted>", 'g'), "</span>")
+  }
+}
 
 @Component({
   selector: 'articles',
@@ -42,15 +52,6 @@ export class ArticleComponent implements OnInit {
     });
   }
 
-  categoryDialog(category: Category) {
-    let dialogRef = this.dialog.open(CategoryDialog, {
-      data: { "category": category }
-    }
-    );
-    dialogRef.afterClosed().subscribe(result => {
-      //this.selectedOption = result;
-    });
-  }
 
 }
 
@@ -69,23 +70,6 @@ export class PublisherDialog {
 
   save() {
     this.client.publishersOptOut(this.data.publisher, this.data.category);
-    this.dialogRef.close('close');
-  }
-}
-
-@Component({
-  selector: 'category-dialog',
-  templateUrl: './category-dialog.html',
-  styleUrls: ['./dialog.css']
-})
-export class CategoryDialog {
-
-  public removeall: boolean = false;
-  constructor(public dialogRef: MdDialogRef<CategoryDialog>, @Inject(MD_DIALOG_DATA) public data: any) {
-
-  }
-
-  save() {
     this.dialogRef.close('close');
   }
 }
