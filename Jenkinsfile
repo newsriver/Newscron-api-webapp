@@ -64,7 +64,7 @@ def angular2Compile() {
 
         stage 'update global modules'
 
-        //sh 'npm cache clean'
+        sh 'npm cache clean'
         sh 'npm update -g'
         stage 'install modules'
         sh 'rm -rf node_modules && rm -rf dist'
