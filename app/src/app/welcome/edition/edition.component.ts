@@ -15,7 +15,7 @@ export class EditionComponent implements OnInit {
   ngOnInit() {
   }
 
-  private onPackageChange() {
+  public onPackageChange($event) {
     this.onChange.emit(this.packagesIds);
   }
 

@@ -1,20 +1,5 @@
 <div class="welcome-step">
   <h1>{{continent}}</h1>
   <p>Select editions</p>
-
-  <!--
-<div class="twocol">
-  <div *ngFor="let package of packages | editionPerContinent:continent let i = index;">
-    <label class="custom-control custom-checkbox statcard statcard-success p-a-md" style="padding: 15px!important;width: 100%;">
-                <input type="checkbox" [(ngModel)]="package.selected" class="custom-control-input" value="{{package.id}}" (change)="selectEdition($event)">
-                <span class="custom-control-indicator" style=" top: 12px;left: 12px; width: 22px; height: 22px;"></span>
-                <span class="custom-control-description statcard-number" style="margin-left: 30px;">{{package.name}}</span>
-            </label>
-  </div>
-</div>
--->
-
   <package-selection [continent]="continent" [packagesIds]="packagesIds" (onChange)="onPackageChange($event)"></package-selection>
-
-
 </div>
