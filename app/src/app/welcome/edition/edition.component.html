@@ -1,0 +1,5 @@
+<div class="welcome-step">
+  <h1>{{continent}}</h1>
+  <p>Select editions</p>
+  <package-selection [continent]="continent" [packagesIds]="packagesIds" (onChange)="onPackageChange($event)"></package-selection>
+</div>
