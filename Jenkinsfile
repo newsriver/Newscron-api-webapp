@@ -64,11 +64,12 @@ def angular2Compile() {
 
         stage 'update global modules'
 
-        sh 'npm cache clean'
+        //sh 'npm cache clean'
         sh 'npm update -g'
         stage 'install modules'
-        sh 'rm -rf node_modules && rm -rf dist'
+        //sh 'rm -rf node_modules && rm -rf dist'
         sh 'npm update'
+        stage 'build'
         sh 'ng build --prod --aot'
         sh 'cp -R dist/*  ../src/main/resources/static/'
     }
