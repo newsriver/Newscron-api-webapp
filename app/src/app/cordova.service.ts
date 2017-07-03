@@ -9,7 +9,11 @@ function _window(): any {
 @Injectable()
 export class CordovaService {
 
-  constructor() { }
+  private last: Date;
+  constructor() {
+    this.last = new Date();
+  }
+
 
   get cordova(): any {
     return _window().cordova;
@@ -21,7 +25,11 @@ export class CordovaService {
 
 
   public onResume(): void {
-    _window().document.location.href = 'index.html';
+    if (this.last == null || ((new Date().getTime() - this.last.getTime()) > 300000)) {
+      //hard-reset forces the app to completely reload
+      _window().document.location.href = 'index.html';
+      return;
+    }
   }
 
   public openLinkInBrowser(url: string) {
