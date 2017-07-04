@@ -25,10 +25,15 @@ export class CordovaService {
 
 
   public onResume(): void {
-    if (this.last == null || ((new Date().getTime() - this.last.getTime()) > 300000)) {
+    if (this.last == null) {
       //hard-reset forces the app to completely reload
       _window().document.location.href = 'index.html';
-      return;
+    } else {
+      let diff: number = new Date().getTime() - this.last.getTime();
+      if (diff > 300000) {
+        //hard-reset forces the app to completely reload
+        _window().document.location.href = 'index.html';
+      }
     }
   }
 
