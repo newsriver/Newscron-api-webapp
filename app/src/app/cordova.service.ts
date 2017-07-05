@@ -23,6 +23,13 @@ export class CordovaService {
     return !!_window().cordova;
   }
 
+  public hideSplashScreen(): void {
+    if (!!_window().navigator && !!_window().navigator.splashscreen) {
+      _window().navigator.splashscreen.hide();
+    }
+
+  }
+
 
   public onResume(): void {
     if (this.last == null) {

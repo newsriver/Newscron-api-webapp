@@ -17,10 +17,12 @@ let cordova: CordovaService = new CordovaService();
 
 let onBootstrap = () => {
   platformBrowserDynamic().bootstrapModule(AppModule);
+  cordova.hideSplashScreen();
 };
 
 let onResume = () => {
   cordova.onResume();
+  cordova.hideSplashScreen();
 };
 
 if (cordova.onCordova) {
