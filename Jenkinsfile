@@ -22,7 +22,6 @@ node {
     writeFile file: 'settings.gradle', text: '''rootProject.name = \'''' + projectName + '''\' \ninclude \'Newscron-lib\' '''
 
     angular2Compile()
-    moveApp()
     cordovaAppDeploy()
 
 
@@ -76,23 +75,20 @@ def angular2Compile() {
         //sh 'rm -rf node_modules && rm -rf dist'
         sh 'npm update'
         stage 'build'
-        sh 'ng build --prod --aot'
+        sh 'ng build --prod --aot --output-path ../src/main/resources/static/'
     }
 
 }
 
-def moveApp() {
-    stage 'Move Angular App'
-
-    dir('app') {
-        sh 'cp -R dist/*  ../src/main/resources/static/'
-    }
-}
 
 def cordovaAppDeploy() {
     stage 'Create Cordova App Deploy'
 
-    sh 'cp -R app/dist/*  src/main/resources/static/__cordova_app_deploy'
+    dir('app') {
+
+        stage 'build'
+        sh 'ng build --prod --aot  --output-path ../src/main/resources/static/__cordova_app_deploy/ --base-href .'
+    }
 
     dir('src/main/resources/static/__cordova_app_deploy') {
       sh "sed -i -- 's/<!-- web-version-config-on -->/<!-- web-version-config-off/g' index.html"
