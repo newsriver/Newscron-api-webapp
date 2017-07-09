@@ -59,7 +59,7 @@ def cordovaCodePush() {
    sh 'npm update -g'
 
    dir('app') {
-      cordova-hcp build ./dist
+      sh 'cordova-hcp build ./dist'
    }
 
 }
