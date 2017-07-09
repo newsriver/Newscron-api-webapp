@@ -21,6 +21,7 @@ node {
 
     angular2Compile()
     cordovaCodePush()
+    moveApp()
 
 
 
@@ -55,7 +56,7 @@ def restartDockerContainer(marathonAppId, projectName, dockerRegistry, marathonU
 
 def cordovaCodePush() {
    stage 'Cordova Hot Code Push'
-   sh 'npm update -g'
+@angular/cdk   sh 'npm update -g'
 
    dir('app') {
       sh 'cordova-hcp build ./dist'
@@ -84,9 +85,16 @@ def angular2Compile() {
         sh 'npm update'
         stage 'build'
         sh 'ng build --prod --aot'
-        sh 'cp -R dist/*  ../src/main/resources/static/'
     }
 
+}
+
+def moveApp() {
+    stage 'Move Angular App'
+
+    dir('app') {
+        sh 'cp -R dist/*  ../src/main/resources/static/'
+    }
 }
 
 def deployDockerImage(projectName, dockerRegistry) {
