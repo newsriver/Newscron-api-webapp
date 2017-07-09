@@ -5,6 +5,9 @@ def projectName = 'newsriver-io/newscron-api-webapp'
 def dockerRegistry = 'gcr.io'
 def marathonURL = 'http://leader.mesos:8080/'
 
+options {buildDiscarder(logRotator(numToKeepStr:'3'))}
+
+
 node {
 
 
