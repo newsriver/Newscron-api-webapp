@@ -14,16 +14,12 @@ node {
     checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'Newscron-lib']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/newsriver/Newscron-lib.git']]])
 
 
-
     stage 'set-up project'
     writeFile file: 'settings.gradle', text: '''rootProject.name = \'''' + projectName + '''\' \ninclude \'Newscron-lib\' '''
-
 
     angular2Compile()
     moveApp()
     cordovaAppDeploy()
-
-
 
 
 
