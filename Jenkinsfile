@@ -96,10 +96,10 @@ def cordovaAppDeploy() {
         sh 'cp -R dist/*  ../src/main/resources/static/__cordova_app_deploy'
     }
     dir('src/main/resources/static/__cordova_app_deploy') {
-      sh 'sed -i -- 's/<!-- web-version-config-on -->/<!-- web-version-config-off/g' index.html'
-      sh 'sed -i -- 's/<!-- end-web-version-config-on -->/end-web-version-config-off -->/g' index.html'
-      sh 'sed -i -- 's/<!-- cordova-version-config-off/<!-- cordova-version-config-on -->/g' index.html'
-      sh 'sed -i -- 's/end-cordova-version-config-off -->/<!-- end-cordova-version-config-on -->/g' index.html'
+      sh "sed -i -- 's/<!-- web-version-config-on -->/<!-- web-version-config-off/g' index.html"
+      sh "sed -i -- 's/<!-- end-web-version-config-on -->/end-web-version-config-off -->/g' index.html"
+      sh "sed -i -- 's/<!-- cordova-version-config-off/<!-- cordova-version-config-on -->/g' index.html"
+      sh "sed -i -- 's/end-cordova-version-config-off -->/<!-- end-cordova-version-config-on -->/g' index.html"
     }
     dir('src/main/resources/static/') {
        sh 'cordova-hcp build ./__cordova_app_deploy'
