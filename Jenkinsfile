@@ -88,7 +88,6 @@ def cordovaAppDeploy() {
     stage 'Create Cordova App Deploy'
 
     dir('app') {
-        sh 'mkdir  ../src/main/resources/static/__cordova_app_deploy'
         sh 'cp -R dist/*  ../src/main/resources/static/__cordova_app_deploy'
     }
     dir('src/main/resources/static/__cordova_app_deploy') {
