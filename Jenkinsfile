@@ -55,7 +55,6 @@ def restartDockerContainer(marathonAppId, projectName, dockerRegistry, marathonU
 
 def cordovaCodePush() {
    stage 'Cordova Hot Code Push'
-   sh 'npm install -g cordova-hot-code-push-cli'
    sh 'npm update -g'
 
    dir('app') {
