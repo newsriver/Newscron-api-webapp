@@ -20,8 +20,15 @@ public class HTML5Mode {
     public String readabilityStream(Map<String, Object> model) {
         return "forward:/";
     }
+
+    @RequestMapping(value = {"/welcome/**"})
+    public String readabilityWelcome(Map<String, Object> model) {
+        return "forward:/";
+    }
+
+    @RequestMapping(value = {"/config/**"})
+    public String readabilityConfig(Map<String, Object> model) {
+        return "forward:/";
+    }
+
 }
-
-
-
-
