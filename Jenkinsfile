@@ -5,6 +5,9 @@ def projectName = 'newsriver-io/newscron-api-webapp'
 def dockerRegistry = 'gcr.io'
 def marathonURL = 'http://leader.mesos:8080/'
 
+
+pipeline {
+
 options {buildDiscarder(logRotator(numToKeepStr:'3'))}
 
 
@@ -40,6 +43,7 @@ node {
         restartDockerContainer(marathonAppId, projectName, dockerRegistry, marathonURL)
     }
 
+}
 }
 
 
@@ -90,18 +94,15 @@ def moveApp() {
 def cordovaAppDeploy() {
     stage 'Create Cordova App Deploy'
 
-    dir('app') {
-        sh 'cp -R dist/*  ../src/main/resources/static/__cordova_app_deploy'
-    }
+    sh 'cp -R app/dist/*  src/main/resources/static/__cordova_app_deploy'
+
     dir('src/main/resources/static/__cordova_app_deploy') {
       sh "sed -i -- 's/<!-- web-version-config-on -->/<!-- web-version-config-off/g' index.html"
       sh "sed -i -- 's/<!-- end-web-version-config-on -->/end-web-version-config-off -->/g' index.html"
       sh "sed -i -- 's/<!-- cordova-version-config-off/<!-- cordova-version-config-on -->/g' index.html"
       sh "sed -i -- 's/end-cordova-version-config-off -->/<!-- end-cordova-version-config-on -->/g' index.html"
     }
-    dir('src/main/resources/static/') {
-       sh 'cordova-hcp build ./__cordova_app_deploy'
-    }
+    sh 'cordova-hcp build src/main/resources/static/__cordova_app_deploy'
 }
 
 def deployDockerImage(projectName, dockerRegistry) {
