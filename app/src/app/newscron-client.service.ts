@@ -97,6 +97,7 @@ export class NewscronClientService {
 
     }
 
+
     return this.http.post(this.baseURL + "/digest?after=" + timestamp, this.getUserPreferences().categories, options)
       .map(this.extractData).map(digest => {
         if (digest != null) {

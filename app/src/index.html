@@ -5,35 +5,57 @@
   <meta charset="utf-8">
   <title>Newscron</title>
   <base href="/">
+
+
+
+  <!-- web-version-config-on -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
-  <link rel="stylesheet" href="assets/toolkit-inverse.css">
-  <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
-  <script src="assets/js/fullstory.js"></script>
-
-
-  <!-- used for cordova -->
-  <!-- do not use for web-->
-  <!--
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Montserrat:100,300,400,700|PT+Serif');
+  </style>
+  <!-- end-web-version-config-on -->
+  <!-- cordova-version-config-off
   <script type="text/javascript" src="cordova.js"></script>
   <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-  -->
+  <link rel="stylesheet" href="assets/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/font-montserrat/montserrat-font.css">
+  <style>
+    * {
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
 
-  <!-- used for web -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
+    input {
+      -webkit-user-select: auto !important;
+      -khtml-user-select: auto !important;
+      -moz-user-select: auto !important;
+      -ms-user-select: auto !important;
+      user-select: auto !important;
+    }
+  </style>
+  end-cordova-version-config-off -->
 
 
 
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 
+  <link rel="stylesheet" href="assets/toolkit-inverse.css">
+  <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
 
   <style>
-    @import url('https://fonts.googleapis.com/css?family=Montserrat:100,300,400,700|PT+Serif');
     body {
       font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background-image: url("assets/img/menu-placeholder.png");
+      background-repeat: repeat-x;
+      background-color: #252830;
     }
   </style>
+
+
 
 
   <script>
@@ -52,6 +74,7 @@
     ga('create', 'UA-81261143-2', 'auto');
     ga('send', 'pageview');
   </script>
+  <script src="assets/js/fullstory.js"></script>
 
 
 </head>

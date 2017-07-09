@@ -9,7 +9,11 @@ function _window(): any {
 @Injectable()
 export class CordovaService {
 
-  constructor() { }
+  private last: Date;
+  constructor() {
+    this.last = new Date();
+  }
+
 
   get cordova(): any {
     return _window().cordova;
@@ -19,9 +23,25 @@ export class CordovaService {
     return !!_window().cordova;
   }
 
+  public hideSplashScreen(): void {
+    if (!!_window().navigator && !!_window().navigator.splashscreen) {
+      _window().navigator.splashscreen.hide();
+    }
+
+  }
+
 
   public onResume(): void {
-    _window().document.location.href = 'index.html';
+    if (this.last == null) {
+      //hard-reset forces the app to completely reload
+      _window().document.location.href = 'index.html';
+    } else {
+      let diff: number = new Date().getTime() - this.last.getTime();
+      if (diff > 300000) {
+        //hard-reset forces the app to completely reload
+        _window().document.location.href = 'index.html';
+      }
+    }
   }
 
   public openLinkInBrowser(url: string) {

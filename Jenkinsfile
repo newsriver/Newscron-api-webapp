@@ -20,6 +20,9 @@ node {
 
 
     angular2Compile()
+    cordovaCodePush()
+
+
 
 
 
@@ -48,6 +51,16 @@ def restartDockerContainer(marathonAppId, projectName, dockerRegistry, marathonU
             appid: "$marathonAppId",
             docker: "$dockerRegistry/$projectName:${env.BUILD_NUMBER}"
     )
+}
+
+def cordovaCodePush() {
+   stage 'Cordova Hot Code Push'
+   sh 'npm update -g'
+
+   dir('app') {
+      sh 'cordova-hcp build ./dist'
+   }
+
 }
 
 
