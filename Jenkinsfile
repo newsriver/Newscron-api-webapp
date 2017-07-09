@@ -6,9 +6,7 @@ def dockerRegistry = 'gcr.io'
 def marathonURL = 'http://leader.mesos:8080/'
 
 
-pipeline {
 
-options {buildDiscarder(logRotator(numToKeepStr:'3'))}
 
 
 node {
@@ -44,7 +42,7 @@ node {
     }
 
 }
-}
+
 
 
 def restartDockerContainer(marathonAppId, projectName, dockerRegistry, marathonURL) {
