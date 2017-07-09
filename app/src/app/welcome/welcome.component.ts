@@ -74,6 +74,7 @@ export class WelcomeComponent implements OnInit {
     this.boot(null);
   }
 
+
   close() {
     this.step = 0;
     this.setWelcomeStep.emit(this.step);
@@ -81,11 +82,17 @@ export class WelcomeComponent implements OnInit {
 
   back() {
     this.step--;
+    if (this.step == 1) {
+      this.router.navigate(['/welcome']);
+      return;
+    }
+    window.scrollTo(0, 0);
     this.setWelcomeStep.emit(this.step);
   }
 
   next() {
     this.step++;
+    window.scrollTo(0, 0);
     this.setWelcomeStep.emit(this.step);
   }
 
