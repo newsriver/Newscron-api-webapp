@@ -87,7 +87,7 @@ def cordovaAppDeploy() {
     dir('app') {
 
         stage 'build'
-        sh 'ng build --prod --aot  --output-path ../src/main/resources/static/__cordova_app_deploy/ --base-href .'
+        sh 'ng build --prod --aot  --output-path ../src/main/resources/static/__cordova_app_deploy/'
     }
 
     dir('src/main/resources/static/__cordova_app_deploy') {
