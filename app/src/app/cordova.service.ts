@@ -30,8 +30,16 @@ export class CordovaService {
 
   }
 
+  public checkForUpdate(): void {
+    //sync will check for update, download them and restart the app
+    //allso sync will inform codePush that the app has successfully loaded, validation the update and avoiding rollbacks
+    _window().codePush.sync();
+  }
+
 
   public onResume(): void {
+
+
     if (this.last == null) {
       //hard-reset forces the app to completely reload
       _window().document.location.href = 'index.html';
