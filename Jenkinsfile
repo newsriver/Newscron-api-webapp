@@ -22,7 +22,6 @@ node {
     writeFile file: 'settings.gradle', text: '''rootProject.name = \'''' + projectName + '''\' \ninclude \'Newscron-lib\' '''
 
     angular2Compile()
-    cordovaAppDeploy()
 
 
 
@@ -80,24 +79,6 @@ def angular2Compile() {
 
 }
 
-
-def cordovaAppDeploy() {
-    stage 'Create Cordova App Deploy'
-
-    dir('app') {
-
-        stage 'build'
-        sh 'ng build --prod --aot  --output-path ../src/main/resources/static/__cordova_app_deploy/ --base-href .'
-    }
-
-    dir('src/main/resources/static/__cordova_app_deploy') {
-      sh "sed -i -- 's/<!-- web-version-config-on -->/<!-- web-version-config-off/g' index.html"
-      sh "sed -i -- 's/<!-- end-web-version-config-on -->/end-web-version-config-off -->/g' index.html"
-      sh "sed -i -- 's/<!-- cordova-version-config-off/<!-- cordova-version-config-on -->/g' index.html"
-      sh "sed -i -- 's/end-cordova-version-config-off -->/<!-- end-cordova-version-config-on -->/g' index.html"
-    }
-    sh 'cordova-hcp build src/main/resources/static/__cordova_app_deploy'
-}
 
 def deployDockerImage(projectName, dockerRegistry) {
 
