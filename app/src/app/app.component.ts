@@ -6,7 +6,10 @@ import {Injectable, Pipe, PipeTransform} from '@angular/core';
 import { CordovaService } from './cordova.service';
 
 
-
+function _window(): any {
+  // return the global native browser window object
+  return window;
+}
 
 
 @Component({
@@ -26,8 +29,12 @@ export class AppComponent implements OnInit {
     if (this.cordovaService.onCordova) {
       this.cordovaService.checkForUpdate();
     }
+
+    //Set full story id
+    if (_window().FS) {
+      _window().FS.identify(this.client.getUUID(), {});
+    }
+
   }
-
-
 
 }
