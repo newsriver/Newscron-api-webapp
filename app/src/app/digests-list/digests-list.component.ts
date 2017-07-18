@@ -35,7 +35,7 @@ export class DigestsListComponent implements OnInit {
             //it will already be since the assembleDigest method is unshifting it.
             this.digests.unshift(digest);
             this.counter++;
-            //don't display this currently it is quite useless.. 
+            //don't display this currently it is quite useless..
             //this.snackBar.open('New Digest Available - Scroll to top', 'OK', { duration: 5000, });
           }
         });

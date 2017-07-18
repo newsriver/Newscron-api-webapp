@@ -27,6 +27,11 @@
         <li>
           <a [routerLink]="['/welcome']">Reset</a>
         </li>
+        <li class="nav-header" style="font-weight: lighter;">
+          v3.0.7
+          <span *ngIf="cordovaService.onCordova">a</span>
+          <span *ngIf="!cordovaService.onCordova">w</span>
+        </li>
       </ul>
     </nav>
   </md-sidenav>
@@ -67,6 +72,11 @@
 
               <li>
                 <a [routerLink]="['/welcome/']">Reset</a>
+              </li>
+              <li class="nav-header" style="font-weight: lighter;">
+                v3.0.7
+                <span *ngIf="cordovaService.onCordova">a</span>
+                <span *ngIf="!cordovaService.onCordova">w</span>
               </li>
               <!-- <li>
                               <a>Request Newspaper</a>
