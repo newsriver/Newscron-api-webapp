@@ -1,8 +1,9 @@
 <div class="loading" *ngIf="loading">
   <md-progress-spinner mode="indeterminate" class="progress-spinner"></md-progress-spinner>
+  <h3>Assembling Digest...</h3>
 </div>
 
-<ul *ngIf="!loading">
+<ul *ngIf="!loading" class="digests-list">
   <li *ngFor="let digest of digests; let j = index">
     <digest [digest]="digest"></digest>
   </li>

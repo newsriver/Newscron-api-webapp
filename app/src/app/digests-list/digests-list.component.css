@@ -10,6 +10,12 @@ ul{
   padding: 0px;
 }
 
+.loading h3{
+  color: #1CA8DD;
+    text-align: center;
+    margin-top: 5rem;
+}
+
 h2{
   margin-top: 2rem;
   margin-bottom: 0rem;
@@ -42,5 +48,9 @@ hr{
 
 .progress-spinner{
   margin: auto;
-    margin-top: 5rem;
+    margin-top: 4rem;
+}
+
+.digests-list li:first-child >>> .chunk-header{
+  margin-top: 5rem!important;
 }
