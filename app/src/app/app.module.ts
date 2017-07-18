@@ -6,7 +6,7 @@ import {MdDialogModule} from '@angular/material';
 import {MdButtonModule} from '@angular/material';
 import {MdSidenavModule} from '@angular/material';
 import {MdSnackBarModule} from '@angular/material';
-import {NoopAnimationsModule}  from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule}  from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -60,7 +60,7 @@ import { CategoriesComponent } from './welcome/categories/categories.component';
     CategoriesComponent
   ],
   imports: [
-    NoopAnimationsModule,
+    BrowserAnimationsModule,
     MdMenuModule,
     MdSidenavModule,
     MdProgressSpinnerModule,
