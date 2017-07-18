@@ -1,4 +1,4 @@
-import { NgModule, Component, OnInit, Input, Pipe, PipeTransform, ElementRef, Output, EventEmitter, HostListener } from '@angular/core';
+import { NgModule, Component, OnInit, Input, Pipe, PipeTransform, ElementRef, Output, EventEmitter, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import {ArticleComponent} from '../article/article.component';
 import {Section, Category, Article} from '../newscron-client.service';
 
@@ -20,7 +20,8 @@ export class SortArticle {
 @Component({
   selector: 'section',
   templateUrl: './section.component.html',
-  styleUrls: ['./section.component.css']
+  styleUrls: ['./section.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SectionComponent implements OnInit {
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, ChangeDetectionStrategy } from '@angular/core';
 import {Section, Category, Article, Publisher} from '../newscron-client.service';
 import { CordovaService } from '../cordova.service';
 import { Router, ActivatedRoute} from '@angular/router';
@@ -18,7 +18,8 @@ export class EscapeHtmlPipe implements PipeTransform {
 @Component({
   selector: 'articles',
   templateUrl: './article.component.html',
-  styleUrls: ['./article.component.css']
+  styleUrls: ['./article.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ArticleComponent implements OnInit {
 
