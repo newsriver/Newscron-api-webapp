@@ -45,7 +45,7 @@ export class CordovaService {
       _window().document.location.href = 'index.html';
     } else {
       let diff: number = new Date().getTime() - this.last.getTime();
-      if (diff > 300000) {
+      if (diff > 900000) { //15min
         //hard-reset forces the app to completely reload
         _window().document.location.href = 'index.html';
       }
@@ -59,13 +59,16 @@ export class CordovaService {
           url: url,
           hidden: false, // default false
           animated: true, // default true, note that 'hide' will reuse this preference (the 'Done' button will always animate though)
-          transition: 'curl', // unless animated is false you can choose from: curl, flip, fade, slide (default)
+          transition: 'slide', // unless animated is false you can choose from: curl, flip, fade, slide (default)
           enterReaderModeIfAvailable: false, // default false
-          barColor: "#0000ff", // default is white (iOS 10 only)
-          tintColor: "#ffffff" // default is ios blue
+          barColor: "#f7f7f9", // default is white (iOS 10 only)
+          tintColor: "#1ca8dd", // iOS controls colot
+          controlTintColor: "#1ca8dd",  // iOS controls colot
+          toolbarColor: "#f7f7f9", //android toolbar color
+          showDefaultShareMenuItem: true //android sharing menu color
         });
       } else {
-        _window().cordova.InAppBrowser.open(url, "_blank", "location=no,mediaPlaybackRequiresUserAction=yes");
+        _window().cordova.InAppBrowser.open(url, "_blank", "location=yes,mediaPlaybackRequiresUserAction=yes");
       }
     })
   }
