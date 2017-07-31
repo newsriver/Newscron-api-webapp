@@ -78,6 +78,23 @@ a{
   text-decoration: none;
 }
 
+
+
+.optout-publisher{
+   flex: 1;
+   text-align: right;
+}
+
+.optout-publisher .mat-icon-button{
+  font-size:20px;
+  margin-top:-15px;
+  margin-right: -12px;
+}
+
+.optout-publisher .mat-icon-button i{
+  color: #1CA8DD;
+}
+
 .mat-menu-item span{
   font-weight: 400;
 }
@@ -86,7 +103,6 @@ a{
   text-align: center;
   margin-right: 5px;
 }
-
 
 
 @media screen and (max-width: 576px) {
