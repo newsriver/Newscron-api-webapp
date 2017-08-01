@@ -18,6 +18,14 @@
     margin-top: 5rem;
 }
 
+.menu-button{
+  min-width: 38px;
+  height: 38px;
+  font-size: 22px;
+}
+.menu-button i{
+  vertical-align: baseline;
+}
 
 .sarchButton {
     position: absolute;
