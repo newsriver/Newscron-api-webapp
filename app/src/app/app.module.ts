@@ -6,6 +6,7 @@ import {MdDialogModule} from '@angular/material';
 import {MdButtonModule} from '@angular/material';
 import {MdSidenavModule} from '@angular/material';
 import {MdSnackBarModule} from '@angular/material';
+import {MdTabsModule} from '@angular/material';
 import {BrowserAnimationsModule}  from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -67,6 +68,7 @@ import { CategoriesComponent } from './welcome/categories/categories.component';
     MdDialogModule,
     MdButtonModule,
     MdSnackBarModule,
+    MdTabsModule,
     BrowserModule,
     FormsModule,
     HttpModule,

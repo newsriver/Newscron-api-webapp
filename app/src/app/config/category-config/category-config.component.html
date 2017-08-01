@@ -1,15 +1,16 @@
-<h1>{{category.name}} - Configuration</h1>
+<h1>{{category.name}}</h1>
 <hr/>
 
 
-
-<h3 style="margin-top: 6rem;">OptedOut Publishers</h3>
-<p *ngIf="category.publishersOptOut.length==0">No publishers have been opted out for this category.</p>
-<ul>
-  <li *ngFor="let publisher of category.publishersOptOut; let j = index">
-    <button md-button style="min-width:20px" (click)="undoPublisherOptOut(j)"><i class="fa fa-undo" aria-hidden="true"></i></button> {{publisher.name}}
-  </li>
-</ul>
+<div *ngIf="category.publishersOptOut.length>0">
+  <h3 style="margin-top: 6rem;">OptedOut Publishers</h3>
+  <p *ngIf="category.publishersOptOut.length==0">No publishers have been opted out for this category.</p>
+  <ul>
+    <li *ngFor="let publisher of category.publishersOptOut; let j = index">
+      <button md-button style="min-width:20px" (click)="undoPublisherOptOut(j)"><i class="fa fa-undo" aria-hidden="true"></i></button> {{publisher.name}}
+    </li>
+  </ul>
+</div>
 
 
 

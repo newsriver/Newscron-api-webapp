@@ -5,3 +5,9 @@
 .mat-tab-body-wrapper{
   padding-top: 20px;
 }
+
+@media screen and (max-width: 400px){
+  .mat-tab-label{
+  font-size: 12px!important;
+  }
+}

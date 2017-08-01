@@ -1,13 +1,6 @@
 
 .main{
-  background-color: #1ca8dd;
-  background-image: linear-gradient(to bottom, #137499, #1ca8dd);
-  top:0;
-  right:0;
-  bottom:0;
-  left:0;
-  margin-bottom: 0px!important;
-  min-height: 100%;
+
 }
 
 
@@ -20,18 +13,30 @@
   z-index: 10;
 }
 
+h3{
+    display: inline;
+    color: black;
+    padding-left: 1rem;
+    font-weight: 400;
+    font-size: 20px;
+  }
 
 .back{
-font-size: 30px;
-height: 38px;
+  font-size: 20px;
+  color: rgba(0,0,0,.9);
+  min-width: 38px;
+  height: 38px;
+  padding: 0px;
 }
 
 .back i{
-line-height: 38px;
+vertical-align: baseline;
 }
 
 .app-content {
-  padding-top: 100px;
+  display: block;
+  padding: 2rem;
+  padding-top: 50px;
 }
 
 .main-container{
