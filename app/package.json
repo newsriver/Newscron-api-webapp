@@ -1,6 +1,6 @@
 {
   "name": "newscron",
-  "version": "0.0.0",
+  "version": "3.0.11",
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
@@ -8,7 +8,9 @@
     "start": "ng serve",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build-prod-webapp": "npm version patch && node ./replace.build.js && ng build --prod --aot --output-path ../src/main/resources/static/",
+    "build-prod-cordova": "npm version patch && node ./replace.build.js && ng build --prod --aot --output-path ../../Newscron-cordova/www/ --base-href ."
   },
   "private": true,
   "dependencies": {
@@ -43,6 +45,7 @@
     "karma-jasmine": "^1.0.2",
     "karma-remap-istanbul": "^0.2.1",
     "protractor": "~4.0.14",
+    "replace-in-file": "^2.5.3",
     "ts-node": "1.2.1",
     "tslint": "^4.3.0",
     "typescript": "2.4.0"

@@ -74,7 +74,7 @@ def angular2Compile() {
         //sh 'rm -rf node_modules && rm -rf dist'
         sh 'npm update'
         stage 'build'
-        sh 'ng build --prod --aot --output-path ../src/main/resources/static/'
+        sh 'npm run build-prod-webapp'
     }
 
 }

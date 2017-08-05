@@ -5,12 +5,13 @@ import {NewscronClientService, BootstrapConfiguration, Section, CategoryPreferen
 import {Injectable, Pipe, PipeTransform} from '@angular/core';
 import { Router } from '@angular/router';
 import { CordovaService } from '../cordova.service';
-
+import { environment } from '../../environments/environment';
 
 @Pipe({
   name: 'validSection'
 })
 export class ValidSectionFilter implements PipeTransform {
+
 
   constructor(public client: NewscronClientService) {
 
@@ -54,9 +55,15 @@ export class MainContentComponent implements OnInit {
   public bootConfig: BootstrapConfiguration;
   public categories: CategoryPreference[] = [];
   public displayWelcome: boolean = false;
+  public version: string = "v";
 
   constructor(private client: NewscronClientService, public router: Router, public cordovaService: CordovaService) {
-
+    this.version += environment.version;
+    if (cordovaService.onCordova) {
+      this.version += " a";
+    } else {
+      this.version += " w";
+    }
   }
 
   ngOnInit() {
