@@ -104,7 +104,9 @@ export class MainContentComponent implements OnInit {
 
   public searchPhrase: string;
   public search(e) {
-    this.router.navigate(['/search', this.searchPhrase]);
+    if (this.searchPhrase.length > 0) {
+      this.router.navigate(['/search', this.searchPhrase]);
+    }
   }
 
 

@@ -27,6 +27,7 @@ export class SearchComponent implements OnInit {
       if (this.language == null) {
         if (this.client.getUserPreferences().searchLanguage == null) {
           this.showSettings = true;
+          this.language = "";
         } else {
           this.language = this.client.getUserPreferences().searchLanguage;
         }
