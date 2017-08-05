@@ -13,8 +13,11 @@ export class SearchComponent implements OnInit {
   public section: Section;
   public loading: boolean = true;
   public language: string = "";
+  public showSettings: boolean = false;
   constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router) {
 
+    //check if user preferences contains language if not open the showSettings
+    this.showSettings = true;
   }
 
   ngOnInit() {
@@ -29,6 +32,10 @@ export class SearchComponent implements OnInit {
       this.searchArticles();
 
     });
+  }
+
+  public togleSettings() {
+    this.showSettings = !this.showSettings;
   }
 
   public search(event: any) {

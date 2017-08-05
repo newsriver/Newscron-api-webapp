@@ -28,6 +28,16 @@ hr{
     font-size: 3rem;
 }
 
+.search-settings-button{
+  color: white;
+  min-width: 40px;
+  height: 59px;
+  font-size: 3rem;
+}
+.search-settings-button i{
+  vertical-align: baseline;
+}
+
 .searchPhrase{
   font-size:3rem;
   height: auto;
@@ -56,5 +66,10 @@ hr{
 
   .search-label{
   font-size: 1.5rem;
+  }
+
+  .search-settings-button{
+    font-size: 2rem;
+    height: 42px;
   }
 }
