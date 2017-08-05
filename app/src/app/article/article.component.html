@@ -26,7 +26,7 @@
       </div>
 
       <div class="optout-publisher" *ngIf="article.publisher && article.publisher.id && article.category">
-        <button md-icon-button [mdMenuTriggerFor]="menu"><i class="fa fa-chevron-circle-down" aria-hidden="true"></i></button>
+        <button md-icon-button [mdMenuTriggerFor]="menu"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
         <md-menu #menu="mdMenu">
           <!--<button md-menu-item (click)="categoryDialog(article.category)"><span><i class="fa fa-cog" aria-hidden="true"></i> Manage Category</span></button>-->
           <button md-menu-item (click)="publisherDialog(article.publisher,article.category)"><span><i class="fa fa-minus-circle" aria-hidden="true"></i>Remove Publisher</span></button>

@@ -27,16 +27,30 @@
   vertical-align: baseline;
 }
 
+.searchPhrase{
+  font-size:2rem;
+  background-color: rgba(0,0,0,0.06);
+  border-color: transparent;
+  color: black;
+}
+
+.searchPhrase:focus {
+    background-color: #fff;
+}
+
 .sarchButton {
     position: absolute;
     top: 0;
     right: 0;
-    padding: 9px 10px;
+    padding: 7px 30px;
     color: #b7bcc8;
     background-color: transparent;
     border: 0;
     line-height: 0;
+    font-size: 2rem;
 }
+
+
 
 .main-container{
     margin-right: auto;

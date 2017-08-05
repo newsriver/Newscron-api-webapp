@@ -208,7 +208,7 @@ export class BootstrapConfiguration {
 
 export class UserPreferences {
   public categories: CategoryPreference[] = null;
-
+  public searchLanguage: string = null;
 
   public getCategory(id: number): CategoryPreference {
     for (let category of this.categories) {

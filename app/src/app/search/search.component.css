@@ -11,37 +11,31 @@ hr{
   margin-top: 1rem;
 }
 
+h2{
+  margin-bottom: 0rem;
+  margin-top: 5rem;
+  font-size: 5rem;
+  padding-left: 1.5rem;
+  display: flex;
+  flex-direction: row;
+}
+
 .progress-spinner{
   margin: auto;
     margin-top: 5rem;
 }
 
-.sarchButton {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 14px 30px;
-    color: #b7bcc8;
-    background-color: transparent;
-    border: 0;
-    line-height: 0;
-    font-size: 3rem;
-}
 
 .search-settings-button{
   color: white;
   min-width: 40px;
-  height: 59px;
-  font-size: 3rem;
+  font-size: 20px;
 }
 .search-settings-button i{
   vertical-align: baseline;
 }
 
-.searchPhrase{
-  font-size:3rem;
-  height: auto;
-}
+
 
 .search-label{
   color:white;

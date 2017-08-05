@@ -16,19 +16,21 @@ export class SearchComponent implements OnInit {
   public showSettings: boolean = false;
   constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router) {
 
-    //check if user preferences contains language if not open the showSettings
-    this.showSettings = true;
   }
 
   ngOnInit() {
 
     //we need to subscribe to the params changes as the router is not reloading the componet on param changes
     this.route.params.subscribe(params => {
-
       this.searchPhrase = params.searchPhrase;
       this.language = params.language;
-
-
+      if (this.language == null) {
+        if (this.client.getUserPreferences().searchLanguage == null) {
+          this.showSettings = true;
+        } else {
+          this.language = this.client.getUserPreferences().searchLanguage;
+        }
+      }
       this.searchArticles();
 
     });
@@ -36,6 +38,13 @@ export class SearchComponent implements OnInit {
 
   public togleSettings() {
     this.showSettings = !this.showSettings;
+  }
+
+  public setLanguage(event: any) {
+    let preferences = this.client.getUserPreferences();
+    preferences.searchLanguage = this.language;
+    this.client.setUserPreferences(preferences);
+    this.router.navigate(['/search', this.language, this.searchPhrase]);
   }
 
   public search(event: any) {

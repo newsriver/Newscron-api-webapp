@@ -3,7 +3,7 @@ import {FeaturedComponent} from '../featured/featured.component';
 import {WelcomeComponent} from '../welcome/welcome.component';
 import {NewscronClientService, BootstrapConfiguration, Section, CategoryPreference, Article} from '../newscron-client.service';
 import {Injectable, Pipe, PipeTransform} from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { CordovaService } from '../cordova.service';
 import { environment } from '../../environments/environment';
 
@@ -69,6 +69,12 @@ export class MainContentComponent implements OnInit {
   ngOnInit() {
 
 
+    this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
+      //clear search phrase if route is not search
+      if (!event.url.startsWith('/search')) {
+        this.searchPhrase = "";
+      }
+    });
 
     if (this.client.getUserPreferences() == null) {
 
@@ -93,14 +99,12 @@ export class MainContentComponent implements OnInit {
   }
 
 
-  public isSearch() {
-    return this.router.url.startsWith('/search');
-  }
+
 
 
   public searchPhrase: string;
   public search(e) {
-    this.router.navigate(['/search', '', this.searchPhrase]);
+    this.router.navigate(['/search', this.searchPhrase]);
   }
 
 
