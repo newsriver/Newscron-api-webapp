@@ -22,7 +22,7 @@
       <div style="flex: 3;">
         <!--<img src="http://www.tio.ch/favicon.ico" style="max-height: 28px; margin-right:5px; float:left;" />-->
         <h6 style="color:black; margin:0px;">{{article.publisher.name}}</h6>
-        <h6 style="color:#666; margin:0px; margin-top:3px;">{{article.category.name}} · {{article.publicationDate | date: 'dd/MM/yyyy HH:mm'}} · score: {{article.score}}</h6>
+        <h6 style="color:#666; margin:0px; margin-top:3px;">{{article.category.name}} · {{article.publicationDate | date: 'dd/MM/yyyy HH:mm'}} <span *ngIf="article.score">· score: {{article.score}}</span></h6>
       </div>
 
       <div class="optout-publisher" *ngIf="article.publisher && article.publisher.id && article.category">
