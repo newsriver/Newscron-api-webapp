@@ -29,6 +29,7 @@
     })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-81261143-2', 'auto');
+    ga('set', 'dimension1', 'web');
     ga('send', 'pageview');
   </script>
   <!-- end-web-version-config-on -->
@@ -76,11 +77,16 @@
     fields.clientId = localStorage.getItem('ga:clientId');
 
     ga('create', fields);
-    ga('set', {checkProtocolTask: null,checkStorageTask: null});
+    ga('set', 'checkProtocolTask', null);
+    ga('set', 'transportUrl', 'https://www.google-analytics.com/collect');
+    ga('set', 'transport', 'beacon');
     ga(function(tracker){
        localStorage.setItem('ga:clientId', tracker.get('clientId'));
     });
-    ga('send', {hitType: 'screenview',screenName: '/index.html',appName: 'Newscron'});
+    ga('set', 'dimension1', 'app');
+    ga('set', 'appName', 'Newscron');
+
+    ga('send', {hitType: 'screenview',screenName: '/',appName: 'Newscron'});
   </script>
   end-cordova-version-config-off -->
 

@@ -29,6 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +47,7 @@ public class Search {
     private static final int SOKET_TIMEOUT_SHORT = 5000;
     private static final String NEWSRIVER_API_URL = "https://api.newsriver.io/v2/search?sortBy=discoverDate&sortOrder=DESC&limit=25&query=";
     private static final String NEWSRIVER_API_TOKEN = "sBBqsGXiYgF0Db5OV5tAw6DW7BpOpuMs5WCfGSNgf3xsm9_tCBPN-sUd129X9sh5";
+    private static final SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSZ");
     private static final Logger log = Logger.getLogger(Search.class);
     private static ObjectMapper mapper = new ObjectMapper();
     @Autowired
@@ -71,7 +74,7 @@ public class Search {
     private Section search(String search) {
 
         Section searchArticles = new Section();
-        
+
 
         RequestConfig defaultRequestConfig = RequestConfig.custom()
                 .setExpectContinueEnabled(true)
@@ -121,9 +124,18 @@ public class Search {
             Category articleCategory = new Category();
             articleCategory.setName(((NewsriverCategoryMetaData) strArticle.getMetadata().get("category")).getCategory());
             article.setCategory(articleCategory);
-
-            //article.setPublicationDate(strArticle.getPublicationDateGMT());
             article.setUrl(strArticle.getUrl());
+
+            Date publishDate = null;
+            try {
+                publishDate = inputDateFormat.parse(strArticle.getDiscoverDate());
+                article.setPublicationDate(publishDate.getTime());
+            } catch (Exception e) {
+                log.error("Unable to parse article date", e);
+                article.setPublicationDate(new Date().getTime());
+            }
+            
+
             //article.setId(strArticle.getArticleID());
             //article.setScore(articlesId.get(article.getId()));
             Publisher publisher = new Publisher();
@@ -135,8 +147,6 @@ public class Search {
             searchArticles.getArticles().add(article);
 
         }
-
-
         return searchArticles;
     }
 
