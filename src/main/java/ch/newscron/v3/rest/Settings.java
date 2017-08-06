@@ -91,6 +91,8 @@ public class Settings {
         categoryPackages.addAll(configuration.getPackagesIds());
         categoryPackages.addAll(configuration.getLocalPackagesIds());
 
+        configuration.setSearchLanguage(searchLanguage(packagesIds));
+
         List<CategoryPreference> categories = getCategories(categoryPackages);
         for (CategoryPreference category : categories) {
             category.setPackages(categoryPackages);
@@ -161,8 +163,7 @@ public class Settings {
         try (Connection conn = this.dataSource.getConnection()) {
 
             conn.setReadOnly(true);
-            try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM NewscronConfiguration.package WHERE rootPackage in (?)")) {
-                stmt.setString(1, packagesIdsStr);
+            try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM NewscronConfiguration.package WHERE rootPackage in (" + packagesIdsStr + ")")) {
                 rs = stmt.executeQuery();
                 while (rs.next()) {
                     packages.add(rs.getInt("id"));
@@ -216,9 +217,8 @@ public class Settings {
         try (Connection conn = this.dataSource.getConnection()) {
 
             conn.setReadOnly(true);
-            String sql = "SELECT * FROM NewscronConfiguration.category where (specificCountryID is NULL OR specificCountryID in (SELECT distinct countryId FROM NewscronConfiguration.package WHERE id in (?))) AND isActive=1 AND isHidden=0 AND id <> 12";
+            String sql = "SELECT * FROM NewscronConfiguration.category where (specificCountryID is NULL OR specificCountryID in (SELECT distinct countryId FROM NewscronConfiguration.package WHERE id in (" + packagesIds + "))) AND isActive=1 AND isHidden=0 AND id <> 12";
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, packagesIds);
 
             rs = stmt.executeQuery();
 
@@ -237,6 +237,40 @@ public class Settings {
         }
 
         return categories;
+    }
+
+    protected String searchLanguage(List<Integer> packages) {
+
+
+        String packagesIds = "";
+        for (Integer packageId : packages) {
+            packagesIds += packageId + ",";
+        }
+        packagesIds += "-1";
+
+
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try (Connection conn = this.dataSource.getConnection()) {
+
+            conn.setReadOnly(true);
+            String sql = "SELECT distinct L.name FROM NewscronConfiguration.package as P JOIN NewscronConfiguration.language AS L ON L.id=P.defaultLanguage where P.id in (" + packagesIds + ") limit 1";
+            stmt = conn.prepareStatement(sql);
+
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("L.name").toUpperCase();
+            }
+        } catch (Exception e) {
+            log.log(Level.ERROR, "Error unable to query suggested language", e);
+        } finally {
+            DbUtils.closeQuietly(rs);
+            DbUtils.closeQuietly(stmt);
+        }
+
+        return null;
+
     }
 
 

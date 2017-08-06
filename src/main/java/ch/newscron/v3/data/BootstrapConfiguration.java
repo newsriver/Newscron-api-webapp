@@ -11,6 +11,7 @@ public class BootstrapConfiguration {
     private List<Integer> packagesIds;
     private List<Integer> localPackagesIds;
     private List<CategoryPreference> categories;
+    private String searchLanguage;
 
 
     public List<CategoryPreference> getCategories() {
@@ -35,5 +36,13 @@ public class BootstrapConfiguration {
 
     public void setLocalPackagesIds(List<Integer> localPackagesIds) {
         this.localPackagesIds = localPackagesIds;
+    }
+
+    public String getSearchLanguage() {
+        return searchLanguage;
+    }
+
+    public void setSearchLanguage(String searchLanguage) {
+        this.searchLanguage = searchLanguage;
     }
 }

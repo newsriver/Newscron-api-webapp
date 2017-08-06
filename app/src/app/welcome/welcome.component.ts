@@ -100,6 +100,7 @@ export class WelcomeComponent implements OnInit {
     this.step = -1;
     var preferences: UserPreferences = new UserPreferences();
     preferences.categories = this.categories;
+    preferences.searchLanguage = this.client.getUserPreferences().searchLanguage;
     this.client.resetUserPreferences(preferences, true);
     this.setWelcomeStep.emit(this.step);
     this.router.navigate(['/']);

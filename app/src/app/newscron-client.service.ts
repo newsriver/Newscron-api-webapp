@@ -130,6 +130,7 @@ export class NewscronClientService {
       .map(this.extractData).map(bootConfig => {
         var preferences: UserPreferences = new UserPreferences();
         preferences.categories = bootConfig.categories;
+        preferences.searchLanguage = bootConfig.searchLanguage;
         this.resetUserPreferences(preferences, false);
         return bootConfig;
       });
@@ -204,6 +205,7 @@ export class BootstrapConfiguration {
   public packagesIds: number[] = [];
   public localPackagesIds: number[];
   public countryId: number;
+  public searchLanguage: string;
 }
 
 export class UserPreferences {
