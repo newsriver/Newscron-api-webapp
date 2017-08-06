@@ -56,6 +56,7 @@ export class MainContentComponent implements OnInit {
   public categories: CategoryPreference[] = [];
   public displayWelcome: boolean = false;
   public version: string = "v";
+  public searchInputFocus: boolean = false;
 
   constructor(private client: NewscronClientService, public router: Router, public cordovaService: CordovaService) {
     this.version += environment.version;
@@ -109,5 +110,11 @@ export class MainContentComponent implements OnInit {
     }
   }
 
+  public onSearchBlur() {
+    this.searchInputFocus = false;
+  }
 
+  public onSearchFocus() {
+    this.searchInputFocus = true;
+  }
 }

@@ -30,6 +30,14 @@ export class CordovaService {
 
   }
 
+  public platformName(): string {
+    if (this.onCordova) {
+      return _window().device.platform;
+    } else {
+      return null;
+    }
+  }
+
   public checkForUpdate(): void {
     //sync will check for update, download them and restart the app
     //allso sync will inform codePush that the app has successfully loaded, validation the update and avoiding rollbacks

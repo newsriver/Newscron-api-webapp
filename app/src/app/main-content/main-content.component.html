@@ -8,12 +8,11 @@
     </nav>
     <nav class="sidebar-nav" style="padding: 50px; position:relative">
       <ul class="nav nav-pills nav-stacked" style="position:relative">
-
-        <li><a routerLink='' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">News Digest</a></li>
+        <li><a routerLink='/' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">News Digest</a></li>
         <!--<li><a routerLink='/top' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">Top News</a></li>-->
         <li class="nav-header ">Categories</li>
         <li *ngFor="let category of categories | sortCategory ">
-          <a [routerLink]="[ 'category', category.id,category.name] " [routerLinkActive]="[ 'active-link'] " (click)="menu.close()">{{category.name}}</a>
+          <a [routerLink]="[ '/category', category.id,category.name] " [routerLinkActive]="[ 'active-link'] " (click)="menu.close()">{{category.name}}</a>
         </li>
 
 
@@ -27,14 +26,14 @@
   </md-sidenav>
 
   <!-- Navigation Bar -->
-  <nav class="navbar navbar-light bg-faded">
+  <nav class="navbar navbar-light bg-faded" [ngClass]="cordovaService.platformName()==='iOS' && searchInputFocus ? 'navbar-iOS-fix-onfocus' : ''">
     <div class="row">
       <div class="col-xs-2 visible-xs">
-        <button md-button routerLink='' class="mat-primary menu-button" (click)="menu.open()"><i class="fa fa-bars" aria-hidden="true"></i></button>
+        <button md-button class="mat-primary menu-button" (click)="menu.open()"><i class="fa fa-bars" aria-hidden="true"></i></button>
       </div>
       <div class="col-xs-10 col-sm-8 col-sm-offset-2">
         <form (submit)="search($event)" name="search">
-          <input class="form-control searchPhrase" type="text" placeholder="Search..." [(ngModel)]="searchPhrase" name="searchPhrase">
+          <input class="form-control searchPhrase" type="text" placeholder="Search..." [(ngModel)]="searchPhrase" name="searchPhrase" (blur)="onSearchBlur()" (focus)="onSearchFocus()">
           <button type="submit" class="sarchButton" (click)="search(null)">
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
