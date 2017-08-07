@@ -19,7 +19,7 @@ import { CategoryComponent } from './category/category.component';
 import { WelcomeComponent, ResetConfirmationDialoug, KeysPipe, CategoryAmmountPipe } from './welcome/welcome.component';
 import {NewscronClientService} from './newscron-client.service';
 import {SectionComponent, SortArticle} from './section/section.component';
-
+import {GoogleAnalyticsService} from './google-analytics.service';
 import { CordovaService } from './cordova.service';
 import { DigestsListComponent } from './digests-list/digests-list.component';
 import { DigestComponent } from './digest/digest.component';
@@ -78,7 +78,7 @@ import { CategoriesComponent } from './welcome/categories/categories.component';
   entryComponents: [
     PublisherDialog, ResetConfirmationDialoug
   ],
-  providers: [CordovaService, NewscronClientService],
+  providers: [CordovaService, NewscronClientService, GoogleAnalyticsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

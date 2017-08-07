@@ -5,7 +5,7 @@ import { Router, ActivatedRoute} from '@angular/router';
 import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
 import {NewscronClientService} from '../newscron-client.service';
 import {Pipe, PipeTransform} from '@angular/core';
-
+import {GoogleAnalyticsService} from '../google-analytics.service';
 
 @Pipe({ name: 'escapeHtml', pure: false })
 export class EscapeHtmlPipe implements PipeTransform {
@@ -26,7 +26,7 @@ export class ArticleComponent implements OnInit {
   public isDigest = true;
 
   @Input() article: Article;
-  constructor(public cordovaService: CordovaService, private route: ActivatedRoute, public dialog: MdDialog) {
+  constructor(public cordovaService: CordovaService, private route: ActivatedRoute, public dialog: MdDialog, public ga: GoogleAnalyticsService) {
 
     if (route.snapshot.url[0] != null && route.snapshot.url[0].path != null && route.snapshot.url[0].path === "top") {
       this.isDigest = false;
@@ -43,6 +43,11 @@ export class ArticleComponent implements OnInit {
 
   public openLinkInBrowser() {
     this.cordovaService.openLinkInBrowser(this.article.url);
+    this.trackEvent();
+  }
+
+  public trackEvent() {
+    this.ga.trackEvent("Article", "click", this.article.publisher.name);
   }
 
   publisherDialog(publisher: Publisher, category: Category) {
