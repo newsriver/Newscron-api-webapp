@@ -2,7 +2,6 @@ import { NgModule, Component, OnInit, Input, Pipe, PipeTransform, ElementRef, Ou
 import {ArticleComponent} from '../article/article.component';
 import {Section, Category, Article} from '../newscron-client.service';
 
-
 @Pipe({
   name: "sortArticle",
   pure: false

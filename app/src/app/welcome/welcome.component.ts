@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, Pipe, PipeTransform, In
 import {NewscronClientService, BootstrapConfiguration, CategoryPreference, UserPreferences} from '../newscron-client.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
+import {GoogleAnalyticsService} from '../google-analytics.service';
 
 @Pipe({
   name: 'keys'
@@ -51,7 +52,7 @@ export class WelcomeComponent implements OnInit {
   public packagesIds: number[] = [];
   public categories: CategoryPreference[] = [];
 
-  constructor(private client: NewscronClientService, private router: Router, private route: ActivatedRoute, public dialog: MdDialog) {
+  constructor(private client: NewscronClientService, private router: Router, private route: ActivatedRoute, public dialog: MdDialog, public ga: GoogleAnalyticsService) {
 
   }
 
@@ -88,12 +89,14 @@ export class WelcomeComponent implements OnInit {
     }
     window.scrollTo(0, 0);
     this.setWelcomeStep.emit(this.step);
+    this.ga.trackEvent("SetUp", "step", "" + this.step);
   }
 
   next() {
     this.step++;
     window.scrollTo(0, 0);
     this.setWelcomeStep.emit(this.step);
+    this.ga.trackEvent("SetUp", "step", "" + this.step);
   }
 
   finish() {
@@ -104,7 +107,7 @@ export class WelcomeComponent implements OnInit {
     this.client.resetUserPreferences(preferences, true);
     this.setWelcomeStep.emit(this.step);
     this.router.navigate(['/']);
-
+    this.ga.trackEvent("SetUp", "completed", null);
   }
 
   public hasOnePackage() {

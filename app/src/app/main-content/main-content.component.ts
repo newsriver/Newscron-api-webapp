@@ -7,6 +7,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { CordovaService } from '../cordova.service';
 import { environment } from '../../environments/environment';
 
+
 @Pipe({
   name: 'validSection'
 })

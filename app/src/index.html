@@ -30,7 +30,6 @@
 
     ga('create', 'UA-81261143-2', 'auto');
     ga('set', 'dimension1', 'web');
-    ga('send', 'pageview');
   </script>
   <!-- end-web-version-config-on -->
   <!-- cordova-version-config-off
@@ -78,15 +77,11 @@
 
     ga('create', fields);
     ga('set', 'checkProtocolTask', null);
-    ga('set', 'transportUrl', 'https://www.google-analytics.com/collect');
     ga('set', 'transport', 'beacon');
     ga(function(tracker){
        localStorage.setItem('ga:clientId', tracker.get('clientId'));
     });
     ga('set', 'dimension1', 'app');
-    ga('set', 'appName', 'Newscron');
-
-    ga('send', {hitType: 'screenview',screenName: '/',appName: 'Newscron'});
   </script>
   end-cordova-version-config-off -->
 

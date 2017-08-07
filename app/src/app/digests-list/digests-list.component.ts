@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MdSnackBar} from '@angular/material';
 import {NewscronClientService, Article, Digest} from '../newscron-client.service';
 import { DigestComponent } from '../digest/digest.component';
-
+import {GoogleAnalyticsService} from '../google-analytics.service';
 
 @Component({
   selector: 'app-digests-list',
@@ -16,7 +16,7 @@ export class DigestsListComponent implements OnInit {
   public loading: boolean = true;
   public counter: number = 0;
 
-  constructor(private client: NewscronClientService, public snackBar: MdSnackBar) {
+  constructor(private client: NewscronClientService, public snackBar: MdSnackBar, public ga: GoogleAnalyticsService) {
 
   }
 
@@ -41,6 +41,7 @@ export class DigestsListComponent implements OnInit {
         });
       }
     });
+    this.ga.trackPage("/");
   }
 
   loadDigest(count: number) {

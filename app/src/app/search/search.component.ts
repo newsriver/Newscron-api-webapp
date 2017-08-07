@@ -1,7 +1,7 @@
 import { NgModule, Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {NewscronClientService, Section, Category, Article} from '../newscron-client.service';
-
+import {GoogleAnalyticsService} from '../google-analytics.service';
 @Component({
   selector: 'search',
   templateUrl: './search.component.html',
@@ -14,12 +14,11 @@ export class SearchComponent implements OnInit {
   public loading: boolean = true;
   public language: string = "";
   public showSettings: boolean = false;
-  constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router) {
+  constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router, public ga: GoogleAnalyticsService) {
 
   }
 
   ngOnInit() {
-
     //we need to subscribe to the params changes as the router is not reloading the componet on param changes
     this.route.params.subscribe(params => {
       this.searchPhrase = params.searchPhrase;
@@ -35,6 +34,7 @@ export class SearchComponent implements OnInit {
       this.searchArticles();
 
     });
+    this.ga.trackPage("/search");
   }
 
   public togleSettings() {

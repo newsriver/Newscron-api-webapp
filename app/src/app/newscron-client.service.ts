@@ -257,6 +257,6 @@ export class Article {
   public imgUrl: string = null;
   public publicationDate: number = null;
   public publisher: Publisher = null;
-  public category: string = null;
+  public category: Category = null;
   public score: number = null;
 }

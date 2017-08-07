@@ -1,7 +1,7 @@
 import { NgModule, Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {NewscronClientService, Section, Category, Article} from '../newscron-client.service';
-
+import {GoogleAnalyticsService} from '../google-analytics.service';
 @Component({
   selector: 'category',
   templateUrl: './category.component.html',
@@ -13,7 +13,7 @@ export class CategoryComponent implements OnInit {
   public section: Section;
   public name: string;
   public loading: boolean = true;
-  constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router) {
+  constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router, public ga: GoogleAnalyticsService) {
 
   }
 
@@ -25,6 +25,8 @@ export class CategoryComponent implements OnInit {
       this.categoryId = params.id;
       this.name = params.name;
 
+      this.ga.trackPage("/category/" + this.name.toLowerCase());
+
       this.loading = true;
       this.section = null;
       this.client.category(this.categoryId).subscribe(section => {
@@ -33,6 +35,5 @@ export class CategoryComponent implements OnInit {
       });
 
     });
-
   }
 }

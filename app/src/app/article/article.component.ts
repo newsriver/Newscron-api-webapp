@@ -47,7 +47,11 @@ export class ArticleComponent implements OnInit {
   }
 
   public trackEvent() {
-    this.ga.trackEvent("Article", "click", this.article.publisher.name);
+    if (this.article.category == null) {
+      this.ga.trackEvent("Article", "click", null);
+    } else {
+      this.ga.trackEvent("Article", "click", this.article.category.name);
+    }
   }
 
   publisherDialog(publisher: Publisher, category: Category) {
