@@ -13,21 +13,14 @@ if (environment.production) {
   enableProdMode();
 }
 
-let cordova: CordovaService = new CordovaService();
-
 let onBootstrap = () => {
   platformBrowserDynamic().bootstrapModule(AppModule);
-  cordova.hideSplashScreen();
+  CordovaService.HideSplashScreen();
 };
 
-let onResume = () => {
-  cordova.onResume();
-  cordova.hideSplashScreen();
-};
 
-if (cordova.onCordova) {
+if (CordovaService.OnCordova) {
   document.addEventListener('deviceready', onBootstrap, false);
-  document.addEventListener('resume', onResume, false);
 } else {
   onBootstrap();
 }

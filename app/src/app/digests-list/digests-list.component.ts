@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { HostListener, Component, OnInit } from '@angular/core';
 import {MdSnackBar} from '@angular/material';
 import {NewscronClientService, Article, Digest} from '../newscron-client.service';
 import { DigestComponent } from '../digest/digest.component';
 import {GoogleAnalyticsService} from '../google-analytics.service';
+import {CordovaService} from '../cordova.service';
 
 @Component({
   selector: 'app-digests-list',
@@ -16,7 +17,7 @@ export class DigestsListComponent implements OnInit {
   public loading: boolean = true;
   public counter: number = 0;
 
-  constructor(private client: NewscronClientService, public snackBar: MdSnackBar, public ga: GoogleAnalyticsService) {
+  constructor(private client: NewscronClientService, public snackBar: MdSnackBar, public ga: GoogleAnalyticsService, public cordova: CordovaService) {
 
   }
 
@@ -26,22 +27,30 @@ export class DigestsListComponent implements OnInit {
       if (refresh) {
         this.digestsData = this.client.digestsList();
         this.digests = [];
+        this.counter = 0;
         this.loadDigest(2);
-
-        this.client.assembleDigest().subscribe(digest => {
-          this.loading = false;
-          if (digest != null) {
-            //since digestsData is a reference from the client we don't need to update it
-            //it will already be since the assembleDigest method is unshifting it.
-            this.digests.unshift(digest);
-            this.counter++;
-            //don't display this currently it is quite useless..
-            //this.snackBar.open('New Digest Available - Scroll to top', 'OK', { duration: 5000, });
-          }
-        });
+        this.downloadDigest();
       }
     });
+
     this.ga.trackPage("/");
+  }
+
+
+
+  private downloadDigest() {
+    this.loading = true;
+    this.client.assembleDigest().subscribe(digest => {
+      this.loading = false;
+      if (digest != null) {
+        //since digestsData is a reference from the client we don't need to update it
+        //it will already be since the assembleDigest method is unshifting it.
+        this.digests.unshift(digest);
+        this.counter++;
+        //don't display this currently it is quite useless..
+        //this.snackBar.open('New Digest Available - Scroll to top', 'OK', { duration: 5000, });
+      }
+    });
   }
 
   loadDigest(count: number) {

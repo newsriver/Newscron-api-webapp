@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import {Inject} from '@angular/core';
 import { Observable, BehaviorSubject, Subject } from 'rxjs/Rx';
+import {CordovaService} from './cordova.service';
 
 @Injectable()
 export class NewscronClientService {
@@ -18,7 +19,7 @@ export class NewscronClientService {
 
 
 
-  constructor( @Inject(Http) private http: Http) {
+  constructor( @Inject(Http) private http: Http, private cordova: CordovaService) {
     let prefJson = JSON.parse(localStorage.getItem('userPreferences'));
     if (prefJson != null) {
       let preferences: UserPreferences = Object.assign(new UserPreferences(), prefJson);
@@ -37,6 +38,15 @@ export class NewscronClientService {
     if (this.uuid == null) {
       this.uuid = this.uuidGenerator();
       localStorage.setItem('uuid', this.uuid);
+    }
+
+    //consider to move this in the client and use refreshListener instead
+    if (this.cordova.onCordova) {
+      this.cordova.resumeListener().subscribe(item => {
+        if (item != null) {
+          this.refresh.next(true);
+        }
+      });
     }
   }
 

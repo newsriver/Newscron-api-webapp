@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-
+import { Injectable, EventEmitter, NgZone } from '@angular/core';
+import { Observable, BehaviorSubject, Subject } from 'rxjs/Rx';
 
 function _window(): any {
   // return the global native browser window object
@@ -9,9 +9,34 @@ function _window(): any {
 @Injectable()
 export class CordovaService {
 
+  //This static methods are used by main.ts before bootsrapping the Angular app
+  static get OnCordova(): Boolean {
+    return !!_window().cordova;
+  }
+
+  static HideSplashScreen(): void {
+    if (!!_window().navigator && !!_window().navigator.splashscreen) {
+      _window().navigator.splashscreen.hide();
+    }
+  }
+
+  private TIMEOUT: number = 900000; //15min
+
+  private resume: BehaviorSubject<boolean>;
   private last: Date;
-  constructor() {
+  constructor(private zone: NgZone) {
     this.last = new Date();
+    this.resume = new BehaviorSubject<boolean>(null);
+    //document.addEventListener('resume', this.onResume, false);
+    Observable.fromEvent(document, 'resume').subscribe(event => {
+      this.zone.run(() => {
+        this.onResume();
+      });
+    })
+  }
+
+  public resumeListener(): BehaviorSubject<boolean> {
+    return this.resume;
   }
 
 
@@ -20,18 +45,11 @@ export class CordovaService {
   }
 
   get onCordova(): Boolean {
-    return !!_window().cordova;
-  }
-
-  public hideSplashScreen(): void {
-    if (!!_window().navigator && !!_window().navigator.splashscreen) {
-      _window().navigator.splashscreen.hide();
-    }
-
+    return CordovaService.OnCordova;
   }
 
   public platformName(): string {
-    if (this.onCordova) {
+    if (CordovaService.OnCordova) {
       return _window().device.platform;
     } else {
       return null;
@@ -45,17 +63,20 @@ export class CordovaService {
   }
 
 
-  public onResume(): void {
 
+  public onResume(): void {
+    CordovaService.HideSplashScreen();
 
     if (this.last == null) {
       //hard-reset forces the app to completely reload
-      _window().document.location.href = 'index.html';
+      //_window().document.location.href = 'index.html';
+      this.resume.next(true);
     } else {
       let diff: number = new Date().getTime() - this.last.getTime();
-      if (diff > 900000) { //15min
+      if (diff > this.TIMEOUT) {
         //hard-reset forces the app to completely reload
-        _window().document.location.href = 'index.html';
+        //_window().document.location.href = 'index.html';
+        this.resume.next(true);
       }
     }
   }
