@@ -23,9 +23,9 @@ export class CordovaService {
   private TIMEOUT: number = 900000; //15min
 
   private resume: BehaviorSubject<boolean>;
-  private last: Date;
+  private lastResume: Date;
   constructor(private zone: NgZone) {
-    this.last = new Date();
+    this.lastResume = new Date();
     this.resume = new BehaviorSubject<boolean>(null);
     //document.addEventListener('resume', this.onResume, false);
     Observable.fromEvent(document, 'resume').subscribe(event => {
@@ -67,15 +67,14 @@ export class CordovaService {
   public onResume(): void {
     CordovaService.HideSplashScreen();
 
-    if (this.last == null) {
+    if (this.lastResume == null) {
+      //lastResume should never be null - therefor lets completely reload the app
       //hard-reset forces the app to completely reload
-      //_window().document.location.href = 'index.html';
-      this.resume.next(true);
+      _window().document.location.href = 'index.html';
     } else {
-      let diff: number = new Date().getTime() - this.last.getTime();
+      let diff: number = new Date().getTime() - this.lastResume.getTime();
       if (diff > this.TIMEOUT) {
-        //hard-reset forces the app to completely reload
-        //_window().document.location.href = 'index.html';
+        this.lastResume = new Date();
         this.resume.next(true);
       }
     }
