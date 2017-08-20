@@ -7,6 +7,13 @@ function _window(): any {
   return window;
 }
 
+export enum InstallMode {
+  IMMEDIATE,
+  ON_NEXT_RESTART,
+  ON_NEXT_RESUME
+}
+
+
 @Injectable()
 export class CordovaService {
 
@@ -74,12 +81,14 @@ export class CordovaService {
     }
   }
 
+
+
   public checkForUpdate(): void {
     //sync will check for update, download them and restart the app
     //allso sync will inform codePush that the app has successfully loaded, validation the update and avoiding rollbacks
-    _window().codePush.sync();
+    _window().codePush.notifyApplicationReady();  //should not be nesecary to call as sync is doing it... but we got too many rollabks
+    _window().codePush.sync(null, { installMode: InstallMode.ON_NEXT_RESUME, minimumBackgroundDuration: 60 * 10 });
   }
-
 
 
   public onResume(): void {
@@ -96,6 +105,7 @@ export class CordovaService {
         this.resume.next(true);
       }
     }
+    this.checkForUpdate();
   }
 
   public openLinkInBrowser(url: string) {
