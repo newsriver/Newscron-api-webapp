@@ -17,12 +17,11 @@
 -->
 
   <div class="card-block">
-
-    <div style="display: flex;flex-direction: row;     margin-bottom: 1.5rem;" *ngIf="isDigest">
+    <div class="digest" *ngIf="isDigest">
       <div style="flex: 3;">
         <!--<img src="http://www.tio.ch/favicon.ico" style="max-height: 28px; margin-right:5px; float:left;" />-->
         <h6 style="color:black; margin:0px;">{{article.publisher.name}}</h6>
-        <h6 style="color:#666; margin:0px; margin-top:3px;">{{article.category.name}} · {{article.publicationDate | date: 'dd/MM/yyyy HH:mm'}} <span *ngIf="article.score">· score: {{article.score}}</span></h6>
+        <h6 class="info">{{article.category.name}} · {{article.publicationDate | date: 'dd/MM/yyyy HH:mm'}} <span *ngIf="article.score">· score: {{article.score}}</span></h6>
       </div>
 
       <div class="optout-publisher" *ngIf="article.publisher && article.publisher.id && article.category">
@@ -37,6 +36,7 @@
         <div class="img" [ngStyle]="{'background-image': 'url(' + article.imgUrl + ')'}" border="0" *ngIf="article.imgUrl!=null"></div>
         <h4>{{article.title}}</h4>
         <p [innerHTML]="article.snippet | escapeHtml" class="snippet"></p>
+        <h6 class="info-mobile">{{article.publicationDate | date: 'dd/MM/yyyy HH:mm'}}</h6>
       </div>
     </a>
     <div (click)="openLinkInBrowser()" *ngIf="cordovaService.onCordova">
@@ -44,6 +44,7 @@
         <div class="img" [ngStyle]="{'background-image': 'url(' + article.imgUrl + ')'}" border="0" *ngIf="article.imgUrl!=null"></div>
         <h4>{{article.title}}</h4>
         <p [innerHTML]="article.snippet | escapeHtml" class="snippet"></p>
+        <h6 class="info-mobile">{{article.publicationDate | date: 'dd/MM/yyyy HH:mm'}}</h6>
       </div>
     </div>
   </div>

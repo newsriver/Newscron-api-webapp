@@ -2,6 +2,8 @@ li{
   list-style-type:none
 }
 
+
+
 ul{
   padding: 0px;
 }
@@ -26,18 +28,33 @@ h2{
   font-size: 20px;
 }
 
-@media screen and (max-width: 540px) {
-  h2{
-    font-size: 2.5rem;
-    line-height: 36px;
-  }
-}
-
-
 
 .category-settings-button i{
   vertical-align: baseline;
 }
 hr{
   margin-top: 1rem;
+}
+
+
+@media screen and (max-width: 540px) {
+  h2{
+    font-size: 2.5rem;
+    line-height: 36px;
+    padding-left: 1.1rem;
+  }
+
+
+  li{
+    border-bottom:1px solid lightgrey;
+  }
+
+  li:last-child{
+    border-bottom:0px;
+  }
+
+  hr{
+    margin-bottom: 0px;
+  }
+
 }

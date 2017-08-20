@@ -7,7 +7,7 @@
   <li *ngFor="let digest of digests; let j = index">
     <digest [digest]="digest"></digest>
   </li>
-  <li style="text-align: center;" *ngIf="this.counter < this.digestsData.length">
+  <li style="text-align: center; margin-top:5rem;" *ngIf="this.counter < this.digestsData.length">
     <button md-raised-button (click)="loadDigest(1)">Load Previous Digest</button>
   </li>
 </ul>
