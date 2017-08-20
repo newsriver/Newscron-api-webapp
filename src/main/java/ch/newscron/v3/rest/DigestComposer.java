@@ -60,7 +60,7 @@ public class DigestComposer {
         Digest digest = new Digest();
         digest.setTimestamp(System.currentTimeMillis());
         List<Section> sections = new LinkedList<>();
-        int articles = 0;
+        int articlesCount = 0;
         for (CategoryPreference category : categories) {
             Section section = featuredCategory(category, timestamp);
             Collections.sort(section.getArticles(), new Comparator<Article>() {
@@ -71,12 +71,12 @@ public class DigestComposer {
             });
 
             sections.add(section);
-            articles += section.getArticles().size();
+            articlesCount += section.getArticles().size();
         }
         digest.setSections(sections);
 
-        //empty response
-        if (articles == 0) {
+        //empty response if the digest is not big enough
+        if (articlesCount < 8) {
             return new ResponseEntity<ch.newscron.v3.data.Digest>(HttpStatus.NO_CONTENT);
         }
 
