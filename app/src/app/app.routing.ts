@@ -17,11 +17,11 @@ export const AppRoutes: Routes = [
   {
     path: '', component: MainContentComponent,
     children: [
-      { path: '', component: DigestsListComponent },
-      { path: 'top', component: FeaturedComponent },
-      { path: 'search/:searchPhrase', component: SearchComponent },
-      { path: 'search/:language/:searchPhrase', component: SearchComponent },
-      { path: 'category/:id/:name', component: CategoryComponent },
+      { path: '', component: DigestsListComponent, data: { exitOnBack: true } },
+      { path: 'top', component: FeaturedComponent, data: { exitOnBack: true } },
+      { path: 'search/:searchPhrase', component: SearchComponent, data: { exitOnBack: true } },
+      { path: 'search/:language/:searchPhrase', component: SearchComponent, data: { exitOnBack: true } },
+      { path: 'category/:id/:name', component: CategoryComponent, data: { exitOnBack: true } },
     ]
   },
   {

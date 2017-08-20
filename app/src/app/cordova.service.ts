@@ -1,5 +1,6 @@
 import { Injectable, EventEmitter, NgZone } from '@angular/core';
 import { Observable, BehaviorSubject, Subject } from 'rxjs/Rx';
+import { Router, RoutesRecognized, ActivatedRoute } from '@angular/router';
 
 function _window(): any {
   // return the global native browser window object
@@ -24,7 +25,7 @@ export class CordovaService {
 
   private resume: BehaviorSubject<boolean>;
   private lastResume: Date;
-  constructor(private zone: NgZone) {
+  constructor(private zone: NgZone, private router: Router) {
     this.lastResume = new Date();
     this.resume = new BehaviorSubject<boolean>(null);
     //document.addEventListener('resume', this.onResume, false);
@@ -33,6 +34,23 @@ export class CordovaService {
         this.onResume();
       });
     })
+
+
+    if (CordovaService.OnCordova) {
+      Observable.fromEvent(document, 'backbutton').subscribe(event => {
+        this.zone.run(() => {
+          let route: ActivatedRoute = this.router.routerState.root.firstChild;
+          while (route != null) {
+            if (route.snapshot.data.exitOnBack != undefined && route.snapshot.data.exitOnBack == true) {
+              _window().navigator.app.exitApp();
+              return;
+            }
+            route = route.firstChild;
+          }
+          _window().navigator.app.backHistory()
+        });
+      })
+    }
   }
 
   public resumeListener(): BehaviorSubject<boolean> {
