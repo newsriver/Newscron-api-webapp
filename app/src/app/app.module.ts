@@ -1,13 +1,13 @@
 import 'hammerjs';
 import { BrowserModule } from '@angular/platform-browser';
-import {MdProgressSpinnerModule} from '@angular/material';
-import {MdMenuModule} from '@angular/material';
-import {MdDialogModule} from '@angular/material';
-import {MdButtonModule} from '@angular/material';
-import {MdSidenavModule} from '@angular/material';
-import {MdSnackBarModule} from '@angular/material';
-import {MdTabsModule} from '@angular/material';
-import {BrowserAnimationsModule}  from '@angular/platform-browser/animations';
+import { MdProgressSpinnerModule } from '@angular/material';
+import { MdMenuModule } from '@angular/material';
+import { MdDialogModule } from '@angular/material';
+import { MdButtonModule } from '@angular/material';
+import { MdSidenavModule } from '@angular/material';
+import { MdSnackBarModule } from '@angular/material';
+import { MdTabsModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -17,9 +17,9 @@ import { AppComponents, AppRoutes } from "./app.routing";
 import { ArticleComponent, PublisherDialog, EscapeHtmlPipe } from './article/article.component';
 import { CategoryComponent } from './category/category.component';
 import { WelcomeComponent, ResetConfirmationDialoug, KeysPipe, CategoryAmmountPipe } from './welcome/welcome.component';
-import {NewscronClientService} from './newscron-client.service';
-import {SectionComponent, SortArticle} from './section/section.component';
-import {GoogleAnalyticsService} from './google-analytics.service';
+import { NewscronClientService } from './newscron-client.service';
+import { SectionComponent, SortArticle } from './section/section.component';
+import { GoogleAnalyticsService } from './google-analytics.service';
 import { CordovaService } from './cordova.service';
 import { DigestsListComponent } from './digests-list/digests-list.component';
 import { DigestComponent } from './digest/digest.component';
@@ -73,7 +73,7 @@ import { CategoriesComponent } from './welcome/categories/categories.component';
     FormsModule,
     HttpModule,
     RouterModule,
-    RouterModule.forRoot(AppRoutes)
+    RouterModule.forRoot(AppRoutes, { useHash: true })
   ],
   entryComponents: [
     PublisherDialog, ResetConfirmationDialoug
