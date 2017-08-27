@@ -1,6 +1,6 @@
 {
   "name": "newscron",
-  "version": "5.0.0",
+  "version": "5.0.10",
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
@@ -9,8 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build-prod-webapp": "npm version patch && node ./replace.build.js && ng build --prod --aot --output-path ../src/main/resources/static/",
-    "build-prod-cordova": "npm version patch && node ./replace.build.js && ng build --prod --aot --output-path ../../Newscron-cordova/www/ --base-href ."
+    "build-prod-webapp": "npm version patch && node ./replace.build.js && node ./replace.useLocationHash.js false && ng build --prod --aot --output-path ../src/main/resources/static/",
+    "build-prod-cordova": "npm version patch && node ./replace.build.js && node ./replace.useLocationHash.js true && ng build --prod --aot --output-path ../../Newscron-cordova/www/ --base-href ."
   },
   "private": true,
   "dependencies": {
