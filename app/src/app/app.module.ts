@@ -31,6 +31,7 @@ import { SearchComponent } from './search/search.component';
 import { RegionComponent } from './welcome/region/region.component';
 import { EditionComponent } from './welcome/edition/edition.component';
 import { CategoriesComponent } from './welcome/categories/categories.component';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,7 @@ import { CategoriesComponent } from './welcome/categories/categories.component';
     FormsModule,
     HttpModule,
     RouterModule,
-    RouterModule.forRoot(AppRoutes, { useHash: true })
+    RouterModule.forRoot(AppRoutes, { useHash: environment.useLocationHash })
   ],
   entryComponents: [
     PublisherDialog, ResetConfirmationDialoug

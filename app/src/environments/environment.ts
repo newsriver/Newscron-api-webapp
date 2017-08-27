@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  version: 'DEV'
+  version: 'DEV',
+  useLocationHash: false,
 };
