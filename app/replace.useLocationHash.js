@@ -10,7 +10,7 @@ process.argv.forEach(function(val, index, array) {
 const options = {
   files: 'src/environments/environment.prod.ts',
   replace: /useLocationHash: (.*)/g,
-  with: "useLocationHash: " + value,
+  with: "useLocationHash: " + value + ",",
   allowEmptyPaths: false,
 };
 
