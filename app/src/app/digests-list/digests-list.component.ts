@@ -1,9 +1,9 @@
 import { HostListener, Component, OnInit } from '@angular/core';
-import {MdSnackBar} from '@angular/material';
-import {NewscronClientService, Article, Digest} from '../newscron-client.service';
+import { MatSnackBar } from '@angular/material';
+import { NewscronClientService, Article, Digest } from '../newscron-client.service';
 import { DigestComponent } from '../digest/digest.component';
-import {GoogleAnalyticsService} from '../google-analytics.service';
-import {CordovaService} from '../cordova.service';
+import { GoogleAnalyticsService } from '../google-analytics.service';
+import { CordovaService } from '../cordova.service';
 
 @Component({
   selector: 'app-digests-list',
@@ -17,7 +17,7 @@ export class DigestsListComponent implements OnInit {
   public loading: boolean = true;
   public counter: number = 0;
 
-  constructor(private client: NewscronClientService, public snackBar: MdSnackBar, public ga: GoogleAnalyticsService, public cordova: CordovaService) {
+  constructor(private client: NewscronClientService, public snackBar: MatSnackBar, public ga: GoogleAnalyticsService, public cordova: CordovaService) {
 
   }
 

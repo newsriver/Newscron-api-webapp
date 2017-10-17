@@ -7,7 +7,7 @@
   <p *ngIf="category.publishersOptOut.length==0">No publishers have been opted out for this category.</p>
   <ul>
     <li *ngFor="let publisher of category.publishersOptOut; let j = index">
-      <button md-button style="min-width:20px" (click)="undoPublisherOptOut(j)"><i class="fa fa-undo" aria-hidden="true"></i></button> {{publisher.name}}
+      <button mat-button style="min-width:20px" (click)="undoPublisherOptOut(j)"><i class="fa fa-undo" aria-hidden="true"></i></button> {{publisher.name}}
     </li>
   </ul>
 </div>
@@ -15,14 +15,14 @@
 
 
 <h3 style="margin-top: 6rem;">Publishers Regions</h3>
-<md-tab-group>
-  <md-tab label="EUROPE">
+<mat-tab-group>
+  <mat-tab label="EUROPE">
     <package-selection continent="EUROPE" [packagesIds]="category.packages" (onChange)="onPackageChange($event)"></package-selection>
-  </md-tab>
-  <md-tab label="NORTH AMERICA">
+  </mat-tab>
+  <mat-tab label="NORTH AMERICA">
     <package-selection continent="NORTH_AMERICA" [packagesIds]="category.packages" (onChange)="onPackageChange($event)"></package-selection>
-  </md-tab>
-  <md-tab label="SOUTH AMERICA">
+  </mat-tab>
+  <mat-tab label="SOUTH AMERICA">
     <package-selection continent="SOUTH_AMERICA" [packagesIds]="category.packages" (onChange)="onPackageChange($event)"></package-selection>
-  </md-tab>
-</md-tab-group>
+  </mat-tab>
+</mat-tab-group>

@@ -1,7 +1,7 @@
 <h2>
 {{searchPhrase}}
 <div style="flex: 1;text-align: right;">
-  <button md-button class="search-settings-button" (click)="togleSettings()"><i class="fa fa-cog" aria-hidden="true"></i></button>
+  <button mat-button class="search-settings-button" (click)="togleSettings()"><i class="fa fa-cog" aria-hidden="true"></i></button>
 </div>
 </h2>
 <div class="flextable" *ngIf="showSettings" style="padding-left: 1.5rem; margin-top:1.5rem;">
@@ -100,7 +100,7 @@
 
 
 <div class="loading" *ngIf="loading">
-  <md-progress-spinner mode="indeterminate" class="progress-spinner"></md-progress-spinner>
+  <mat-progress-spinner mode="indeterminate" class="progress-spinner"></mat-progress-spinner>
 </div>
 
 

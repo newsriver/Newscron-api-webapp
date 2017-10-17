@@ -1,9 +1,15 @@
-<h1 md-dialog-title>OptOut Publisher</h1>
-<div md-dialog-content>
-  Don't include any article of {{data.publisher.name}} for category {{data.category.name}} in any further digest?
-  <!--<md-checkbox class="mat-primary" [(ngModel)]="removeall" style="display: block;">Remove for all categories.</md-checkbox>-->
+<h1 mat-dialog-title>Publisher Relevance</h1>
+<div mat-dialog-content>
+  How relevant is the publisher <b>{{data.publisher.name}}</b> for the category <b>{{data.category.name}}</b>?
+  <!--<mat-checkbox class="mat-primary" [(ngModel)]="removeall" style="display: block;">Remove for all categories.</mat-checkbox>-->
+  <div class="relevance">
+    <button mat-raised-button>+1 very relevant</button>
+    <button mat-raised-button>-1 not so relevant</button>
+    <button mat-raised-button color="warn"><i class="fa fa-ban" aria-hidden="true"></i> Remove</button>
+  </div>
+
+
 </div>
-<div md-dialog-actions align='end'>
-  <div><button md-button class="mat-primary" (click)="save()">Yes</button></div>
-  <div><button md-button class="mat-primary" (click)="dialogRef.close('cancel')">Cancel</button></div>
+<div mat-dialog-actions align='end'>
+  <div><button mat-button color="primary" (click)="dialogRef.close('cancel')">Cancel</button></div>
 </div>

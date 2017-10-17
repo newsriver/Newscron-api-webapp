@@ -1,12 +1,12 @@
 import 'hammerjs';
 import { BrowserModule } from '@angular/platform-browser';
-import { MdProgressSpinnerModule } from '@angular/material';
-import { MdMenuModule } from '@angular/material';
-import { MdDialogModule } from '@angular/material';
-import { MdButtonModule } from '@angular/material';
-import { MdSidenavModule } from '@angular/material';
-import { MdSnackBarModule } from '@angular/material';
-import { MdTabsModule } from '@angular/material';
+import { MatProgressSpinnerModule } from '@angular/material';
+import { MatMenuModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material';
+import { MatSidenavModule } from '@angular/material';
+import { MatSnackBarModule } from '@angular/material';
+import { MatTabsModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -63,13 +63,13 @@ import { environment } from '../environments/environment';
   ],
   imports: [
     BrowserAnimationsModule,
-    MdMenuModule,
-    MdSidenavModule,
-    MdProgressSpinnerModule,
-    MdDialogModule,
-    MdButtonModule,
-    MdSnackBarModule,
-    MdTabsModule,
+    MatMenuModule,
+    MatSidenavModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatSnackBarModule,
+    MatTabsModule,
     BrowserModule,
     FormsModule,
     HttpModule,
