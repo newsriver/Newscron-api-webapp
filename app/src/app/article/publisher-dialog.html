@@ -3,9 +3,9 @@
   How relevant is the publisher <b>{{data.publisher.name}}</b> for the category <b>{{data.category.name}}</b>?
   <!--<mat-checkbox class="mat-primary" [(ngModel)]="removeall" style="display: block;">Remove for all categories.</mat-checkbox>-->
   <div class="relevance">
-    <button mat-raised-button>+1 very relevant</button>
-    <button mat-raised-button>-1 not so relevant</button>
-    <button mat-raised-button color="warn"><i class="fa fa-ban" aria-hidden="true"></i> Remove</button>
+    <button mat-raised-button (click)="save(1)">+1 very relevant</button>
+    <button mat-raised-button (click)="save(-1)">-1 not relevant</button>
+    <button mat-raised-button (click)="save(-100)" color="warn"><i class="fa fa-ban" aria-hidden="true"></i> Remove</button>
   </div>
 
 

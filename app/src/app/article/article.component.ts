@@ -6,6 +6,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { NewscronClientService } from '../newscron-client.service';
 import { Pipe, PipeTransform } from '@angular/core';
 import { GoogleAnalyticsService } from '../google-analytics.service';
+import { UserProfileService } from '../user-profile.service';
+
 
 @Pipe({ name: 'escapeHtml', pure: false })
 export class EscapeHtmlPipe implements PipeTransform {
@@ -26,7 +28,7 @@ export class ArticleComponent implements OnInit {
   public isDigest = true;
 
   @Input() article: Article;
-  constructor(public cordovaService: CordovaService, private route: ActivatedRoute, public dialog: MatDialog, public ga: GoogleAnalyticsService) {
+  constructor(public cordovaService: CordovaService, private route: ActivatedRoute, public dialog: MatDialog, public ga: GoogleAnalyticsService, private userProfile: UserProfileService) {
 
     if (route.snapshot.url[0] != null && route.snapshot.url[0].path != null && route.snapshot.url[0].path === "top") {
       this.isDigest = false;
@@ -77,11 +79,12 @@ export class PublisherDialog {
   public removeall: boolean = false;
   relevance: string;
 
-  constructor(public dialogRef: MatDialogRef<PublisherDialog>, @Inject(MAT_DIALOG_DATA) public data: any, private client: NewscronClientService) {
+  constructor(public dialogRef: MatDialogRef<PublisherDialog>, @Inject(MAT_DIALOG_DATA) public data: any, private client: NewscronClientService, private userProfile: UserProfileService) {
 
   }
 
-  save() {
+  save(relevance: number) {
+    this.userProfile.setPublishersRelevance(this.data.category.id, this.data.publisher.id, relevance);
     this.client.publishersOptOut(this.data.publisher, this.data.category);
     this.dialogRef.close('close');
   }

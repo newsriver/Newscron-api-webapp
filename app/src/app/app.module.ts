@@ -18,6 +18,7 @@ import { ArticleComponent, PublisherDialog, EscapeHtmlPipe } from './article/art
 import { CategoryComponent } from './category/category.component';
 import { WelcomeComponent, ResetConfirmationDialoug, KeysPipe, CategoryAmmountPipe } from './welcome/welcome.component';
 import { NewscronClientService } from './newscron-client.service';
+import { UserProfileService } from './user-profile.service';
 import { SectionComponent, SortArticle } from './section/section.component';
 import { GoogleAnalyticsService } from './google-analytics.service';
 import { CordovaService } from './cordova.service';
@@ -79,7 +80,7 @@ import { environment } from '../environments/environment';
   entryComponents: [
     PublisherDialog, ResetConfirmationDialoug
   ],
-  providers: [CordovaService, NewscronClientService, GoogleAnalyticsService],
+  providers: [CordovaService, NewscronClientService, GoogleAnalyticsService, UserProfileService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

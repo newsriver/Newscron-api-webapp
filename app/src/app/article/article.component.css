@@ -141,6 +141,13 @@ a{
   font-size: 14px;
   margin-top:-2px;
 }
+.publisher-vote-button-arrow.up.active{
+  color: #1BC98E;
+}
+.publisher-vote-button-arrow.down.active{
+  color: #f44336;
+}
+
 .publisher-vote-text{
   font-size: 12px;
 }

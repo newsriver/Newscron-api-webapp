@@ -21,9 +21,9 @@
       <div class="publisher-vote">
         <button mat-button (click)="publisherDialog(article.publisher,article.category)">
           <div class="publisher-vote-button">
-            <i class="fa fa-chevron-up publisher-vote-button-arrow" aria-hidden="true"></i>
-            <span class="publisher-vote-text">+1002</span>
-            <i class="fa fa-chevron-down publisher-vote-button-arrow" aria-hidden="true"></i>
+            <i class="fa fa-chevron-up publisher-vote-button-arrow up" aria-hidden="true" [ngClass]="{active: userProfile.getPublisherRelevance(article.category.id,article.publisher.id)>0}"></i>
+            <span class="publisher-vote-text"><span *ngIf="userProfile.getPublisherRelevance(article.category.id,article.publisher.id)>0">+</span>{{userProfile.getPublisherRelevance(article.category.id,article.publisher.id)}}</span>
+            <i class="fa fa-chevron-down publisher-vote-button-arrow down" aria-hidden="true" [style.color]="red ? '30' : '16'" [ngClass]="{active: userProfile.getPublisherRelevance(article.category.id,article.publisher.id)<0}"></i>
           </div>
         </button>
       </div>
@@ -32,7 +32,7 @@
         <h6 style="color:black; font-weight: 400;" class="publisher-name">
           {{article.publisher.name}}
         </h6>
-        <h6 class="info">{{article.category.name}} · {{article.publicationDate | date: 'dd/MM/yyyy HH:mm'}} <!--<span *ngIf="article.score">· score: {{article.score}}</span>--></h6>
+        <h6 class="info">{{article.publicationDate | date: 'dd/MM/yyyy HH:mm'}} <!--<span *ngIf="article.score">· score: {{article.score}}</span>--></h6>
       </div>
 
       <div class="optout-publisher" *ngIf="article.publisher && article.publisher.id && article.category">
