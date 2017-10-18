@@ -18,15 +18,7 @@
 
   <div class="card-block">
     <div class="digest" *ngIf="isDigest">
-      <div class="publisher-vote">
-        <button mat-button (click)="publisherDialog(article.publisher,article.category)">
-          <div class="publisher-vote-button">
-            <i class="fa fa-chevron-up publisher-vote-button-arrow up" aria-hidden="true" [ngClass]="{active: userProfile.getPublisherRelevance(article.category.id,article.publisher.id)>0}"></i>
-            <span class="publisher-vote-text"><span *ngIf="userProfile.getPublisherRelevance(article.category.id,article.publisher.id)>0">+</span>{{userProfile.getPublisherRelevance(article.category.id,article.publisher.id)}}</span>
-            <i class="fa fa-chevron-down publisher-vote-button-arrow down" aria-hidden="true" [style.color]="red ? '30' : '16'" [ngClass]="{active: userProfile.getPublisherRelevance(article.category.id,article.publisher.id)<0}"></i>
-          </div>
-        </button>
-      </div>
+      <publisher-relevance [article]="article"></publisher-relevance>
       <div style="flex: 3;">
         <!--<img src="http://www.tio.ch/favicon.ico" style="max-height: 28px; margin-right:5px; float:left;" />-->
         <h6 style="color:black; font-weight: 400;" class="publisher-name">

@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class UserProfileService {
+
+  private publishersRelevance2: BehaviorSubject<{ [id: number]: { [id: number]: number; }; }> = new BehaviorSubject<{ [id: number]: { [id: number]: number; }; }>(null);
+
 
   private publishersRelevance: { [id: number]: { [id: number]: number; }; } = {};
   constructor() {
@@ -9,8 +14,12 @@ export class UserProfileService {
     if (this.publishersRelevance == null) {
       this.publishersRelevance = {};
     }
+    this.publishersRelevance2.next(this.publishersRelevance);
   }
 
+  public getPublishersRelevance(): Observable<{ [id: number]: { [id: number]: number; }; }> {
+    return this.publishersRelevance2.asObservable();
+  }
 
   public getPublisherRelevance(categoryId: number, publisherId: number): number {
     if (this.publishersRelevance[categoryId] == null) {
@@ -28,6 +37,7 @@ export class UserProfileService {
     }
     this.publishersRelevance[categoryId][publisherId] = relevance;
     localStorage.setItem('publishers-relevance', JSON.stringify(this.publishersRelevance));
+    this.publishersRelevance2.next(this.publishersRelevance);
   }
 
 }

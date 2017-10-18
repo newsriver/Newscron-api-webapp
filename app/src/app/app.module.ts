@@ -14,7 +14,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AppComponents, AppRoutes } from "./app.routing";
-import { ArticleComponent, PublisherDialog, EscapeHtmlPipe } from './article/article.component';
+import { ArticleComponent, EscapeHtmlPipe } from './article/article.component';
 import { CategoryComponent } from './category/category.component';
 import { WelcomeComponent, ResetConfirmationDialoug, KeysPipe, CategoryAmmountPipe } from './welcome/welcome.component';
 import { NewscronClientService } from './newscron-client.service';
@@ -33,6 +33,7 @@ import { RegionComponent } from './welcome/region/region.component';
 import { EditionComponent } from './welcome/edition/edition.component';
 import { CategoriesComponent } from './welcome/categories/categories.component';
 import { environment } from '../environments/environment';
+import { PublisherRelevanceComponent, PublisherDialog } from './article/publisher-relevance/publisher-relevance.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { environment } from '../environments/environment';
     SearchComponent,
     RegionComponent,
     EditionComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    PublisherRelevanceComponent
   ],
   imports: [
     BrowserAnimationsModule,
