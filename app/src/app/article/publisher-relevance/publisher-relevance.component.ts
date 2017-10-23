@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, Output, Inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Section, Category, Article, Publisher } from '../../newscron-client.service';
 import { Observable } from 'rxjs';
 import { UserProfileService } from '../../user-profile.service';
@@ -13,17 +13,22 @@ export class PublisherRelevanceComponent implements OnInit {
 
   @Input() article: Article;
   public publisherUserRelevance: number = 0;
-  constructor(private userProfile: UserProfileService, public dialog: MatDialog, private chageDetector: ChangeDetectorRef) {
+  constructor(private userProfile: UserProfileService, public dialog: MatDialog, private changeDetector: ChangeDetectorRef) {
 
   }
 
   ngOnInit() {
-    this.userProfile.getPublishersRelevance().subscribe(result => {
-      if (result != null && result[this.article.category.id] != null && result[this.article.category.id][this.article.publisher.id] != null) {
-        this.publisherUserRelevance = result[this.article.category.id][this.article.publisher.id];
-        this.chageDetector.detectChanges();
+    this.publisherUserRelevance = this.userProfile.getPublisherRelevance(this.article.category.id, this.article.publisher.id);
+    this.userProfile.getProfileUpdateObserver().subscribe(result => {
+      if (result != null && result["publisher-relevance"] != null && result["publisher-relevance"] == this.article.category.id) {
+        this.publisherUserRelevance = this.userProfile.getPublisherRelevance(this.article.category.id, this.article.publisher.id);
+        this.changeDetector.markForCheck();
       }
     });
+  }
+
+  ngOnDestroy() {
+    //this.userProfile.getPublishersRelevance().unsubscribe();
   }
 
   publisherDialog(publisher: Publisher, category: Category) {
@@ -46,15 +51,18 @@ export class PublisherRelevanceComponent implements OnInit {
 })
 export class PublisherDialog {
 
-  public removeall: boolean = false;
+  public confirmRemove: boolean = false;
   relevance: string;
 
   constructor(public dialogRef: MatDialogRef<PublisherDialog>, @Inject(MAT_DIALOG_DATA) public data: any, private userProfile: UserProfileService) {
 
   }
+  remove() {
+    this.confirmRemove = true;
+  }
 
   save(relevance: number) {
-    this.userProfile.setPublishersRelevance(this.data.category.id, this.data.publisher.id, relevance);
     this.dialogRef.close('close');
+    this.userProfile.setPublishersRelevance(this.data.category.id, this.data.publisher, relevance);
   }
 }

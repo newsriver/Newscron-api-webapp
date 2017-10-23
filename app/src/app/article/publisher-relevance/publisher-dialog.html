@@ -1,15 +1,20 @@
 <h1 mat-dialog-title>Publisher Relevance</h1>
 <div mat-dialog-content>
-  How relevant is the publisher <b>{{data.publisher.name}}</b> for the category <b>{{data.category.name}}</b>?
-  <!--<mat-checkbox class="mat-primary" [(ngModel)]="removeall" style="display: block;">Remove for all categories.</mat-checkbox>-->
-  <div class="relevance">
-    <button mat-raised-button (click)="save(1)">+1 very relevant</button>
-    <button mat-raised-button (click)="save(-1)">-1 not relevant</button>
-    <button mat-raised-button (click)="save(-100)" color="warn"><i class="fa fa-ban" aria-hidden="true"></i> Remove</button>
+  <div *ngIf="!confirmRemove">
+    How relevant is the publisher <b>{{data.publisher.name}}</b> for the category <b>{{data.category.name}}</b>?
+    <!--<mat-checkbox class="mat-primary" [(ngModel)]="removeall" style="display: block;">Remove for all categories.</mat-checkbox>-->
+    <div class="relevance">
+      <button mat-raised-button (click)="save(1)">Very relevant</button>
+      <button mat-raised-button (click)="save(-1)">Not relevant</button>
+      <button mat-raised-button (click)="remove()" color="warn"><i class="fa fa-ban" aria-hidden="true"></i> Remove</button>
+    </div>
   </div>
-
-
+  <div *ngIf="confirmRemove">
+    Are you sure to completelly remove <b>{{data.publisher.name}}</b> from the <b>{{data.category.name}}</b> category?
+    <p style="font-style: italic;margin-top: 5px;">Note: you can always revert it in the category settings.</p>
+  </div>
 </div>
 <div mat-dialog-actions align='end'>
-  <div><button mat-button color="primary" (click)="dialogRef.close('cancel')">Cancel</button></div>
+  <div *ngIf="!confirmRemove"><button mat-button color="primary" (click)="dialogRef.close('cancel')">Cancel</button></div>
+  <div *ngIf="confirmRemove"><button mat-button color="primary" (click)="confirmRemove=false;">Cancel</button><button mat-button color="primary" (click)="save(-100)">Yes</button></div>
 </div>

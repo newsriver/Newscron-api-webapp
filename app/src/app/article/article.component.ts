@@ -28,25 +28,21 @@ export class ArticleComponent implements OnInit {
 
   public isDigest = true;
 
-
   @Input() article: Article;
   constructor(public cordovaService: CordovaService, private route: ActivatedRoute, public ga: GoogleAnalyticsService) {
-
     if (route.snapshot.url[0] != null && route.snapshot.url[0].path != null && route.snapshot.url[0].path === "top") {
       this.isDigest = false;
     }
-
 
   }
 
 
   ngOnInit() {
 
-
   }
 
-
-
+  ngOnDestroy() {
+  }
 
   public openLinkInBrowser() {
     this.cordovaService.openLinkInBrowser(this.article.url);

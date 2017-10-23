@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import {Inject} from '@angular/core';
+import { Inject } from '@angular/core';
 import { Observable, BehaviorSubject, Subject } from 'rxjs/Rx';
-import {CordovaService} from './cordova.service';
+import { CordovaService } from './cordova.service';
 
 @Injectable()
 export class NewscronClientService {
@@ -233,9 +233,9 @@ export class UserPreferences {
 }
 
 export class Publisher {
-
   public name: string;
   public id: number;
+  public relevance: number;
 }
 export class Category {
   public name: string = null;
