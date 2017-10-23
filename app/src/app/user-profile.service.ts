@@ -55,6 +55,15 @@ export class UserProfileService {
     this.profileUpdate.next({ "publisher-relevance": categoryId });
   }
 
+  public removePublishersRelevance(categoryId: number, publisherId: number) {
+
+    if (this.publishersRelevance[categoryId] != null && this.publishersRelevance[categoryId][publisherId] != null) {
+      delete this.publishersRelevance[categoryId][publisherId];
+    }
+    localStorage.setItem('publishers-relevance', JSON.stringify(this.publishersRelevance));
+    this.profileUpdate.next({ "publisher-relevance": categoryId });
+  }
+
 }
 
 
