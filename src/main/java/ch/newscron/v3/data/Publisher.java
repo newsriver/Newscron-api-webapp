@@ -7,6 +7,7 @@ public class Publisher {
 
     private String name;
     private Long id;
+    private Integer relevance;
 
     public String getName() {
         return name;
@@ -22,5 +23,13 @@ public class Publisher {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getRelevance() {
+        return relevance;
+    }
+
+    public void setRelevance(Integer relevance) {
+        this.relevance = relevance;
     }
 }

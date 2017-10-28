@@ -111,9 +111,11 @@ public class CategoryArticles {
         packagesIds += "-1";
 
         String publishersOptOut = "";
-        if (category.getPublishersOptOut() != null) {
-            for (Publisher publisher : category.getPublishersOptOut()) {
-                publishersOptOut += publisher.getId() + ",";
+        if (category.getPublishersRelevance() != null) {
+            for (Publisher publisher : category.getPublishersRelevance().values()) {
+                if (publisher.getRelevance() <= -100) {
+                    publishersOptOut += publisher.getId() + ",";
+                }
             }
         }
         publishersOptOut += "-1";
