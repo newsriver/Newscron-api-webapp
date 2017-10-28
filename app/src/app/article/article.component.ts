@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { Section, Category, Article, Publisher } from '../newscron-client.service';
+import { Section, Category, Article, Publisher } from '../newscron-model';
 import { CordovaService } from '../cordova.service';
 import { Router, ActivatedRoute } from '@angular/router';
 

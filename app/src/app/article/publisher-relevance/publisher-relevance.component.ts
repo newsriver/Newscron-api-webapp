@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, Inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { Section, Category, Article, Publisher } from '../../newscron-client.service';
+import { Section, Category, Article, Publisher } from '../../newscron-model';
 import { Observable } from 'rxjs';
 import { UserProfileService } from '../../user-profile.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';

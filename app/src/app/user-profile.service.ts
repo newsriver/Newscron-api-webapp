@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Publisher } from './newscron-client.service';
-
+import { Publisher } from './newscron-model';
 @Injectable()
 export class UserProfileService {
 
   private profileUpdate: BehaviorSubject<{ [id: string]: any; }> = new BehaviorSubject<{ [id: string]: any; }>(null);
-  private publishersRelevance: { [id: number]: { [id: number]: PublisherRelevance; }; } = {};
+  private publishersRelevance: { [id: number]: { [id: number]: Publisher; }; } = {};
   constructor() {
     this.publishersRelevance = JSON.parse(localStorage.getItem('publishers-relevance'));
     if (this.publishersRelevance == null) {
@@ -29,11 +28,11 @@ export class UserProfileService {
     return this.publishersRelevance[categoryId][publisherId].relevance;
   }
 
-  public getRemovedPublishersForCategory(categoryId: number): { [id: number]: PublisherRelevance; } {
+  public getRemovedPublishersForCategory(categoryId: number): { [id: number]: Publisher; } {
     if (this.publishersRelevance[categoryId] == null) {
       return {};
     }
-    let publishers: { [id: number]: PublisherRelevance; } = {};
+    let publishers: { [id: number]: Publisher; } = {};
     for (var id in this.publishersRelevance[categoryId]) {
       if (this.publishersRelevance[categoryId][id].relevance <= -100)
         publishers[id] = this.publishersRelevance[categoryId][id];
@@ -43,32 +42,24 @@ export class UserProfileService {
 
 
   public setPublishersRelevance(categoryId: number, publisher: Publisher, relevance: number) {
-    if (this.publishersRelevance[categoryId] == null) {
-      this.publishersRelevance[categoryId] = {};
+    //remove if relevance is null
+    if (relevance == null) {
+      if (this.publishersRelevance[categoryId] != null && this.publishersRelevance[categoryId][publisher.id] != null) {
+        delete this.publishersRelevance[categoryId][publisher.id];
+      }
+    } else {
+      if (this.publishersRelevance[categoryId] == null) {
+        this.publishersRelevance[categoryId] = {};
+      }
+      if (this.publishersRelevance[categoryId][publisher.id] == null) {
+        this.publishersRelevance[categoryId][publisher.id] = new Publisher();
+        this.publishersRelevance[categoryId][publisher.id].name = publisher.name;
+        this.publishersRelevance[categoryId][publisher.id].id = publisher.id;
+      }
+      this.publishersRelevance[categoryId][publisher.id].relevance = relevance;
     }
-    if (this.publishersRelevance[categoryId][publisher.id] == null) {
-      this.publishersRelevance[categoryId][publisher.id] = new PublisherRelevance();
-      this.publishersRelevance[categoryId][publisher.id].name = publisher.name;
-    }
-    this.publishersRelevance[categoryId][publisher.id].relevance = relevance;
     localStorage.setItem('publishers-relevance', JSON.stringify(this.publishersRelevance));
     this.profileUpdate.next({ "publisher-relevance": categoryId });
   }
 
-  public removePublishersRelevance(categoryId: number, publisherId: number) {
-
-    if (this.publishersRelevance[categoryId] != null && this.publishersRelevance[categoryId][publisherId] != null) {
-      delete this.publishersRelevance[categoryId][publisherId];
-    }
-    localStorage.setItem('publishers-relevance', JSON.stringify(this.publishersRelevance));
-    this.profileUpdate.next({ "publisher-relevance": categoryId });
-  }
-
-}
-
-
-
-export class PublisherRelevance {
-  public name: string;
-  public relevance: number;
 }

@@ -1,7 +1,8 @@
 import { NgModule, Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import {NewscronClientService, Section, Category, Article} from '../newscron-client.service';
-import {GoogleAnalyticsService} from '../google-analytics.service';
+import { NewscronClientService } from '../newscron-client.service';
+import { Section, Category, Article } from '../newscron-model';
+import { GoogleAnalyticsService } from '../google-analytics.service';
 @Component({
   selector: 'search',
   templateUrl: './search.component.html',

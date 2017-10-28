@@ -1,6 +1,7 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges, HostListener, ElementRef, ChangeDetectionStrategy  } from '@angular/core';
-import {NewscronClientService, Digest, Section, Category, Article} from '../newscron-client.service';
-import {SectionComponent} from '../section/section.component';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, HostListener, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { NewscronClientService } from '../newscron-client.service';
+import { Digest, Section, Category, Article } from '../newscron-model';
+import { SectionComponent } from '../section/section.component';
 
 
 

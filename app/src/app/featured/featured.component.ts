@@ -1,7 +1,7 @@
 import { NgModule, Component, OnInit, Input, OnChanges, SimpleChanges, HostListener, ElementRef } from '@angular/core';
-import {SectionComponent} from '../section/section.component';
-import {NewscronClientService, Section, Category, Article} from '../newscron-client.service';
-
+import { SectionComponent } from '../section/section.component';
+import { NewscronClientService } from '../newscron-client.service';
+import { Section, Category, Article } from '../newscron-model';
 
 @Component({
   selector: 'featured',

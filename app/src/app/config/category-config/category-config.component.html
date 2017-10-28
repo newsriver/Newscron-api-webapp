@@ -2,11 +2,11 @@
 <hr/>
 
 
-<div *ngIf="bannedPublishersIds.length>0">
+<div *ngIf="bannedPublishers.length>0">
   <h3 style="margin-top: 6rem;">Removed Publishers</h3>
   <ul>
-    <li *ngFor="let id of bannedPublishersIds">
-      <button mat-button style="min-width:20px" (click)="undoPublisherOptOut(id)"><i class="fa fa-undo" aria-hidden="true"></i></button> {{publishersRelevance[id].name}}
+    <li *ngFor="let publisher of bannedPublishers">
+      <button mat-button style="min-width:20px" (click)="undoPublisherOptOut(publisher)"><i class="fa fa-undo" aria-hidden="true"></i></button> {{publisher.name}}
     </li>
   </ul>
 </div>

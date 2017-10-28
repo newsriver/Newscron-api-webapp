@@ -1,6 +1,7 @@
 import { HostListener, Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
-import { NewscronClientService, Article, Digest } from '../newscron-client.service';
+import { NewscronClientService, } from '../newscron-client.service';
+import { Digest, Article } from '../newscron-model';
 import { DigestComponent } from '../digest/digest.component';
 import { GoogleAnalyticsService } from '../google-analytics.service';
 import { CordovaService } from '../cordova.service';

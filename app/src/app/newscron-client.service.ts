@@ -3,13 +3,15 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Inject } from '@angular/core';
 import { Observable, BehaviorSubject, Subject } from 'rxjs/Rx';
 import { CordovaService } from './cordova.service';
+import { UserProfileService } from './user-profile.service';
+import { Digest, Section, Category, Article, Publisher } from './newscron-model';
 
 @Injectable()
 export class NewscronClientService {
 
 
-  private baseURL: string = "http://app.newscron.com/v3";
-  //private baseURL: string = "http://localhost:9092/v3";
+  //private baseURL: string = "http://app.newscron.com/v3";
+  private baseURL: string = "http://localhost:9092/v3";
 
   private userPreferences: UserPreferences = null;
   private refresh: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
@@ -19,7 +21,7 @@ export class NewscronClientService {
 
 
 
-  constructor( @Inject(Http) private http: Http, private cordova: CordovaService) {
+  constructor( @Inject(Http) private http: Http, private cordova: CordovaService, private userProfile: UserProfileService) {
     let prefJson = JSON.parse(localStorage.getItem('userPreferences'));
     if (prefJson != null) {
       let preferences: UserPreferences = Object.assign(new UserPreferences(), prefJson);
@@ -59,6 +61,7 @@ export class NewscronClientService {
     for (let category of this.getUserPreferences().categories) {
       if (category.id == categoryId) {
         cat = category;
+        cat.publishersRelevance = this.userProfile.getRemovedPublishersForCategory(category.id);
         break;
       }
     }
@@ -116,8 +119,13 @@ export class NewscronClientService {
 
     }
 
-
-    return this.http.post(this.baseURL + "/digest?after=" + timestamp, this.getUserPreferences().categories, options)
+    let categoriesPreferences: CategoryPreference[] = this.getUserPreferences().categories;
+    if (categoriesPreferences != null) {
+      for (let category of categoriesPreferences) {
+        category.publishersRelevance = this.userProfile.getRemovedPublishersForCategory(category.id);
+      }
+    }
+    return this.http.post(this.baseURL + "/digest?after=" + timestamp, categoriesPreferences, options)
       .map(this.extractData).map(digest => {
         if (digest != null) {
           this.digests.unshift(digest);
@@ -161,15 +169,7 @@ export class NewscronClientService {
     this.refresh.next(true);
   }
 
-  public publishersOptOut(publisher: Publisher, categoryOptOut: Category) {
-    for (let category of this.getUserPreferences().categories) {
-      if (category.id == categoryOptOut.id) {
-        category.publishersOptOut.push(publisher);
-        localStorage.setItem('userPreferences', JSON.stringify(this.userPreferences));
-        break;
-      }
-    }
-  }
+
 
   public getUserPreferences(): UserPreferences {
     return this.userPreferences;
@@ -232,41 +232,10 @@ export class UserPreferences {
   }
 }
 
-export class Publisher {
-  public name: string;
-  public id: number;
-  public relevance: number;
-}
-export class Category {
-  public name: string = null;
-  public id: number;
-}
+
 
 export class CategoryPreference extends Category {
   public amount: number;
   public packages: number[];
-  public publishersOptOut: Publisher[] = [];
-}
-
-export class Section {
-  public category: Category = null;
-  public articles: Article[];
-}
-
-export class Digest {
-  public timestamp: number = null;
-  public sections: Section[];
-}
-
-
-export class Article {
-  public id: number = null;
-  public title: string = null;
-  public url: string = null;
-  public snippet: string = null;
-  public imgUrl: string = null;
-  public publicationDate: number = null;
-  public publisher: Publisher = null;
-  public category: Category = null;
-  public score: number = null;
+  public publishersRelevance: { [id: number]: Publisher; } = {};
 }

@@ -1,8 +1,8 @@
 import { NgModule, OnInit, Component } from '@angular/core';
-import {FeaturedComponent} from './featured/featured.component';
-import {WelcomeComponent} from './welcome/welcome.component';
-import {NewscronClientService, BootstrapConfiguration, Section, CategoryPreference, Article} from './newscron-client.service';
-import {Injectable, Pipe, PipeTransform} from '@angular/core';
+import { FeaturedComponent } from './featured/featured.component';
+import { WelcomeComponent } from './welcome/welcome.component';
+import { NewscronClientService, BootstrapConfiguration, CategoryPreference } from './newscron-client.service';
+import { Injectable, Pipe, PipeTransform } from '@angular/core';
 import { CordovaService } from './cordova.service';
 
 

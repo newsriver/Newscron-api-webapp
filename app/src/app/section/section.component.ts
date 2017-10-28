@@ -1,7 +1,7 @@
 import { NgModule, Component, OnInit, Input, Pipe, PipeTransform, ElementRef, Output, EventEmitter, HostListener, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ArticleComponent } from '../article/article.component';
-import { Section, Category, Article } from '../newscron-client.service';
-import { UserProfileService, PublisherRelevance } from '../user-profile.service';
+import { Section, Category, Article, Publisher } from '../newscron-model';
+import { UserProfileService } from '../user-profile.service';
 
 
 
@@ -49,7 +49,7 @@ export class SectionComponent implements OnInit {
   }
 
   private filterRemovedPublishers(articles: Article[]): Article[] {
-    let publishersIds: { [id: number]: PublisherRelevance; } = this.userProfile.getRemovedPublishersForCategory(this.section.category.id);
+    let publishersIds: { [id: number]: Publisher; } = this.userProfile.getRemovedPublishersForCategory(this.section.category.id);
     return this.section.articles.filter(item => publishersIds[item.publisher.id] == null);
   }
 

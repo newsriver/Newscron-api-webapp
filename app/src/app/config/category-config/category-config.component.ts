@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NewscronClientService, BootstrapConfiguration, CategoryPreference, UserPreferences } from '../../newscron-client.service';
+import { Publisher } from '../../newscron-model';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { UserProfileService, PublisherRelevance } from '../../user-profile.service';
+import { UserProfileService } from '../../user-profile.service';
 
 @Component({
   selector: 'app-category-config',
@@ -12,9 +13,8 @@ export class CategoryConfigComponent implements OnInit {
 
   public category: CategoryPreference = null;
   public preferences: UserPreferences = null;
-  public bannedPublishersIds: number[] = [];
+  public bannedPublishers: Publisher[] = [];
   private categoryId: number;
-  public publishersRelevance: { [id: number]: PublisherRelevance; } = {};
   constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router, private userProfile: UserProfileService) {
 
   }
@@ -27,10 +27,10 @@ export class CategoryConfigComponent implements OnInit {
   }
 
   private updateBannedPublishers(categoryId: number) {
-    this.publishersRelevance = this.userProfile.getRemovedPublishersForCategory(categoryId);
-    this.bannedPublishersIds = [];
-    for (var key in this.publishersRelevance) {
-      this.bannedPublishersIds.push(+key);
+    this.bannedPublishers = [];
+    let publishersRelevance: { [id: number]: Publisher; } = this.userProfile.getRemovedPublishersForCategory(categoryId);
+    for (var key in publishersRelevance) {
+      this.bannedPublishers.push(publishersRelevance[key]);
     }
   }
 
@@ -38,8 +38,8 @@ export class CategoryConfigComponent implements OnInit {
     this.client.setUserPreferences(this.preferences);
   }
 
-  public undoPublisherOptOut(publisherId: number) {
-    this.userProfile.removePublishersRelevance(this.categoryId, publisherId);
+  public undoPublisherOptOut(publisher: Publisher) {
+    this.userProfile.setPublishersRelevance(this.categoryId, publisher, null);
     this.updateBannedPublishers(this.categoryId);
   }
 
