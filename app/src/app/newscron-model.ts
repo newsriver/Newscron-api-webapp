@@ -30,3 +30,24 @@ export class Article {
   public category: Category = null;
   public score: number = null;
 }
+
+export class Log {
+  public logs: LogEntry[] = null;
+  public uuid: string = null;
+  public version: string = null;
+}
+
+export abstract class LogEntry {
+  public timestamp: number;
+  constructor() {
+    this.timestamp = Date.now();
+  }
+}
+
+export class PublisherRelevanceLogEntry extends LogEntry {
+  public type: string = "pubRelevance"; //used by java to deserialize
+
+  constructor(public categoryId: number, public publisherId: number, public relevance: number) {
+    super();
+  }
+}

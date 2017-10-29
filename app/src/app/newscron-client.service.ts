@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { Inject } from '@angular/core';
 import { Observable, BehaviorSubject, Subject } from 'rxjs/Rx';
 import { CordovaService } from './cordova.service';
 import { UserProfileService } from './user-profile.service';
-import { Digest, Section, Category, Article, Publisher } from './newscron-model';
+import { Digest, Section, Category, Article, Publisher, Log } from './newscron-model';
 
 @Injectable()
 export class NewscronClientService {
@@ -153,6 +152,7 @@ export class NewscronClientService {
         return bootConfig;
       });
   }
+
 
 
 

@@ -39,7 +39,7 @@ export class CategoryConfigComponent implements OnInit {
   }
 
   public undoPublisherOptOut(publisher: Publisher) {
-    this.userProfile.setPublishersRelevance(this.categoryId, publisher, null);
+    this.userProfile.setPublishersRelevance(this.categoryId, publisher, 0);
     this.updateBannedPublishers(this.categoryId);
   }
 

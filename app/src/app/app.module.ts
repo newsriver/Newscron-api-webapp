@@ -22,6 +22,7 @@ import { UserProfileService } from './user-profile.service';
 import { SectionComponent, SortArticle } from './section/section.component';
 import { GoogleAnalyticsService } from './google-analytics.service';
 import { CordovaService } from './cordova.service';
+import { LoggerService } from './logger.service';
 import { DigestsListComponent } from './digests-list/digests-list.component';
 import { DigestComponent } from './digest/digest.component';
 import { CategoryConfigComponent } from './config/category-config/category-config.component';
@@ -82,7 +83,7 @@ import { PublisherRelevanceComponent, PublisherDialog } from './article/publishe
   entryComponents: [
     PublisherDialog, ResetConfirmationDialoug
   ],
-  providers: [CordovaService, NewscronClientService, GoogleAnalyticsService, UserProfileService],
+  providers: [CordovaService, NewscronClientService, GoogleAnalyticsService, UserProfileService, LoggerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Publisher } from './newscron-model';
+import { LoggerService } from './logger.service';
+
 @Injectable()
 export class UserProfileService {
 
   private profileUpdate: BehaviorSubject<{ [id: string]: any; }> = new BehaviorSubject<{ [id: string]: any; }>(null);
   private publishersRelevance: { [id: number]: { [id: number]: Publisher; }; } = {};
-  constructor() {
+  constructor(private logger: LoggerService) {
     this.publishersRelevance = JSON.parse(localStorage.getItem('publishers-relevance'));
     if (this.publishersRelevance == null) {
       this.publishersRelevance = {};
@@ -42,8 +44,8 @@ export class UserProfileService {
 
 
   public setPublishersRelevance(categoryId: number, publisher: Publisher, relevance: number) {
-    //remove if relevance is null
-    if (relevance == null) {
+    //remove if relevance is 0
+    if (relevance == 0) {
       if (this.publishersRelevance[categoryId] != null && this.publishersRelevance[categoryId][publisher.id] != null) {
         delete this.publishersRelevance[categoryId][publisher.id];
       }
@@ -60,6 +62,7 @@ export class UserProfileService {
     }
     localStorage.setItem('publishers-relevance', JSON.stringify(this.publishersRelevance));
     this.profileUpdate.next({ "publisher-relevance": categoryId });
+    this.logger.logPublisherRelevance(categoryId, publisher.id, relevance);
   }
 
 }
