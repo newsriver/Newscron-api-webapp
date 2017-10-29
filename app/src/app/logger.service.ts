@@ -8,9 +8,10 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 export class LoggerService {
 
   private baseURL: string = "http://localhost:9092/v3";
+  private uuid: string = null;
 
   constructor( @Inject(Http) private http: Http) {
-
+    this.uuid = localStorage.getItem('uuid');
   }
 
 
@@ -25,7 +26,7 @@ export class LoggerService {
     let log: Log = new Log();
     log.logs = entries;
     log.version = environment.version;
-    //log.uuid = this.client.getUUID();
+    log.uuid = this.uuid;
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });

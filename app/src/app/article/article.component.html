@@ -26,13 +26,6 @@
         </h6>
         <h6 class="info">{{article.publicationDate | date: 'dd/MM/yyyy HH:mm'}} <!--<span *ngIf="article.score">· score: {{article.score}}</span>--></h6>
       </div>
-
-      <div class="optout-publisher" *ngIf="article.publisher && article.publisher.id && article.category">
-        <button mat-icon-button [matMenuTriggerFor]="menu"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="publisherDialog(article.publisher,article.category)"><span><i class="fa fa-minus-circle" aria-hidden="true"></i>Remove Publisher</span></button>
-        </mat-menu>
-      </div>
     </div>
     <a [attr.href]="article.url" (click)="trackEvent()" target="_blank" *ngIf="!cordovaService.onCordova">
       <div class="content">
