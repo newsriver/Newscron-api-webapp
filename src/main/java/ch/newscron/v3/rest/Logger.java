@@ -1,5 +1,6 @@
 package ch.newscron.v3.rest;
 
+import ch.newscron.data.publisher.PublisherServiceFactory;
 import ch.newscron.v3.data.Log;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.Timestamp;
 
 /**
  * Created by eliapalme on 29.10.17.
@@ -43,22 +41,8 @@ public class Logger {
 
     private void logPublisherRelevance(Log.PublisherRelevanceLog log, String UDID) {
 
-        final String sql = "REPLACE INTO NewscronConfiguration.publisherRelevance (publisherId, categoryId, relevance, UDID, timestamp) VALUES (?,?,?,?,?)";
-
-        try (Connection conn = this.dataSource.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            conn.setReadOnly(false);
-
-            stmt.setInt(1, log.getPublisherId());
-            stmt.setInt(2, log.getCategoryId());
-            stmt.setInt(3, log.getRelevance());
-            stmt.setString(4, UDID);
-            stmt.setTimestamp(5, new Timestamp(log.getTimestamp()));
-
-            stmt.executeUpdate();
-
-        } catch (Exception e) {
-            logger.error("Error unable to save publisher relevance", e);
-        }
+        PublisherServiceFactory publisherServiceFactory = PublisherServiceFactory.getInstance();
+        publisherServiceFactory.setPublisherRelevanceForCategory(log.getPublisherId(), log.getCategoryId(), log.getRelevance(), UDID);
     }
 
 }
