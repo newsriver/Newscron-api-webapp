@@ -28,12 +28,13 @@ public class Article {
             ArticleFactoryIFace.LongTermArticlesURLs articleURL = articleFactory.getLongtermArticleURL(articleId);
             if (articleURL != null) {
                 return ResponseEntity.status(HttpStatus.FOUND).header("Location", articleURL.url).body(null);
+            } else {
+                //if the URL is not present in the LongTermArticleURL table, this Newscron URL is gone.
+                return ResponseEntity.status(HttpStatus.GONE).body(null);
             }
         } else {
             return ResponseEntity.status(HttpStatus.FOUND).header("Location", article.getUrl()).body(null);
         }
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
 
