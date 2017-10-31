@@ -11,14 +11,10 @@ const options = {
   files: 'src/environments/environment.prod.ts',
   replace: /useLocationHash: (.*)/g,
   with: "useLocationHash: " + value + ",",
-  allowEmptyPaths: false,
 };
 
 try {
   let changedFiles = replace.sync(options);
-  if (changedFiles == 0) {
-    throw "Please make sure that file '" + options.files + "' has \"useLocationHash\"";
-  }
   console.log('useLocationHash set to: ' + value);
 } catch (error) {
   console.error('Error occurred:', error);
