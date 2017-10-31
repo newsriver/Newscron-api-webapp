@@ -3,8 +3,8 @@ var package = require("./package.json");
 var buildVersion = package.version;
 const options = {
   files: 'src/environments/environment.prod.ts',
-  replace: /version: '(.*)'/g,
-  with: "version: '" + buildVersion + "'",
+  from: /version: '(.*)'/g,
+  to: "version: '" + buildVersion + "'",
 };
 
 try {
