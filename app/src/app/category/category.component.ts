@@ -2,7 +2,6 @@ import { NgModule, Component, OnInit, Input, ChangeDetectionStrategy, ChangeDete
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NewscronClientService } from '../newscron-client.service';
 import { Section, Category, Article } from '../newscron-model';
-import { UserProfileService } from '../user-profile.service';
 import { GoogleAnalyticsService } from '../google-analytics.service';
 @Component({
   selector: 'category',
@@ -16,7 +15,7 @@ export class CategoryComponent implements OnInit {
   public section: Section;
   public name: string;
   public loading: boolean = true;
-  constructor(private client: NewscronClientService, private userProfile: UserProfileService, private route: ActivatedRoute, private router: Router, private chageDetector: ChangeDetectorRef, public ga: GoogleAnalyticsService) {
+  constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router, private chageDetector: ChangeDetectorRef, public ga: GoogleAnalyticsService) {
 
   }
 
@@ -37,13 +36,6 @@ export class CategoryComponent implements OnInit {
         this.loading = false;
         this.chageDetector.markForCheck();
       });
-
-      this.userProfile.getProfileUpdateObserver().subscribe(result => {
-        if (result != null && result["publisher-relevance"] != null && result["publisher-relevance"] == this.categoryId) {
-          this.chageDetector.markForCheck();
-        }
-      });
-
 
     });
   }

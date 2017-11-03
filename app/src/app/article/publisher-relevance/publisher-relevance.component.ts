@@ -12,6 +12,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class PublisherRelevanceComponent implements OnInit {
 
   @Input() article: Article;
+  public publisherRelevance: number = 0;
   public publisherUserRelevance: number = 0;
   constructor(private userProfile: UserProfileService, public dialog: MatDialog, private changeDetector: ChangeDetectorRef) {
 
@@ -19,8 +20,10 @@ export class PublisherRelevanceComponent implements OnInit {
 
   ngOnInit() {
     this.publisherUserRelevance = this.userProfile.getPublisherRelevance(this.article.category.id, this.article.publisher.id);
+    this.publisherRelevance = this.article.publisher.relevance + this.publisherUserRelevance;
     this.userProfile.getProfileUpdateObserver().subscribe(result => {
       if (result != null && result["publisher-relevance"] != null && result["publisher-relevance"] == this.article.category.id) {
+        this.publisherRelevance += this.userProfile.getPublisherRelevance(this.article.category.id, this.article.publisher.id);
         this.publisherUserRelevance = this.userProfile.getPublisherRelevance(this.article.category.id, this.article.publisher.id);
         this.changeDetector.markForCheck();
       }
