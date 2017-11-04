@@ -1,5 +1,5 @@
 <div class="loading" *ngIf="loading">
-  <md-progress-spinner mode="indeterminate" class="progress-spinner"></md-progress-spinner>
+  <mat-progress-spinner mode="indeterminate" class="progress-spinner"></mat-progress-spinner>
   <h3>Assembling Digest...</h3>
 </div>
 
@@ -8,7 +8,7 @@
     <digest [digest]="digest"></digest>
   </li>
   <li style="text-align: center; margin-top:5rem;" *ngIf="this.counter < this.digestsData.length">
-    <button md-raised-button (click)="loadDigest(1)">Load Previous Digest</button>
+    <button mat-raised-button (click)="loadDigest(1)">Load Previous Digest</button>
   </li>
 </ul>
 

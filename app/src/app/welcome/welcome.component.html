@@ -1,5 +1,5 @@
 <div class="welcome">
-  <md-progress-bar mode="indeterminate" class="loading-bar" *ngIf="loading"></md-progress-bar>
+  <mat-progress-bar mode="indeterminate" class="loading-bar" *ngIf="loading"></mat-progress-bar>
   <div class="welcome-body">
     <div *ngIf="this.step==1">
       <welcome-region></welcome-region>
@@ -13,9 +13,9 @@
   </div>
   <div class="fixed-bar" *ngIf="this.step>1">
     <div>
-      <button md-raised-button style="" (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</button>
-      <button *ngIf="this.step==2" md-raised-button style="float:right;" [disabled]="!hasOnePackage()" (click)="next()">Next <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
-      <button *ngIf="this.step==3" md-raised-button style="float:right;" (click)="finish()">Save <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+      <button mat-raised-button style="" (click)="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</button>
+      <button *ngIf="this.step==2" mat-raised-button style="float:right;" [disabled]="!hasOnePackage()" (click)="next()">Next <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+      <button *ngIf="this.step==3" mat-raised-button style="float:right;" (click)="finish()">Save <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
     </div>
   </div>
 

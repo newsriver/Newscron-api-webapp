@@ -18,17 +18,13 @@
 
   <div class="card-block">
     <div class="digest" *ngIf="isDigest">
+      <publisher-relevance [article]="article"></publisher-relevance>
       <div style="flex: 3;">
         <!--<img src="http://www.tio.ch/favicon.ico" style="max-height: 28px; margin-right:5px; float:left;" />-->
-        <h6 style="color:black; margin:0px;">{{article.publisher.name}}</h6>
-        <h6 class="info">{{article.category.name}} · {{article.publicationDate | date: 'dd/MM/yyyy HH:mm'}} <span *ngIf="article.score">· score: {{article.score}}</span></h6>
-      </div>
-
-      <div class="optout-publisher" *ngIf="article.publisher && article.publisher.id && article.category">
-        <button md-icon-button [mdMenuTriggerFor]="menu"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
-        <md-menu #menu="mdMenu">
-          <button md-menu-item (click)="publisherDialog(article.publisher,article.category)"><span><i class="fa fa-minus-circle" aria-hidden="true"></i>Remove Publisher</span></button>
-        </md-menu>
+        <h6 style="color:black; font-weight: 400;" class="publisher-name">
+          {{article.publisher.name}}
+        </h6>
+        <h6 class="info">{{article.publicationDate | date: 'dd/MM/yyyy HH:mm'}} <!--<span *ngIf="article.score">· score: {{article.score}}</span>--></h6>
       </div>
     </div>
     <a [attr.href]="article.url" (click)="trackEvent()" target="_blank" *ngIf="!cordovaService.onCordova">

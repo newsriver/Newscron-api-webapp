@@ -2,6 +2,7 @@ package ch.newscron.v3.rest;
 
 
 import ch.newscron.data.article.v2.ArticleFactory;
+import ch.newscron.data.publisher.PublisherServiceFactory;
 import ch.newscron.extractor.StructuredArticle;
 import ch.newscron.v3.data.Article;
 import ch.newscron.v3.data.Category;
@@ -95,6 +96,7 @@ public class DigestComposer {
 
         categoryArticles.setCategory(category);
 
+        PublisherServiceFactory publisherServiceFactory = PublisherServiceFactory.getInstance();
         ArticleFactory articleFactory = ArticleFactory.getInstance();
         HashMap<Long, Long> articlesId = featuredArticlesIdsPerCategory(categoryPreference, timestamp);
 
@@ -115,6 +117,8 @@ public class DigestComposer {
             Publisher publisher = new Publisher();
             publisher.setId(strArticle.getPublisherId());
             publisher.setName(strArticle.getPublisher());
+            publisher.setRelevance(publisherServiceFactory.getPublisherRelevanceForCategory(strArticle.getPublisherId(), strArticle.getCategoryId()));
+
             article.setPublisher(publisher);
 
             categoryArticles.getArticles().add(article);
@@ -138,9 +142,11 @@ public class DigestComposer {
         packagesIds += "-1";
 
         String publishersOptOut = "";
-        if (category.getPublishersOptOut() != null) {
-            for (Publisher publisher : category.getPublishersOptOut()) {
-                publishersOptOut += publisher.getId() + ",";
+        if (category.getPublishersRelevance() != null) {
+            for (Publisher publisher : category.getPublishersRelevance().values()) {
+                if (publisher.getRelevance() <= -100) {
+                    publishersOptOut += publisher.getId() + ",";
+                }
             }
         }
         publishersOptOut += "-1";

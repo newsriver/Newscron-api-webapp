@@ -1,0 +1,43 @@
+h1{
+  color:black;
+}
+
+>>> .mat-dialog-container{
+  background-color: #fafafa;
+}
+.mat-dialog-content{
+  color:black;
+  padding-bottom: 10px;
+}
+
+.mat-dialog-actions{
+  color:black;
+  flex-wrap: wrap;
+}
+
+.relevance{
+   margin-top:8px;
+   display:flex;
+   flex-direction: row;
+}
+.relevance button{
+   flex:1;
+   margin: 8px;
+   margin-left: 0px;
+}
+
+.relevance button:last-child {
+    margin-right:0px;
+}
+
+
+
+@media screen and (max-width: 576px) {
+
+  .relevance{
+    flex-direction: column;
+  }
+  .relevance button{
+    margin-right:0px;
+  }
+}

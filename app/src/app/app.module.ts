@@ -1,12 +1,12 @@
 import 'hammerjs';
 import { BrowserModule } from '@angular/platform-browser';
-import { MdProgressSpinnerModule } from '@angular/material';
-import { MdMenuModule } from '@angular/material';
-import { MdDialogModule } from '@angular/material';
-import { MdButtonModule } from '@angular/material';
-import { MdSidenavModule } from '@angular/material';
-import { MdSnackBarModule } from '@angular/material';
-import { MdTabsModule } from '@angular/material';
+import { MatProgressSpinnerModule } from '@angular/material';
+import { MatMenuModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material';
+import { MatSidenavModule } from '@angular/material';
+import { MatSnackBarModule } from '@angular/material';
+import { MatTabsModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -14,13 +14,15 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AppComponents, AppRoutes } from "./app.routing";
-import { ArticleComponent, PublisherDialog, EscapeHtmlPipe } from './article/article.component';
+import { ArticleComponent, EscapeHtmlPipe } from './article/article.component';
 import { CategoryComponent } from './category/category.component';
 import { WelcomeComponent, ResetConfirmationDialoug, KeysPipe, CategoryAmmountPipe } from './welcome/welcome.component';
 import { NewscronClientService } from './newscron-client.service';
+import { UserProfileService } from './user-profile.service';
 import { SectionComponent, SortArticle } from './section/section.component';
 import { GoogleAnalyticsService } from './google-analytics.service';
 import { CordovaService } from './cordova.service';
+import { LoggerService } from './logger.service';
 import { DigestsListComponent } from './digests-list/digests-list.component';
 import { DigestComponent } from './digest/digest.component';
 import { CategoryConfigComponent } from './config/category-config/category-config.component';
@@ -32,6 +34,7 @@ import { RegionComponent } from './welcome/region/region.component';
 import { EditionComponent } from './welcome/edition/edition.component';
 import { CategoriesComponent } from './welcome/categories/categories.component';
 import { environment } from '../environments/environment';
+import { PublisherRelevanceComponent, PublisherDialog } from './article/publisher-relevance/publisher-relevance.component';
 
 @NgModule({
   declarations: [
@@ -59,17 +62,18 @@ import { environment } from '../environments/environment';
     SearchComponent,
     RegionComponent,
     EditionComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    PublisherRelevanceComponent
   ],
   imports: [
     BrowserAnimationsModule,
-    MdMenuModule,
-    MdSidenavModule,
-    MdProgressSpinnerModule,
-    MdDialogModule,
-    MdButtonModule,
-    MdSnackBarModule,
-    MdTabsModule,
+    MatMenuModule,
+    MatSidenavModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatSnackBarModule,
+    MatTabsModule,
     BrowserModule,
     FormsModule,
     HttpModule,
@@ -79,7 +83,7 @@ import { environment } from '../environments/environment';
   entryComponents: [
     PublisherDialog, ResetConfirmationDialoug
   ],
-  providers: [CordovaService, NewscronClientService, GoogleAnalyticsService],
+  providers: [CordovaService, NewscronClientService, GoogleAnalyticsService, UserProfileService, LoggerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,17 +1,22 @@
 package ch.newscron.v3.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.apache.commons.collections.map.HashedMap;
+
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by eliapalme on 19.11.16.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CategoryPreference extends Category {
 
 
     private int amount;
     private List<Integer> packages = new LinkedList<>();
-    private List<Publisher> publishersOptOut = new LinkedList<>();
+    private Map<Integer, Publisher> publishersRelevance = new HashedMap();
 
 
     public List<Integer> getPackages() {
@@ -30,11 +35,11 @@ public class CategoryPreference extends Category {
         this.amount = amount;
     }
 
-    public List<Publisher> getPublishersOptOut() {
-        return publishersOptOut;
+    public Map<Integer, Publisher> getPublishersRelevance() {
+        return publishersRelevance;
     }
 
-    public void setPublishersOptOut(List<Publisher> publishersOptOut) {
-        this.publishersOptOut = publishersOptOut;
+    public void setPublishersRelevance(Map<Integer, Publisher> publishersRelevance) {
+        this.publishersRelevance = publishersRelevance;
     }
 }

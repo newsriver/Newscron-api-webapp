@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, Pipe, PipeTransform, Inject } from '@angular/core';
-import {NewscronClientService, BootstrapConfiguration, CategoryPreference, UserPreferences} from '../newscron-client.service';
+import { NewscronClientService, BootstrapConfiguration, CategoryPreference, UserPreferences } from '../newscron-client.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
-import {GoogleAnalyticsService} from '../google-analytics.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { GoogleAnalyticsService } from '../google-analytics.service';
 
 @Pipe({
   name: 'keys'
@@ -52,7 +52,7 @@ export class WelcomeComponent implements OnInit {
   public packagesIds: number[] = [];
   public categories: CategoryPreference[] = [];
 
-  constructor(private client: NewscronClientService, private router: Router, private route: ActivatedRoute, public dialog: MdDialog, public ga: GoogleAnalyticsService) {
+  constructor(private client: NewscronClientService, private router: Router, private route: ActivatedRoute, public dialog: MatDialog, public ga: GoogleAnalyticsService) {
 
   }
 
@@ -151,7 +151,7 @@ export class WelcomeComponent implements OnInit {
 export class ResetConfirmationDialoug {
 
   public removeall: boolean = false;
-  constructor(public dialogRef: MdDialogRef<ResetConfirmationDialoug>, @Inject(MD_DIALOG_DATA) public data: any, private router: Router) {
+  constructor(public dialogRef: MatDialogRef<ResetConfirmationDialoug>, @Inject(MAT_DIALOG_DATA) public data: any, private router: Router) {
 
   }
 
