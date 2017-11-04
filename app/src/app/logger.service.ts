@@ -16,7 +16,6 @@ export class LoggerService {
 
 
   public logPublisherRelevance(categoryId: number, publisherId: number, relevance: number) {
-    console.log("pub relevance");
     let entries: LogEntry[] = [];
     entries.push(new PublisherRelevanceLogEntry(categoryId, publisherId, relevance));
     this.logEvents(entries);

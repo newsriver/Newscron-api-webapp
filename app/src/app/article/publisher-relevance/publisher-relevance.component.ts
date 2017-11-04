@@ -20,7 +20,10 @@ export class PublisherRelevanceComponent implements OnInit {
 
   ngOnInit() {
     this.publisherUserRelevance = this.userProfile.getPublisherRelevance(this.article.category.id, this.article.publisher.id);
-    this.publisherRelevance = this.article.publisher.relevance + this.publisherUserRelevance;
+    if (this.article.publisher.relevance != null) {
+      this.publisherRelevance = this.article.publisher.relevance
+    }
+    this.publisherRelevance += this.publisherUserRelevance;
     this.userProfile.getProfileUpdateObserver().subscribe(result => {
       if (result != null && result["publisher-relevance"] != null && result["publisher-relevance"] == this.article.category.id) {
         this.publisherRelevance += this.userProfile.getPublisherRelevance(this.article.category.id, this.article.publisher.id);
