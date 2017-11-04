@@ -29,7 +29,7 @@ export class SectionComponent implements OnInit {
 
   @Output() sectionPosition = new EventEmitter();
   @Input() section: Section;
-  private articles: Article[];
+  public articles: Article[];
 
   constructor(private userProfile: UserProfileService, private el: ElementRef, private chageDetector: ChangeDetectorRef) {
 

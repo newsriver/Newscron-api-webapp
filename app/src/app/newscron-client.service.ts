@@ -9,8 +9,8 @@ import { Digest, Section, Category, Article, Publisher, Log } from './newscron-m
 export class NewscronClientService {
 
 
-  //private baseURL: string = "http://app.newscron.com/v3";
-  private baseURL: string = "http://localhost:9092/v3";
+  private baseURL: string = "http://app.newscron.com/v3";
+  //private baseURL: string = "http://localhost:9092/v3";
 
   private userPreferences: UserPreferences = null;
   private refresh: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
