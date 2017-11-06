@@ -7,7 +7,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 @Injectable()
 export class LoggerService {
 
-  private baseURL: string = "http://localhost:9092/v3";
+  private baseURL: string = "http://app.newscron.com/v3";
   private uuid: string = null;
 
   constructor( @Inject(Http) private http: Http) {
