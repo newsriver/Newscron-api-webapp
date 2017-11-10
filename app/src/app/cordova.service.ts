@@ -1,5 +1,9 @@
 import { Injectable, EventEmitter, NgZone } from '@angular/core';
-import { Observable, BehaviorSubject, Subject } from 'rxjs/Rx';
+import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/fromEvent';
+import 'rxjs/add/operator/map';
 import { Router, RoutesRecognized, ActivatedRoute } from '@angular/router';
 
 function _window(): any {

@@ -1,6 +1,11 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { Observable, BehaviorSubject, Subject } from 'rxjs/Rx';
+import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable'
+import 'rxjs/add/observable/fromEvent';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 import { CordovaService } from './cordova.service';
 import { UserProfileService } from './user-profile.service';
 import { Digest, Section, Category, Article, Publisher, Log } from './newscron-model';
@@ -162,11 +167,11 @@ export class NewscronClientService {
     this.userPreferences = userPreferences;
     if (save) {
       localStorage.setItem('userPreferences', JSON.stringify(this.userPreferences));
+      //re-setting the  categoris will also delete all current digests
+      this.digests = [];
+      localStorage.setItem('digests', JSON.stringify(this.digests));
+      this.refresh.next(true);
     }
-    //re-setting the  categoris will also delete all current digests
-    this.digests = [];
-    localStorage.setItem('digests', JSON.stringify(this.digests));
-    this.refresh.next(true);
   }
 
 

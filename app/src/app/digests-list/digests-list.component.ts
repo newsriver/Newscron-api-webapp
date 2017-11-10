@@ -1,11 +1,15 @@
+import { NgModule } from '@angular/core';
 import { HostListener, Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { NewscronClientService, } from '../newscron-client.service';
 import { Digest, Article } from '../newscron-model';
-import { DigestComponent } from '../digest/digest.component';
+import { DigestComponent } from './digest/digest.component';
 import { GoogleAnalyticsService } from '../google-analytics.service';
+import { SectionModule,SectionComponent } from '../section/section.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CordovaService } from '../cordova.service';
-
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-digests-list',
   templateUrl: './digests-list.component.html',
@@ -62,6 +66,18 @@ export class DigestsListComponent implements OnInit {
       }
     }
   }
-
-
 }
+
+@NgModule({
+  imports: [
+    FormsModule,
+    CommonModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
+    SectionModule
+  ],
+  exports: [DigestsListComponent],
+  declarations: [DigestsListComponent,DigestComponent],
+  providers: [NewscronClientService,GoogleAnalyticsService,CordovaService],
+})
+export class DigestModule {}

@@ -1,14 +1,14 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { NgModule,Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Section, Category, Article, Publisher } from '../newscron-model';
 import { CordovaService } from '../cordova.service';
-import { Router, ActivatedRoute } from '@angular/router';
-
+import { RouterModule,Router, ActivatedRoute } from '@angular/router';
 import { NewscronClientService } from '../newscron-client.service';
 import { Pipe, PipeTransform } from '@angular/core';
 import { GoogleAnalyticsService } from '../google-analytics.service';
-
-import { PublisherRelevanceComponent } from './publisher-relevance/publisher-relevance.component';
-
+import { PublisherRelevanceComponent,PublisherDialog } from './publisher-relevance/publisher-relevance.component';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Pipe({ name: 'escapeHtml', pure: false })
 export class EscapeHtmlPipe implements PipeTransform {
@@ -26,13 +26,11 @@ export class EscapeHtmlPipe implements PipeTransform {
 })
 export class ArticleComponent implements OnInit {
 
-  public isDigest = true;
+
 
   @Input() article: Article;
   constructor(public cordovaService: CordovaService, private route: ActivatedRoute, public ga: GoogleAnalyticsService) {
-    if (route.snapshot.url[0] != null && route.snapshot.url[0].path != null && route.snapshot.url[0].path === "top") {
-      this.isDigest = false;
-    }
+  
 
   }
 
@@ -57,7 +55,20 @@ export class ArticleComponent implements OnInit {
     }
   }
 
-
-
-
 }
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    MatButtonModule
+  ],
+  entryComponents: [
+    PublisherDialog
+  ],
+  exports: [ArticleComponent],
+  declarations: [ArticleComponent,EscapeHtmlPipe,PublisherRelevanceComponent,PublisherDialog],
+  providers: [NewscronClientService,CordovaService,GoogleAnalyticsService],
+})
+export class ArticleModule {}
