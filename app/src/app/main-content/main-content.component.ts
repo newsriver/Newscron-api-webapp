@@ -1,49 +1,20 @@
-import { NgModule, OnInit, Component } from '@angular/core';
-import { FeaturedComponent } from '../featured/featured.component';
-import { WelcomeComponent } from '../welcome/welcome.component';
+import { NgModule, OnInit, Component,ViewChild,NgZone } from '@angular/core';
+import { WelcomeModule,WelcomeComponent } from '../welcome/welcome.component';
+import { CategoryModule } from '../category/category.component';
 import { NewscronClientService, BootstrapConfiguration, CategoryPreference } from '../newscron-client.service';
 import { Section } from '../newscron-model';
-import { Injectable, Pipe, PipeTransform } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Injectable } from '@angular/core';
+import { RouterModule,Router, NavigationEnd } from '@angular/router';
 import { CordovaService } from '../cordova.service';
 import { environment } from '../../environments/environment';
+import 'rxjs/add/operator/filter';
+import {MatSidenavModule,MatSidenav} from '@angular/material/sidenav';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 
-@Pipe({
-  name: 'validSection'
-})
-export class ValidSectionFilter implements PipeTransform {
 
-
-  constructor(public client: NewscronClientService) {
-
-  }
-
-  transform(items: Array<Section>, args: any[]): Array<Section> {
-    items = items.filter(item => item.articles.length > 0);
-    items.sort((a: Section, b: Section) => {
-      let cata = this.client.getUserPreferences().getCategory(a.category.id);
-      let catb = this.client.getUserPreferences().getCategory(b.category.id);
-      return (catb == null ? 0 : catb.amount) - (cata == null ? 0 : cata.amount);
-    });
-    return items;
-  }
-}
-
-
-@Pipe({
-  name: "sortCategory",
-  pure: false
-})
-export class SortCategory {
-  transform(array: Array<CategoryPreference>, args: string): Array<CategoryPreference> {
-    array = array.filter(item => item.amount > 0)
-    array.sort((a: CategoryPreference, b: CategoryPreference) => {
-      return b.amount - a.amount;
-    });
-    return array;
-  }
-}
+const SMALL_WIDTH_BREAKPOINT = 767;
 
 
 @Component({
@@ -54,30 +25,37 @@ export class SortCategory {
 })
 export class MainContentComponent implements OnInit {
 
+  private mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`);
   public bootConfig: BootstrapConfiguration;
   public categories: CategoryPreference[] = [];
   public displayWelcome: boolean = false;
   public version: string = "v";
   public searchInputFocus: boolean = false;
 
-  constructor(private client: NewscronClientService, public router: Router, public cordovaService: CordovaService) {
+  constructor(private client: NewscronClientService, public router: Router, public cordovaService: CordovaService,zone: NgZone) {
     this.version += environment.version;
     if (cordovaService.onCordova) {
       this.version += " a";
     } else {
       this.version += " w";
     }
+    // TODO(josephperrott): Move to CDK breakpoint management once available.
+    this.mediaMatcher.addListener(mql => zone.run(() => this.mediaMatcher = mql));
   }
 
+  @ViewChild(MatSidenav) sidenav: MatSidenav;
+
   ngOnInit() {
-
-
     this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
       //clear search phrase if route is not search
       if (!event.url.startsWith('/search')) {
         this.searchPhrase = "";
       }
+      if (this.isScreenSmall()) {
+        this.sidenav.close();
+      }
     });
+
 
     if (this.client.getUserPreferences() == null) {
 
@@ -102,7 +80,9 @@ export class MainContentComponent implements OnInit {
   }
 
 
-
+  isScreenSmall(): boolean {
+    return this.mediaMatcher.matches;
+  }
 
 
   public searchPhrase: string;
@@ -120,3 +100,18 @@ export class MainContentComponent implements OnInit {
     this.searchInputFocus = true;
   }
 }
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatSidenavModule,
+    RouterModule,
+    WelcomeModule,
+    CategoryModule
+  ],
+  exports: [MainContentComponent],
+  declarations: [MainContentComponent],
+  providers: [NewscronClientService,CordovaService],
+})
+export class MainContentModule {}

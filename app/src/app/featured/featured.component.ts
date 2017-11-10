@@ -1,8 +1,11 @@
 import { NgModule, Component, OnInit, Input, OnChanges, SimpleChanges, HostListener, ElementRef } from '@angular/core';
-import { SectionComponent } from '../section/section.component';
 import { NewscronClientService } from '../newscron-client.service';
 import { Section, Category, Article } from '../newscron-model';
-
+import { SectionModule,SectionComponent } from '../section/section.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'featured',
   templateUrl: './featured.component.html',
@@ -73,7 +76,18 @@ export class FeaturedComponent implements OnInit {
   onResize(event) {
     this.headerWidth = this.el.nativeElement.getBoundingClientRect().width + 1;
   }
-
-
-
 }
+
+@NgModule({
+  imports: [
+    FormsModule,
+    CommonModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    SectionModule
+  ],
+  exports: [FeaturedComponent],
+  declarations: [FeaturedComponent],
+  providers: [NewscronClientService],
+})
+export class FeaturedModule {}

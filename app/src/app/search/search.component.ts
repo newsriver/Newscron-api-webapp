@@ -1,8 +1,13 @@
 import { NgModule, Component, OnInit, Input } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { RouterModule,Router, ActivatedRoute, Params } from '@angular/router';
 import { NewscronClientService } from '../newscron-client.service';
 import { Section, Category, Article } from '../newscron-model';
 import { GoogleAnalyticsService } from '../google-analytics.service';
+import { SectionModule,SectionComponent } from '../section/section.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'search',
   templateUrl: './search.component.html',
@@ -71,3 +76,18 @@ export class SearchComponent implements OnInit {
   }
 
 }
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    SectionModule
+  ],
+  exports: [SearchComponent],
+  declarations: [SearchComponent],
+  providers: [NewscronClientService,GoogleAnalyticsService],
+})
+export class SearchModule {}

@@ -1,8 +1,18 @@
+import { NgModule } from '@angular/core';
 import { Component, OnInit, Input, Output, EventEmitter, Pipe, PipeTransform, Inject } from '@angular/core';
 import { NewscronClientService, BootstrapConfiguration, CategoryPreference, UserPreferences } from '../newscron-client.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
+import { MatDialogModule,MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import {MatButtonModule} from '@angular/material/button';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { GoogleAnalyticsService } from '../google-analytics.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { RegionComponent } from './region/region.component';
+import { EditionComponent } from './edition/edition.component';
+import { CategoriesComponent } from './categories/categories.component';
+import { ConfigModule } from '../config/config.component';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Pipe({
   name: 'keys'
@@ -66,15 +76,24 @@ export class WelcomeComponent implements OnInit {
       }
     });
 
+
+
     if (this.client.hasPreferences() && this.step == 1) {
+
+        setTimeout(() =>{
       let dialogRef = this.dialog.open(ResetConfirmationDialoug, {
         data: {}
       }
       );
+    });
     }
+
     this.boot(null);
   }
 
+ngAfterViewChecked(){
+
+}
 
   close() {
     this.step = 0;
@@ -175,3 +194,23 @@ export class Continent {
   public size: number = null;
 
 }
+
+@NgModule({
+  imports: [
+    FormsModule,
+    CommonModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatProgressBarModule,
+    RouterModule,
+    BrowserAnimationsModule,
+    ConfigModule
+  ],
+  entryComponents: [
+    ResetConfirmationDialoug
+  ],
+  exports: [WelcomeComponent],
+  declarations: [WelcomeComponent,RegionComponent,EditionComponent,CategoriesComponent,ResetConfirmationDialoug,KeysPipe,CategoryAmmountPipe],
+  providers: [NewscronClientService,GoogleAnalyticsService],
+})
+export class WelcomeModule {}

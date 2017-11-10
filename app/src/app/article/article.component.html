@@ -17,8 +17,8 @@
 -->
 
   <div class="card-block">
-    <div class="digest" *ngIf="isDigest">
-      <publisher-relevance [article]="article"></publisher-relevance>
+    <div class="digest" >
+      <publisher-relevance [article]="article" *ngIf="article.publisher.id!==null"></publisher-relevance>
       <div style="flex: 3;">
         <!--<img src="http://www.tio.ch/favicon.ico" style="max-height: 28px; margin-right:5px; float:left;" />-->
         <h6 style="color:black; font-weight: 400;" class="publisher-name">

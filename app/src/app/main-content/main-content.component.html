@@ -1,20 +1,39 @@
+<!-- Navigation Bar -->
+<nav class="navbar navbar-light bg-faded" [ngClass]="cordovaService.platformName()==='iOS' && searchInputFocus ? 'navbar-iOS-fix-onfocus' : ''">
+  <div class="row">
+    <div class="col-xs-3 visible-xs">
+      <button mat-button class="mat-primary menu-button" (click)="menu.toggle()"><i class="fa fa-bars" aria-hidden="true"></i></button>
+    </div>
+    <div class="col-xs-9 col-sm-8 col-sm-offset-2">
+      <form (submit)="search($event)" name="search">
+        <input class="form-control searchPhrase" type="text" placeholder="Search..." [(ngModel)]="searchPhrase" name="searchPhrase" (blur)="onSearchBlur()" (focus)="onSearchFocus()">
+        <button type="submit" class="sarchButton" (click)="search(null)">
+      <i class="fa fa-search" aria-hidden="true"></i>
+    </button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<welcome *ngIf="displayWelcome" class="embedded-welcome" style="height: fit-content;"></welcome>
+
+
 <!-- NOTE: also see custom css in the main app.component.css files due to a bug -->
-<mat-sidenav-container>
+<mat-sidenav-container class="main-content-container">
   <!-- Menu -->
-  <mat-sidenav mode="over" class="mat-sidenav" #menu>
-    <nav class="navbar navbar-light bg-faded">
-      <button mat-button (click)="menu.close()"><i class="fa fa-chevron-left" aria-hidden="true"></i> Close
-      </button>
-    </nav>
-    <nav class="sidebar-nav" style="padding: 50px; position:relative">
-      <ul class="nav nav-pills nav-stacked" style="position:relative">
-        <li><a routerLink='/' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">News Digest</a></li>
+  <mat-sidenav class="main-content-sidenav" #menu
+              [opened]="!isScreenSmall()"
+              [mode]="isScreenSmall() ? 'over' : 'side'"
+              [fixedInViewport]="isScreenSmall()">
+
+    <nav class="sidebar-nav" style="padding: 50px;">
+      <ul class="nav nav-pills nav-stacked">
+        <li><a routerLink='/' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true}">News Digest</a></li>
         <!--<li><a routerLink='/top' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">Top News</a></li>-->
         <li class="nav-header ">Categories</li>
         <li *ngFor="let category of categories | sortCategory ">
-          <a [routerLink]="[ '/category', category.id,category.name] " [routerLinkActive]="[ 'active-link'] " (click)="menu.close()">{{category.name}}</a>
+          <a [routerLink]="[ '/category', category.id,category.name] " [routerLinkActive]="[ 'active-link']">{{category.name}}</a>
         </li>
-
 
         <li class=" nav-header ">Other</li>
         <li>
@@ -25,64 +44,12 @@
     </nav>
   </mat-sidenav>
 
-  <!-- Navigation Bar -->
-  <nav class="navbar navbar-light bg-faded" [ngClass]="cordovaService.platformName()==='iOS' && searchInputFocus ? 'navbar-iOS-fix-onfocus' : ''">
-    <div class="row">
-      <div class="col-xs-3 visible-xs">
-        <button mat-button class="mat-primary menu-button" (click)="menu.open()"><i class="fa fa-bars" aria-hidden="true"></i></button>
-      </div>
-      <div class="col-xs-9 col-sm-8 col-sm-offset-2">
-        <form (submit)="search($event)" name="search">
-          <input class="form-control searchPhrase" type="text" placeholder="Search..." [(ngModel)]="searchPhrase" name="searchPhrase" (blur)="onSearchBlur()" (focus)="onSearchFocus()">
-          <button type="submit" class="sarchButton" (click)="search(null)">
-        <i class="fa fa-search" aria-hidden="true"></i>
-      </button>
-        </form>
-      </div>
-    </div>
-  </nav>
+
 
   <!-- Main Content -->
   <div class="app-content">
-    <welcome *ngIf="displayWelcome"></welcome>
-
     <div class="main-container">
-      <div class="row">
-        <div class="col-sm-3 hidden-sm-down sidebar">
-          <nav class="sidebar-nav" *ngIf="categories.length>0">
-            <ul class="nav nav-pills nav-stacked">
-              <li><a routerLink='/' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">News Digest</a></li>
-              <!--<li><a routerLink='/top' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">Top News</a></li>-->
-
-              <li class="nav-header ">Categories</li>
-              <li *ngFor="let category of categories | sortCategory ">
-                <a [routerLink]="[ '/category', category.id,category.name] " [routerLinkActive]="[ 'active-link'] ">{{category.name}}</a>
-              </li>
-
-
-              <li class=" nav-header ">Other</li>
-
-              <li>
-                <a [routerLink]="['/welcome/']">Reset</a>
-              </li>
-              <li class="nav-header" style="font-weight: lighter;">{{version}}</li>
-              <!-- <li>
-                              <a>Request Newspaper</a>
-                          </li>
-                          <li>
-                              <a>Report Problem</a>
-                          </li>
-                          --->
-            </ul>
-            <hr class="visible-xs m-t ">
-          </nav>
-        </div>
-        <div class="col-xs-12 col-sm-9 content">
-
           <router-outlet></router-outlet>
-
-        </div>
-      </div>
     </div>
   </div>
 
