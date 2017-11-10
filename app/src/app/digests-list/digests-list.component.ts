@@ -5,8 +5,9 @@ import { NewscronClientService, } from '../newscron-client.service';
 import { Digest, Article } from '../newscron-model';
 import { DigestComponent } from './digest/digest.component';
 import { GoogleAnalyticsService } from '../google-analytics.service';
-import { SectionModule,SectionComponent } from '../section/section.component';
+import { SectionModule, SectionComponent } from '../section/section.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
 import { CordovaService } from '../cordova.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -74,10 +75,11 @@ export class DigestsListComponent implements OnInit {
     CommonModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatButtonModule,
     SectionModule
   ],
   exports: [DigestsListComponent],
-  declarations: [DigestsListComponent,DigestComponent],
-  providers: [NewscronClientService,GoogleAnalyticsService,CordovaService],
+  declarations: [DigestsListComponent, DigestComponent],
+  providers: [NewscronClientService, GoogleAnalyticsService, CordovaService],
 })
-export class DigestModule {}
+export class DigestModule { }
