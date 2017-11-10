@@ -122,6 +122,9 @@ main-content{
   background-color: transparent;
   flex: 1;
   height: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1200px;
 }
 
 .main-content-sidenav{

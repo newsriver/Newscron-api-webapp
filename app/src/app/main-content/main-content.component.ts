@@ -1,14 +1,15 @@
-import { NgModule, OnInit, Component,ViewChild,NgZone } from '@angular/core';
-import { WelcomeModule,WelcomeComponent } from '../welcome/welcome.component';
+import { NgModule, OnInit, Component, ViewChild, NgZone } from '@angular/core';
+import { WelcomeModule, WelcomeComponent } from '../welcome/welcome.component';
 import { CategoryModule } from '../category/category.component';
 import { NewscronClientService, BootstrapConfiguration, CategoryPreference } from '../newscron-client.service';
 import { Section } from '../newscron-model';
 import { Injectable } from '@angular/core';
-import { RouterModule,Router, NavigationEnd } from '@angular/router';
+import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { CordovaService } from '../cordova.service';
 import { environment } from '../../environments/environment';
 import 'rxjs/add/operator/filter';
-import {MatSidenavModule,MatSidenav} from '@angular/material/sidenav';
+import { MatSidenavModule, MatSidenav } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -32,7 +33,7 @@ export class MainContentComponent implements OnInit {
   public version: string = "v";
   public searchInputFocus: boolean = false;
 
-  constructor(private client: NewscronClientService, public router: Router, public cordovaService: CordovaService,zone: NgZone) {
+  constructor(private client: NewscronClientService, public router: Router, public cordovaService: CordovaService, zone: NgZone) {
     this.version += environment.version;
     if (cordovaService.onCordova) {
       this.version += " a";
@@ -106,12 +107,13 @@ export class MainContentComponent implements OnInit {
     CommonModule,
     FormsModule,
     MatSidenavModule,
+    MatButtonModule,
     RouterModule,
     WelcomeModule,
     CategoryModule
   ],
   exports: [MainContentComponent],
   declarations: [MainContentComponent],
-  providers: [NewscronClientService,CordovaService],
+  providers: [NewscronClientService, CordovaService],
 })
-export class MainContentModule {}
+export class MainContentModule { }
