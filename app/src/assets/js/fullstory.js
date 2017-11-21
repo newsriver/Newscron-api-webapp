@@ -3,8 +3,10 @@ window['_fs_host'] = 'fullstory.com';
 window['_fs_org'] = '5QEF0';
 window['_fs_namespace'] = 'FS';
 (function(m, n, e, t, l, o, g, y) {
-  if (e in m && m.console && m.console.log) {
-    m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].');
+  if (e in m) {
+    if (m.console && m.console.log) {
+      m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].');
+    }
     return;
   }
   g = m[e] = function(a, b) {

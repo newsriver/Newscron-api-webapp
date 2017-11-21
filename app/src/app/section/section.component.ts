@@ -1,7 +1,7 @@
 import { NgModule, Component, OnInit, Input, Pipe, PipeTransform, ElementRef, Output, EventEmitter, HostListener, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { ArticleModule,ArticleComponent } from '../article/article.component';
+import { ArticleModule, ArticleComponent } from '../article/article.component';
 import { Section, Category, Article, Publisher } from '../newscron-model';
-import { NewscronClientService} from '../newscron-client.service';
+import { NewscronClientService } from '../newscron-client.service';
 import { UserProfileService } from '../user-profile.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -15,7 +15,11 @@ import { MatButtonModule } from '@angular/material/button';
 export class SortArticle {
   transform(array: Array<Article>, args: string): Array<Article> {
     array.sort((a: Article, b: Article) => {
-      return b.publicationDate - a.publicationDate;
+      if (b.publisher != null && a.publisher != null) {
+        return b.publisher.relevance - a.publisher.relevance;
+      } else {
+        return b.publicationDate - a.publicationDate;
+      }
     });
     return array;
   }
@@ -62,20 +66,20 @@ export class SectionComponent implements OnInit {
     if (this.section.category != null) {
       this.sectionPosition.emit({ name: this.section.category.name, position: this.el.nativeElement.offsetTop });
     }
-    if(this.section.category!=null){
-    this.userProfile.getProfileUpdateObserver().subscribe(result => {
-      if (result != null && result["publisher-relevance"] != null && result["publisher-relevance"] == this.section.category.id) {
-        this.articles = this.filterRemovedPublishers(this.section.articles);
-        this.chageDetector.detectChanges();
-      }
-    });
+    if (this.section.category != null) {
+      this.userProfile.getProfileUpdateObserver().subscribe(result => {
+        if (result != null && result["publisher-relevance"] != null && result["publisher-relevance"] == this.section.category.id) {
+          this.articles = this.filterRemovedPublishers(this.section.articles);
+          this.chageDetector.detectChanges();
+        }
+      });
     }
     this.articles = this.filterRemovedPublishers(this.section.articles);
   }
 
   private filterRemovedPublishers(articles: Article[]): Article[] {
 
-    if(this.section.category==null){
+    if (this.section.category == null) {
       /* TODO: eventually one day once all results from search will have a publisher id
       //if section category is not assiged (e.g. search) filter each article based on its own category
       return this.section.articles.filter(item => {
@@ -105,8 +109,8 @@ export class SectionComponent implements OnInit {
     MatButtonModule,
     ArticleModule
   ],
-  exports: [SectionComponent,ValidSectionFilter,SortArticle],
-  declarations: [SectionComponent,SortArticle,ValidSectionFilter],
-  providers: [UserProfileService,NewscronClientService],
+  exports: [SectionComponent, ValidSectionFilter, SortArticle],
+  declarations: [SectionComponent, SortArticle, ValidSectionFilter],
+  providers: [UserProfileService, NewscronClientService],
 })
-export class SectionModule {}
+export class SectionModule { }
