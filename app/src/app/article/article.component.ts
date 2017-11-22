@@ -9,7 +9,6 @@ import { PublisherRelevanceComponent,PublisherDialog } from './publisher-relevan
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 @Pipe({ name: 'escapeHtml', pure: false })
 export class EscapeHtmlPipe implements PipeTransform {
   transform(value: string, args: any[] = []) {
@@ -30,7 +29,7 @@ export class ArticleComponent implements OnInit {
 
   @Input() article: Article;
   constructor(public cordovaService: CordovaService, private route: ActivatedRoute, public ga: GoogleAnalyticsService) {
-  
+
 
   }
 
