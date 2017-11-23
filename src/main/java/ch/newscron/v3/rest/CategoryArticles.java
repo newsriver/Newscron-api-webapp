@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -46,14 +48,12 @@ public class CategoryArticles {
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/v3/category", method = RequestMethod.POST)
-    public Section featured(@RequestBody CategoryPreference category) {
-
-        return categoryArticles(category, 50);
-
+    public Section featured(@RequestBody CategoryPreference category, @RequestParam(value = "limit", required = false, defaultValue = "20") int limit, @RequestParam(value = "before", required = false, defaultValue = "0") long timestamp) {
+        return categoryArticles(category, limit, timestamp);
     }
 
 
-    private Section categoryArticles(CategoryPreference categoryPreference, int limit) {
+    private Section categoryArticles(CategoryPreference categoryPreference, int limit, long timestamp) {
 
         Instant start = Instant.now();
         Section categoryArticles = new Section();
@@ -65,7 +65,7 @@ public class CategoryArticles {
         Instant query_start = Instant.now();
         PublisherServiceFactory publisherServiceFactory = PublisherServiceFactory.getInstance();
         ArticleFactory articleFactory = ArticleFactory.getInstance();
-        Set<Long> articlesId = categoryArticlesIds(categoryPreference, limit);
+        Set<Long> articlesId = categoryArticlesIds(categoryPreference, limit, timestamp);
         Instant query_end = Instant.now();
 
         Instant getArticles_start = Instant.now();
@@ -100,7 +100,7 @@ public class CategoryArticles {
     }
 
 
-    private Set<Long> categoryArticlesIds(CategoryPreference category, int limit) {
+    private Set<Long> categoryArticlesIds(CategoryPreference category, int limit, long timestamp) {
 
         HashSet<Long> articleIds = new HashSet<>();
         Connection conn = null;
@@ -130,13 +130,21 @@ public class CategoryArticles {
             conn.setReadOnly(true);
 
             String sql = "SELECT A.id, A.topicId FROM NewscronContent.article AS A \n" +
-                    " WHERE A.publicationDateGMT > DATE_SUB(now(), Interval 7 DAY) AND A.categoryID=? AND A.packageID in (" + packagesIds + ") AND A.publisherId NOT in (" + publishersOptOut + ") AND A.cloneID is NULL\n" +
-                    " ORDER BY A.publicationDateGMT DESC LIMIT ?;";
+                    " WHERE A.publicationDateGMT > DATE_SUB(now(), Interval 7 DAY) AND A.categoryID=? AND A.packageID in (" + packagesIds + ") AND A.publisherId NOT in (" + publishersOptOut + ") AND A.cloneID is NULL\n";
+            if (timestamp > 0) {
+                sql += " AND A.publicationDateGMT < ? ";
+            }
+            sql += " ORDER BY A.publicationDateGMT DESC LIMIT ?;";
 
 
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, category.getId());
-            stmt.setInt(2, limit * 20);
+            if (timestamp > 0) {
+                stmt.setTimestamp(2, new Timestamp(timestamp));
+                stmt.setInt(3, limit * 20);
+            } else {
+                stmt.setInt(2, limit * 20);
+            }
 
             rs = stmt.executeQuery();
 
