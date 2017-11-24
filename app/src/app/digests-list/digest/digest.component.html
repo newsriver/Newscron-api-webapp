@@ -3,6 +3,7 @@
 </div>
 <ul class="content">
   <li *ngFor="let section of (digest.sections | validSection)">
+    <section-header [name]="section.category.name" [categoryId]="section.category.id"></section-header>
     <section [section]="section"></section>
   </li>
 </ul>

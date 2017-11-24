@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CordovaService } from '../cordova.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-digests-list',
   templateUrl: './digests-list.component.html',
@@ -73,6 +74,7 @@ export class DigestsListComponent implements OnInit {
   imports: [
     FormsModule,
     CommonModule,
+    RouterModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatButtonModule,

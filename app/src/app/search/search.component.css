@@ -7,10 +7,6 @@ ul{
 }
 
 
-hr{
-  margin-top: 1rem;
-}
-
 h2{
   margin-bottom: 0rem;
   margin-top: 5rem;
@@ -19,6 +15,10 @@ h2{
   display: flex;
   flex-direction: row;
 }
+hr{
+  margin-top: 1rem;
+}
+
 .search-settings-button{
   color: white;
   min-width: 40px;
@@ -29,6 +29,10 @@ h2{
   h2{
     font-size: 2.5rem;
     line-height: 36px;
+    padding-left: 1.1rem;
+  }
+  hr{
+    margin-bottom: 0px;
   }
 }
 
