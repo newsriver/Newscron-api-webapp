@@ -3,6 +3,7 @@ import { ArticleModule, ArticleComponent } from '../article/article.component';
 import { Section, Category, Article, Publisher } from '../newscron-model';
 import { NewscronClientService } from '../newscron-client.service';
 import { UserProfileService } from '../user-profile.service';
+import { SectionHeaderComponent } from './section-header/section-header.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -55,7 +56,7 @@ export class ValidSectionFilter implements PipeTransform {
 export class SectionComponent implements OnInit {
 
   @Output() sectionPosition = new EventEmitter();
-  @Input() section: Section;
+  @Input()  section: Section;
   public articles: Article[];
 
   constructor(private userProfile: UserProfileService, private el: ElementRef, private chageDetector: ChangeDetectorRef) {
@@ -109,8 +110,8 @@ export class SectionComponent implements OnInit {
     MatButtonModule,
     ArticleModule
   ],
-  exports: [SectionComponent, ValidSectionFilter, SortArticle],
-  declarations: [SectionComponent, SortArticle, ValidSectionFilter],
+  exports: [SectionComponent, ValidSectionFilter, SortArticle,SectionHeaderComponent],
+  declarations: [SectionComponent, SortArticle, ValidSectionFilter,SectionHeaderComponent],
   providers: [UserProfileService, NewscronClientService],
 })
 export class SectionModule { }

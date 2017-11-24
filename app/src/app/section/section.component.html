@@ -1,14 +1,5 @@
 <div class="section">
-  <div *ngIf="section && section.category">
-    <h2>
-  {{section.category.name}}
-  <div style="flex: 1;text-align: right;">
-    <button  mat-button  [routerLink]="[ '/config/category', section.category.id]"class="category-settings-button"><i class="fa fa-sliders" aria-hidden="true"></i></button>
-  </div>
-
-  </h2>
-    <hr class="aky">
-  </div>
+  
 
   <ul>
     <li *ngFor="let article of articles | sortArticle ; let j = index">
