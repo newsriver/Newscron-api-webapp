@@ -5,6 +5,7 @@ import { Section, Category, Article } from '../newscron-model';
 import { GoogleAnalyticsService } from '../google-analytics.service';
 import { SectionModule,SectionComponent } from '../section/section.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button'
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -31,7 +32,7 @@ export class SortCategory {
 export class CategoryComponent implements OnInit {
 
   public categoryId: number;
-  public section: Section;
+  public sections: Section[];
   public name: string;
   public loading: boolean = true;
   constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router, private chageDetector: ChangeDetectorRef, public ga: GoogleAnalyticsService) {
@@ -47,24 +48,49 @@ export class CategoryComponent implements OnInit {
       this.name = params.name;
       this.ga.trackPage("/category/" + this.name.toLowerCase());
       this.loading = true;
-      this.section = null;
+      this.sections = null;
       this.chageDetector.markForCheck();
 
       this.client.category(this.categoryId).subscribe(section => {
-        this.section = section;
+        this.sections = [];
+        this.sections.push(section);
         this.loading = false;
         this.chageDetector.markForCheck();
       });
 
     });
   }
+
+
+  public loadMore(){
+
+    let timestamp : number= Number.MAX_VALUE;
+    for(let article of this.sections[this.sections.length-1].articles){
+      if(article.publicationDate < timestamp){
+        timestamp = article.publicationDate;
+      }
+    }
+
+    this.loading = true;
+    this.client.category(this.categoryId,timestamp).subscribe(section => {
+      this.sections.push(section);
+      this.loading = false;
+      this.chageDetector.markForCheck();
+    });
+  }
+
 }
+
+
+
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     RouterModule,
     MatProgressSpinnerModule,
+    MatButtonModule,
     SectionModule
   ],
   exports: [CategoryComponent,SortCategory],

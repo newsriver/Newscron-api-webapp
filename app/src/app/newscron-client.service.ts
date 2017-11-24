@@ -60,7 +60,7 @@ export class NewscronClientService {
     return this.uuid;
   }
 
-  public category(categoryId: number): Observable<Section> {
+  public category(categoryId: number, before?:number): Observable<Section> {
     var cat: CategoryPreference = null;
     for (let category of this.getUserPreferences().categories) {
       if (category.id == categoryId) {
@@ -73,7 +73,12 @@ export class NewscronClientService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post(this.baseURL + "/category", cat, options)
+    let url = this.baseURL + "/category";
+    if(before!=null){
+      url+="?before="+before;
+    }
+
+    return this.http.post(url, cat, options)
       .map(this.extractData);
 
   }
