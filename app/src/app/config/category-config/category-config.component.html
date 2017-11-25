@@ -1,27 +1,45 @@
-<h1>{{category.name}}</h1>
+<h2>{{category.name}}</h2>
 <hr/>
 
 
-<div *ngIf="bannedPublishers.length>0">
-  <h3 style="margin-top: 6rem;">Removed Publishers</h3>
-  <ul>
-    <li *ngFor="let publisher of bannedPublishers">
-      <button mat-button style="min-width:20px" (click)="undoPublisherOptOut(publisher)"><i class="fa fa-undo" aria-hidden="true"></i></button> {{publisher.name}}
-    </li>
-  </ul>
+<h3>Digest Preferences</h3>
+<hr/>
+<div>
+  <h4>Number of articles</h4>
+  <p>Select how many news articles for the category {{category.name}} should be assembled in the digest.</p>
+  <div style="display: flex; flex-direction:row; max-width: 400px;">
+    <mat-slider [max]="25" [min]="5" [(ngModel)]="category.amount"></mat-slider><span style="    line-height: 48px;margin-left: 2rem;font-weight: 400;color: #1ca8dd;">Many - {{category.amount}}</span>
+  </div>
 </div>
 
 
 
-<h3 style="margin-top: 6rem;">Publishers Regions</h3>
-<mat-tab-group>
-  <mat-tab label="EUROPE">
-    <package-selection continent="EUROPE" [packagesIds]="category.packages" (onChange)="onPackageChange($event)"></package-selection>
-  </mat-tab>
-  <mat-tab label="NORTH AMERICA">
-    <package-selection continent="NORTH_AMERICA" [packagesIds]="category.packages" (onChange)="onPackageChange($event)"></package-selection>
-  </mat-tab>
-  <mat-tab label="SOUTH AMERICA">
-    <package-selection continent="SOUTH_AMERICA" [packagesIds]="category.packages" (onChange)="onPackageChange($event)"></package-selection>
-  </mat-tab>
-</mat-tab-group>
+
+<h3>General Preferences</h3>
+<hr/>
+<div>
+  <div *ngIf="bannedPublishers.length>0">
+    <h4>Removed Publishers</h4>
+    <p>All articles of the following publishers are going to be hidden for the category {{category.name}}.</p>
+    <ul>
+      <li *ngFor="let publisher of bannedPublishers">
+        <button mat-button style="min-width:20px" (click)="undoPublisherOptOut(publisher)"><i class="fa fa-undo" aria-hidden="true"></i></button> {{publisher.name}}
+      </li>
+    </ul>
+  </div>
+
+
+  <h4>News sources</h4>
+  <p>Select from which co news for the category {{category.name}} should be collected from.</p>
+  <mat-tab-group>
+    <mat-tab label="EUROPE">
+      <package-selection continent="EUROPE" [packagesIds]="category.packages" (onChange)="onPackageChange($event)"></package-selection>
+    </mat-tab>
+    <mat-tab label="NORTH AMERICA">
+      <package-selection continent="NORTH_AMERICA" [packagesIds]="category.packages" (onChange)="onPackageChange($event)"></package-selection>
+    </mat-tab>
+    <mat-tab label="SOUTH AMERICA">
+      <package-selection continent="SOUTH_AMERICA" [packagesIds]="category.packages" (onChange)="onPackageChange($event)"></package-selection>
+    </mat-tab>
+  </mat-tab-group>
+</div>

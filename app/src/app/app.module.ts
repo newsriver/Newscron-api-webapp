@@ -1,7 +1,9 @@
+import 'hammerjs';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
-import { RouterModule} from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { NewscronClientService } from './newscron-client.service';
 import { CordovaService } from './cordova.service';
 import { GoogleAnalyticsService } from './google-analytics.service';
@@ -15,12 +17,13 @@ import { AppRoutingModule } from './app-routing.module';
     AppComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     HttpModule,
     RouterModule,
     AppRoutingModule,
   ],
-  providers: [CordovaService, NewscronClientService, GoogleAnalyticsService,UserProfileService,LoggerService],
+  providers: [CordovaService, NewscronClientService, GoogleAnalyticsService, UserProfileService, LoggerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
