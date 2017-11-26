@@ -1,9 +1,21 @@
 
 .mat-tab-label{
   color: white!important;
+  opacity: 1!important;
 }
 .mat-tab-body-wrapper{
   padding-top: 20px;
+}
+.mat-tab-header-pagination-chevron{
+  border-color: white!important;
+}
+
+.mat-tab-label, .mat-tab-link{
+  font-weight: 400;
+}
+
+.mat-tab-header{
+  border-bottom: 1px solid #434857!important;
 }
 
 @media screen and (max-width: 400px){

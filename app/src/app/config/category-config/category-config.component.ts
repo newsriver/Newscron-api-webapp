@@ -3,6 +3,9 @@ import { NewscronClientService, BootstrapConfiguration, CategoryPreference, User
 import { Publisher } from '../../newscron-model';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { UserProfileService } from '../../user-profile.service';
+import { MatSliderModule } from '@angular/material/slider';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @Component({
   selector: 'app-category-config',
@@ -34,7 +37,7 @@ export class CategoryConfigComponent implements OnInit {
     }
   }
 
-  public onPackageChange($event) {
+  public onPreferenceChange($event) {
     this.client.setUserPreferences(this.preferences);
   }
 
