@@ -37,7 +37,7 @@ export class CategoryConfigComponent implements OnInit {
     }
   }
 
-  public onPackageChange($event) {
+  public onPreferenceChange($event) {
     this.client.setUserPreferences(this.preferences);
   }
 

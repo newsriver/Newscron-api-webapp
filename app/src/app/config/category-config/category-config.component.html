@@ -1,4 +1,4 @@
-<h2>{{category.name}}</h2>
+<h2>Settings for {{category.name}}</h2>
 <hr/>
 
 
@@ -6,9 +6,14 @@
 <hr/>
 <div>
   <h4>Number of articles</h4>
-  <p>Select how many news articles for the category {{category.name}} should be assembled in the digest.</p>
+  <p>Select how many news articles for the category {{category.name}} you aim to recive in your digest.</p>
   <div style="display: flex; flex-direction:row; max-width: 400px;">
-    <mat-slider [max]="25" [min]="5" [(ngModel)]="category.amount"></mat-slider><span style="    line-height: 48px;margin-left: 2rem;font-weight: 400;color: #1ca8dd;">Many - {{category.amount}}</span>
+    <mat-slider [max]="20" [min]="3" [(ngModel)]="category.amount" (change)="onPreferenceChange($event)"></mat-slider>
+    <span style="line-height: 48px;margin-left: 2rem;font-weight: 400;color: #1ca8dd; min-width: 100px;" *ngIf="category.amount<=3">Few</span>
+    <span style="line-height: 48px;margin-left: 2rem;font-weight: 400;color: #1ca8dd; min-width: 100px;" *ngIf="category.amount>3 && category.amount<=9">Some</span>
+    <span style="line-height: 48px;margin-left: 2rem;font-weight: 400;color: #1ca8dd; min-width: 100px;" *ngIf="category.amount>9 && category.amount<=12">Many</span>
+    <span style="line-height: 48px;margin-left: 2rem;font-weight: 400;color: #1ca8dd; min-width: 100px;" *ngIf="category.amount>12 && category.amount<=15">A Lot</span>
+    <span style="line-height: 48px;margin-left: 2rem;font-weight: 400;color: #1ca8dd; min-width: 100px;" *ngIf="category.amount>15">Extreme</span>
   </div>
 </div>
 
@@ -30,16 +35,16 @@
 
 
   <h4>News sources</h4>
-  <p>Select from which co news for the category {{category.name}} should be collected from.</p>
+  <p>For the category {{category.name}}, select from which countries you would like to read news articles.</p>
   <mat-tab-group>
     <mat-tab label="EUROPE">
-      <package-selection continent="EUROPE" [packagesIds]="category.packages" (onChange)="onPackageChange($event)"></package-selection>
+      <package-selection continent="EUROPE" [packagesIds]="category.packages" (onChange)="onPreferenceChange($event)"></package-selection>
     </mat-tab>
     <mat-tab label="NORTH AMERICA">
-      <package-selection continent="NORTH_AMERICA" [packagesIds]="category.packages" (onChange)="onPackageChange($event)"></package-selection>
+      <package-selection continent="NORTH_AMERICA" [packagesIds]="category.packages" (onChange)="onPreferenceChange($event)"></package-selection>
     </mat-tab>
     <mat-tab label="SOUTH AMERICA">
-      <package-selection continent="SOUTH_AMERICA" [packagesIds]="category.packages" (onChange)="onPackageChange($event)"></package-selection>
+      <package-selection continent="SOUTH_AMERICA" [packagesIds]="category.packages" (onChange)="onPreferenceChange($event)"></package-selection>
     </mat-tab>
   </mat-tab-group>
 </div>
