@@ -226,7 +226,7 @@ public class Settings {
                 CategoryPreference category = new CategoryPreference();
                 category.setId(rs.getInt("id"));
                 category.setName(rs.getString("name"));
-                category.setAmount(5 * Math.round((rs.getFloat("defaultAmount")) / 5f));  //multiple of 5
+                category.setAmount(3 * Math.round((rs.getFloat("defaultAmount") * 1.5f) / 3f));  //multiple of 3
                 categories.add(category);
             }
         } catch (Exception e) {
