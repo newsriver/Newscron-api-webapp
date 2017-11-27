@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment';
 import 'rxjs/add/operator/filter';
 import { MatSidenavModule, MatSidenav } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -108,6 +109,7 @@ export class MainContentComponent implements OnInit {
     FormsModule,
     MatSidenavModule,
     MatButtonModule,
+    MatSlideToggleModule,
     RouterModule,
     WelcomeModule,
     CategoryModule
