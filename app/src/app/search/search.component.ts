@@ -1,11 +1,12 @@
 import { NgModule, Component, OnInit, Input } from '@angular/core';
-import { RouterModule,Router, ActivatedRoute, Params } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute, Params } from '@angular/router';
 import { NewscronClientService } from '../newscron-client.service';
 import { Section, Category, Article } from '../newscron-model';
 import { GoogleAnalyticsService } from '../google-analytics.service';
-import { SectionModule,SectionComponent } from '../section/section.component';
+import { SectionModule, SectionComponent } from '../section/section.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule, MatSelectChange } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 @Component({
@@ -23,6 +24,8 @@ export class SearchComponent implements OnInit {
   constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router, public ga: GoogleAnalyticsService) {
 
   }
+
+
 
   ngOnInit() {
     //we need to subscribe to the params changes as the router is not reloading the componet on param changes
@@ -47,11 +50,11 @@ export class SearchComponent implements OnInit {
     this.showSettings = !this.showSettings;
   }
 
-  public setLanguage(event: any) {
+  public setLanguage(selectValue: MatSelectChange) {
     let preferences = this.client.getUserPreferences();
-    preferences.searchLanguage = this.language;
+    preferences.searchLanguage = selectValue.value;
     this.client.setUserPreferences(preferences);
-    this.router.navigate(['/search', this.language, this.searchPhrase]);
+    this.router.navigate(['/search', selectValue.value, this.searchPhrase]);
   }
 
   public search(event: any) {
@@ -84,10 +87,11 @@ export class SearchComponent implements OnInit {
     RouterModule,
     MatProgressSpinnerModule,
     MatButtonModule,
+    MatSelectModule,
     SectionModule
   ],
   exports: [SearchComponent],
   declarations: [SearchComponent],
-  providers: [NewscronClientService,GoogleAnalyticsService],
+  providers: [NewscronClientService, GoogleAnalyticsService],
 })
-export class SearchModule {}
+export class SearchModule { }

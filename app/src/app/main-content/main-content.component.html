@@ -32,9 +32,9 @@
           <a [routerLink]="[ '/category', category.id,category.name] " [routerLinkActive]="[ 'active-link']">{{category.name}}</a>
         </li>
 
-        <li class=" nav-header ">Other</li>
-        <li>
-          <mat-slide-toggle></mat-slide-toggle> Readability mode
+        <li class="nav-header ">Other</li>
+        <li style="padding: 7px 15px; margin-top: 12px;">
+          <mat-slide-toggle>Readability</mat-slide-toggle>
         </li>
         <li>
           <a [routerLink]="['/welcome']">Reset Settings</a>

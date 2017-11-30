@@ -6,14 +6,21 @@
   min-height: 100%;
 }
 
+
 .nav > li {
   position: relative;
   display: block;
+  color: #cfd2da;
+
 }
+.nav > li a{
+  color: #cfd2da;
+  padding: 7px 15px;
+}
+
 .nav > li > a {
   position: relative;
   display: block;
-  padding: 7px 15px;
 }
 .nav > li > a:hover,
 .nav > li > a:focus {
@@ -59,9 +66,7 @@
 .nav-pills > li + li {
   margin-left: 2px;
 }
-.nav > li > a {
-  color: #cfd2da;
-}
+
 .nav > li > a:hover,
 .nav > li > a:focus {
   color: #fff;
