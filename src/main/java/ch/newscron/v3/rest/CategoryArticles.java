@@ -75,6 +75,8 @@ public class CategoryArticles {
         for (StructuredArticle strArticle : articles) {
 
             Article article = new Article();
+            article.setId(strArticle.getArticleID());
+            article.setTopicId(strArticle.getTopicID());
             article.setTitle(strArticle.getTitle());
             article.setSnippet(buildSnippet(strArticle.getText()));
             article.setImgUrl(strArticle.getImageSrc());

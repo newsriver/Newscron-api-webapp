@@ -14,8 +14,8 @@ import { Digest, Section, Category, Article, Publisher, Log } from './newscron-m
 export class NewscronClientService {
 
 
-  private baseURL: string = "http://app.newscron.com/v3";
-  //private baseURL: string = "http://localhost:9092/v3";
+  //private baseURL: string = "http://app.newscron.com/v3";
+  private baseURL: string = "http://localhost:9092/v3";
 
   private userPreferences: UserPreferences = null;
   private refresh: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
@@ -60,7 +60,7 @@ export class NewscronClientService {
     return this.uuid;
   }
 
-  public category(categoryId: number, before?:number): Observable<Section> {
+  public category(categoryId: number, before?: number): Observable<Section> {
     var cat: CategoryPreference = null;
     for (let category of this.getUserPreferences().categories) {
       if (category.id == categoryId) {
@@ -74,8 +74,8 @@ export class NewscronClientService {
     let options = new RequestOptions({ headers: headers });
 
     let url = this.baseURL + "/category";
-    if(before!=null){
-      url+="?before="+before;
+    if (before != null) {
+      url += "?before=" + before;
     }
 
     return this.http.post(url, cat, options)
