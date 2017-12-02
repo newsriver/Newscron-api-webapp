@@ -21,6 +21,7 @@ export class Digest {
 
 export class Article {
   public id: number = null;
+  public topicId: number = null;
   public title: string = null;
   public url: string = null;
   public snippet: string = null;

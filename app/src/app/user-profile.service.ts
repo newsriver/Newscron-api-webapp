@@ -4,16 +4,33 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Publisher } from './newscron-model';
 import { LoggerService } from './logger.service';
 
+
 @Injectable()
 export class UserProfileService {
 
   private profileUpdate: BehaviorSubject<{ [id: string]: any; }> = new BehaviorSubject<{ [id: string]: any; }>(null);
   private publishersRelevance: { [id: number]: { [id: number]: Publisher; }; } = {};
+  private readability: { [id: string]: any; } = {};
+
+
   constructor(private logger: LoggerService) {
     this.publishersRelevance = JSON.parse(localStorage.getItem('publishers-relevance'));
     if (this.publishersRelevance == null) {
       this.publishersRelevance = {};
     }
+    this.readability = JSON.parse(localStorage.getItem('readability'));
+    if (this.readability == null) {
+      this.readability = { "general": false };
+    }
+  }
+
+  public getGeneralReadability() {
+    return this.readability.general;
+  }
+
+  public setGeneralReadability(readability: boolean) {
+    this.readability.general = readability;
+    localStorage.setItem('readability', JSON.stringify(this.readability));
   }
 
   public getProfileUpdateObserver(): Observable<{ [id: string]: any; }> {

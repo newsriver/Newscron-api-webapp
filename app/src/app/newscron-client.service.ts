@@ -9,13 +9,12 @@ import 'rxjs/add/operator/catch';
 import { CordovaService } from './cordova.service';
 import { UserProfileService } from './user-profile.service';
 import { Digest, Section, Category, Article, Publisher, Log } from './newscron-model';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class NewscronClientService {
 
-
-  //private baseURL: string = "http://app.newscron.com/v3";
-  private baseURL: string = "http://localhost:9092/v3";
+  private baseURL: string = environment.serviceURL + "/v3";
 
   private userPreferences: UserPreferences = null;
   private refresh: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);

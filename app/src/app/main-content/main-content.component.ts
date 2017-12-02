@@ -6,11 +6,12 @@ import { Section } from '../newscron-model';
 import { Injectable } from '@angular/core';
 import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { CordovaService } from '../cordova.service';
+import { UserProfileService } from '../user-profile.service';
 import { environment } from '../../environments/environment';
 import 'rxjs/add/operator/filter';
 import { MatSidenavModule, MatSidenav } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSlideToggleModule, MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -34,7 +35,7 @@ export class MainContentComponent implements OnInit {
   public version: string = "v";
   public searchInputFocus: boolean = false;
 
-  constructor(private client: NewscronClientService, public router: Router, public cordovaService: CordovaService, zone: NgZone) {
+  constructor(private client: NewscronClientService, public router: Router, public cordovaService: CordovaService, zone: NgZone, private userProfile: UserProfileService) {
     this.version += environment.version;
     if (cordovaService.onCordova) {
       this.version += " a";
@@ -101,6 +102,10 @@ export class MainContentComponent implements OnInit {
   public onSearchFocus() {
     this.searchInputFocus = true;
   }
+
+  public setGeneralReadability(toggleValue: MatSlideToggleChange) {
+    this.userProfile.setGeneralReadability(toggleValue.checked);
+  }
 }
 
 @NgModule({
@@ -116,6 +121,6 @@ export class MainContentComponent implements OnInit {
   ],
   exports: [MainContentComponent],
   declarations: [MainContentComponent],
-  providers: [NewscronClientService, CordovaService],
+  providers: [NewscronClientService, CordovaService, UserProfileService],
 })
 export class MainContentModule { }

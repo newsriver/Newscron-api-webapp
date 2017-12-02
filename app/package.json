@@ -1,6 +1,6 @@
 {
   "name": "newscron",
-  "version": "5.1.7",
+  "version": "5.1.9",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
