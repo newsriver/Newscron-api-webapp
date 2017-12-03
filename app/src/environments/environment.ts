@@ -7,4 +7,5 @@ export const environment = {
   production: false,
   version: 'DEV',
   useLocationHash: false,
+  serviceURL: "http://app.newscron.com",
 };

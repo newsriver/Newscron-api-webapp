@@ -1,0 +1,7 @@
+.mat-slide-toggle-thumb{
+  background-color: #51586a;
+}
+.mat-slide-toggle-content {
+  font: 300 14px/20px Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #cfd2da;
+}

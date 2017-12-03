@@ -83,6 +83,8 @@ public class Featured {
 
             Article article = new Article();
             article.setTitle(strArticle.getTitle());
+            article.setId(strArticle.getArticleID());
+            article.setTopicId(strArticle.getTopicID());
             article.setSnippet(buildSnippet(strArticle.getText()));
             article.setImgUrl(strArticle.getImageSrc());
             article.setPublicationDate(strArticle.getPublicationDateGMT());

@@ -44,6 +44,9 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-jetty', version: '1.4.2.RELEASE'
     compile("org.springframework.boot:spring-boot-starter-actuator")
 
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-freemarker', version: '1.5.9.RELEASE'
+
+
     compile group: 'javax.servlet', name: 'jstl', version: '1.2'
     compile group: 'org.eclipse.jetty', name: 'apache-jsp', version: '9.3.14.v20161028'
     compile group: 'org.eclipse.jetty', name: 'jetty-jsp', version: '9.3.0.M1'
@@ -60,7 +63,7 @@ dependencies {
         exclude(module: 'com.google.apis')
         exclude(module: 'com.google.identitytoolkit')
     }
-    
+
     testCompile group: 'org.springframework', name: 'spring-test', version: '4.3.3.RELEASE'
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.4.1.RELEASE'
     testCompile("org.springframework.boot:spring-boot-starter-actuator")

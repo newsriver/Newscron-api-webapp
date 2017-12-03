@@ -5,6 +5,7 @@ package ch.newscron.v3.data;
  */
 public class Article {
     private Long id;
+    private Long topicId;
     private String title;
     private String url;
     private String snippet;
@@ -84,5 +85,13 @@ public class Article {
 
     public void setPublisher(Publisher publisher) {
         this.publisher = publisher;
+    }
+
+    public Long getTopicId() {
+        return topicId;
+    }
+
+    public void setTopicId(Long topicId) {
+        this.topicId = topicId;
     }
 }
