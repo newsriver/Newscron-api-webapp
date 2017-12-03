@@ -12,6 +12,7 @@
                         background: #fff;
                         margin: 0px;
                         padding:0px;
+                        font-size: 10px;
                     }
 
                     body{
@@ -20,6 +21,7 @@
                         margin: 0px;
                         padding:0px;
                         padding-bottom: 125px;
+                        font-size: 14px;
                     }
 
 
@@ -49,8 +51,8 @@
                     }
 
                     .header{
-                        font-weight: lighter;
-                        font-size:90%;
+                        font-weight: 400;
+                        font-size:1.2rem;
                     }
 
                     .header .publisher{
@@ -63,20 +65,18 @@
                     }
 
                     .title{
-                        font-size: 145%;
-                        line-height:120%;
-                        font-weight: bolder;
+                        font-size: 2.4rem;
+                        font-weight: 700;
                     }
 
 
                     p{
-                        line-height:150%;
-                        font-size: 100%;
+                        font-size: 1.75rem;
                     }
 
                     p:first-letter {
                         font-weight: bolder;
-                        font-size: 135%;
+                        font-size: 1.75rem;
                     }
 
                     .footer{
