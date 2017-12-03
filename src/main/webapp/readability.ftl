@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>${title}</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
     <style>
         @import url('https://fonts.googleapis.com/css?family=Montserrat:100,300,400,700|PT+Serif');
       </style>
