@@ -1,8 +1,8 @@
 .publisher-vote{
   flex: 0;
-  margin-left: -12px;
-  margin-top: -12px;
-  margin-right: 4px;
+  margin-left: -0.7rem;
+  margin-top: -0.7rem;
+  margin-right: 0.3rem;
 }
 .publisher-vote button{
     min-width: 0px;
@@ -17,11 +17,11 @@
     font-weight: 400;
     text-align: center;
     margin:2px;
-    line-height:14px;
+    line-height:0.8rem;
 }
 .publisher-vote-button-arrow{
   color: darkgray;
-  font-size: 14px;
+  font-size: 0.8rem;
   margin-top:-2px;
 }
 .publisher-vote-button-arrow.up.active{
@@ -32,7 +32,7 @@
 }
 
 .publisher-vote-text{
-  font-size: 12px;
+  font-size: 0.8rem;
 }
 
 

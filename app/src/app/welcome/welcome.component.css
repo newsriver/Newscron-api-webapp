@@ -114,17 +114,17 @@ column-count: 1;
 
 
 /deep/ .welcome-step h1 {
-    margin-bottom: 4rem;
-    font-size: 4rem;
+    margin-bottom: 2rem;
+    font-size: 2rem;
     line-height: 1;
     font-weight: 100;
 }
 
 /deep/ .welcome-step p {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-weight: 300;
-    line-height: 2rem;
-    font-size: 2rem;
+    line-height: 1rem;
+    font-size: 1rem;
     color: #9fdcf3;
 }
 

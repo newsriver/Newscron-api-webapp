@@ -5,39 +5,6 @@ li{
 ul{
   padding: 0px;
 }
-h2{
-  margin-bottom: 0rem;
-  margin-top: 5rem;
-  font-size: 5rem;
-  padding-left: 1.5rem;
-  display: flex;
-  flex-direction: row;
-}
-.category-settings-button{
-  color: white;
-  min-width: 40px;
-  font-size: 20px;
-}
-
-
-.category-settings-button i{
-  vertical-align: baseline;
-}
-hr{
-  margin-top: 1rem;
-}
-
-@media screen and (max-width: 540px) {
-  h2{
-    font-size: 2.5rem;
-    line-height: 36px;
-    padding-left: 1.1rem;
-  }
-  hr{
-    margin-bottom: 0px;
-  }
-}
-
 
 .chunk-header:before {
     position: absolute;
