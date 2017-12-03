@@ -21,7 +21,6 @@
                         font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
                         margin: 0px;
                         padding:0px;
-                        padding-bottom: 125px;
                         font-size: 14px;
                     }
 
@@ -35,8 +34,8 @@
 
                     .container{
                         padding-top:25px;
-                        padding-left:7px;
-                        padding-right:7px;
+                        padding-left:12px;
+                        padding-right:12px;
                     }
 
                     .imgFrame{
