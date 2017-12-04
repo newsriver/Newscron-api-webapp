@@ -2,23 +2,12 @@
   display: block;
 }
 
-li{
-  list-style-type:none
-}
-
-ul{
-  padding: 0px;
-}
-
 .loading h3{
   color: #1CA8DD;
     text-align: center;
     margin-top: 2.5rem;
 }
 
-hr{
-  margin-top: 1rem;
-}
 
 .header{
   position: fixed;

@@ -1,10 +1,4 @@
-li{
-  list-style-type:none
-}
 
-ul{
-  padding: 0px;
-}
 
 .chunk-header:before {
     position: absolute;

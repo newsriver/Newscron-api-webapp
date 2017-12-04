@@ -7,10 +7,92 @@
 
 
 
-html, body{
-  height: 100%;
+* {
+  box-sizing: border-box;
 }
 
+html {
+  height: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+  height: 100%;
+  font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-image: url("assets/img/menu-placeholder.png");
+  background-repeat: repeat-x;
+  background-color: #252830;
+  font-weight: 300;
+  letter-spacing: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #cfd2da;
+}
+
+li{
+  list-style-type:none
+}
+
+ul{
+  padding: 0px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: inherit;
+  font-weight: 300;
+  color: #ffffff;
+}
+
+hr {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 0;
+  border-top: 1px solid #434857;
+}
+
+a {
+  color: #1CA8DD;
+  text-decoration: none;
+  background-color: transparent;
+}
+a:hover {
+  text-decoration: none;
+}
+
+
+h1 {
+  font-size: 2.3rem;
+}
+
+h2{
+  font-size: 3rem;
+  margin-bottom: 0rem;
+  margin-top: 3rem;
+}
+
+
+h3 {
+  font-size: 1.5rem;
+  margin-top: 3rem;
+  margin-bottom: 0rem;
+}
+
+h4 {
+  font-size: 1.1rem;
+}
+
+h5 {
+  font-size: 0.9rem;
+}
+
+h6 {
+  font-size: 0.8rem;
+}
 
 .loading{
   width: 1005;
@@ -37,4 +119,16 @@ button:focus{
   z-index: 50;
   left: 0px;
   right: 0px;
+}
+
+
+
+@media screen and (max-width: 540px) {
+  h2{
+    font-size: 1.5rem;
+  }
+  hr{
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }

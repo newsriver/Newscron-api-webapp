@@ -81,16 +81,10 @@
     margin: 2px;
 }
 
-a{
-  text-decoration: none;
-}
-
 .publisher-name{
   margin-top: 0.3rem;
   margin-bottom: 0.1rem;
 }
-
-
 
 @media screen and (max-width: 576px) {
 

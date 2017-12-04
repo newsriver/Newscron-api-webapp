@@ -1,12 +1,3 @@
-li{
-  list-style-type:none
-}
-
-
-
-ul{
-  padding: 0px;
-}
 
 .section:first-child {
   margin-top: 2rem;
@@ -32,9 +23,7 @@ h2{
 .category-settings-button i{
   vertical-align: baseline;
 }
-hr{
-  margin-top: 1rem;
-}
+
 
 
 @media screen and (max-width: 540px) {
@@ -53,8 +42,6 @@ hr{
     border-bottom:0px;
   }
 
-  hr{
-    margin-bottom: 0px;
-  }
+
 
 }

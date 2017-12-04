@@ -3,23 +3,12 @@
 
 }
 
-
-
-
 :host /deep/ .navbar{
   position: fixed;
   width: 100%;
   border-radius: 0px;
   z-index: 10;
 }
-
-h3{
-    display: inline;
-    color: black;
-    padding-left: 0.5rem;
-    font-weight: 400;
-    font-size: 20px;
-  }
 
 .back{
   font-size: 1.2rem;
@@ -46,7 +35,6 @@ vertical-align: baseline;
     padding-right: 2rem;
     max-width: 75rem;
 }
-
 
 @media screen and (max-width: 576px){
   .main-container{
