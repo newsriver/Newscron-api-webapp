@@ -71,19 +71,21 @@ h1 {
 
 h2{
   font-size: 3rem;
-  margin-bottom: 0rem;
   margin-top: 3rem;
+  margin-bottom: 0;
 }
 
 
 h3 {
   font-size: 1.5rem;
   margin-top: 3rem;
-  margin-bottom: 0rem;
+  margin-bottom: 0;
 }
 
 h4 {
-  font-size: 1.1rem;
+  font-size: 1.5rem;
+  margin-top: 0rem;
+  margin-bottom: 0;
 }
 
 h5 {
@@ -121,14 +123,30 @@ button:focus{
   right: 0px;
 }
 
+.progress-spinner{
+  margin: auto;
+  margin-top: 2.5rem;
+}
 
 
 @media screen and (max-width: 540px) {
   h2{
     font-size: 1.5rem;
   }
+  h3{
+    font-size: 1.25rem;
+  }
+  h4{
+    font-size: 1.15rem;
+  }
   hr{
-    margin-top: 0;
-    margin-bottom: 0;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  h4{
+    font-size: 0.9rem;
   }
 }

@@ -18,23 +18,8 @@ h4{
 h4:first-child {
   margin-top: 1.5rem;
 }
+
 hr{
-  margin-top: 0.5rem;
-}
-
-
-@media screen and (max-width: 540px) {
-  h2{
-    font-size: 1.3rem;
-  }
-  h3{
-    margin-top: 2.1rem;
-    font-size: 1.2rem;
-    line-height: 30px;
-  }
-
-  hr{
-    margin-bottom: 0px;
-  }
-
+  margin-left: -1rem;
+  margin-right: -1rem;
 }

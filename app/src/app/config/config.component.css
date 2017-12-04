@@ -1,8 +1,3 @@
-
-.main{
-
-}
-
 :host /deep/ .navbar{
   position: fixed;
   width: 100%;
@@ -22,24 +17,24 @@
 vertical-align: baseline;
 }
 
-.app-content {
+.config-content{
   display: block;
   padding: 1rem;
   padding-top: 3rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  max-width: 75rem;
+  margin-right: auto;
+  margin-left: auto;
 }
 
-.main-container{
-    margin-right: auto;
-    margin-left: auto;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    max-width: 75rem;
-}
 
 @media screen and (max-width: 576px){
-  .main-container{
+  .config-content{
     max-width: 100%!important;
-    padding-left: 0px;
-    padding-right: 0px;
+    padding: 1rem;
+    padding-top: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
