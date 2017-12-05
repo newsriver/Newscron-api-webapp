@@ -23,19 +23,19 @@
   <mat-sidenav class="main-content-sidenav" #menu [opened]="!isScreenSmall()" [mode]="isScreenSmall() ? 'over' : 'side'" [fixedInViewport]="isScreenSmall()">
     <nav class="menu">
       <ul>
-        <li><a routerLink='/' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true}">News Digest</a></li>
+        <li><a routerLink='/' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true}" tabindex="-1">News Digest</a></li>
         <!--<li><a routerLink='/top' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">Top News</a></li>-->
         <li class="header ">Categories</li>
         <li *ngFor="let category of categories | sortCategory ">
-          <a [routerLink]="[ '/category', category.id,category.name] " [routerLinkActive]="[ 'active-link']">{{category.name}}</a>
+          <a [routerLink]="[ '/category', category.id,category.name] " [routerLinkActive]="[ 'active-link']" tabindex="-1">{{category.name}}</a>
         </li>
 
         <li class="header">Other</li>
         <li style="padding: 0.5rem 1rem; margin-top: 1rem;" *ngIf="cordovaService.onCordova">
-          <mat-slide-toggle [checked]="userProfile.getGeneralReadability()" (change)="setGeneralReadability($event)">Readability</mat-slide-toggle>
+          <mat-slide-toggle [checked]="userProfile.getGeneralReadability()" (change)="setGeneralReadability($event)" tabindex="-1">Readability</mat-slide-toggle>
         </li>
         <li>
-          <a [routerLink]="['/welcome']">Reset Settings</a>
+          <a [routerLink]="['/welcome']" tabindex="-1">Reset Settings</a>
         </li>
         <li class="header" style="font-weight: lighter;">{{version}}</li>
       </ul>
