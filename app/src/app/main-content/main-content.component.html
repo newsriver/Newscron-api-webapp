@@ -17,34 +17,30 @@
 
 <welcome *ngIf="displayWelcome" class="embedded-welcome" style="height: fit-content;"></welcome>
 
-
 <!-- NOTE: also see custom css in the main app.component.css files due to a bug -->
 <mat-sidenav-container class="main-content-container">
   <!-- Menu -->
   <mat-sidenav class="main-content-sidenav" #menu [opened]="!isScreenSmall()" [mode]="isScreenSmall() ? 'over' : 'side'" [fixedInViewport]="isScreenSmall()">
-
-    <nav class="sidebar-nav" style="padding: 50px;">
-      <ul class="nav nav-pills nav-stacked">
+    <nav class="menu">
+      <ul>
         <li><a routerLink='/' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true}">News Digest</a></li>
         <!--<li><a routerLink='/top' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">Top News</a></li>-->
-        <li class="nav-header ">Categories</li>
+        <li class="header ">Categories</li>
         <li *ngFor="let category of categories | sortCategory ">
           <a [routerLink]="[ '/category', category.id,category.name] " [routerLinkActive]="[ 'active-link']">{{category.name}}</a>
         </li>
 
-        <li class="nav-header ">Other</li>
-        <li style="padding: 7px 15px; margin-top: 12px;" *ngIf="cordovaService.onCordova">
+        <li class="header">Other</li>
+        <li style="padding: 0.5rem 1rem; margin-top: 1rem;" *ngIf="cordovaService.onCordova">
           <mat-slide-toggle [checked]="userProfile.getGeneralReadability()" (change)="setGeneralReadability($event)">Readability</mat-slide-toggle>
         </li>
         <li>
           <a [routerLink]="['/welcome']">Reset Settings</a>
         </li>
-        <li class="nav-header" style="font-weight: lighter;">{{version}}</li>
+        <li class="header" style="font-weight: lighter;">{{version}}</li>
       </ul>
     </nav>
   </mat-sidenav>
-
-
 
   <!-- Main Content -->
   <div class="app-content">

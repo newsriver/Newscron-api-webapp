@@ -6,93 +6,43 @@
   min-height: 100%;
 }
 
-
-.nav > li {
-  position: relative;
-  display: block;
-  color: #cfd2da;
-
+.menu{
+  margin-top: 3rem;
+  padding: 2rem;
 }
-.nav > li a{
-  color: #cfd2da;
-  padding: 7px 15px;
-}
-
-.nav > li > a {
-  position: relative;
-  display: block;
-}
-.nav > li > a:hover,
-.nav > li > a:focus {
-  text-decoration: none;
-  background-color: #434857;
-}
-.nav > li.disabled > a {
-  color: #cfd2da;
-}
-.nav > li.disabled > a:hover,
-.nav > li.disabled > a:focus {
-  color: #cfd2da;
-  text-decoration: none;
-  background-color: transparent;
-  cursor: not-allowed;
-}
-.nav .open > a,
-.nav .open > a:hover,
-.nav .open > a:focus {
-  background-color: #434857;
-  border-color: #1CA8DD;
-}
-
-.nav > .nav-header {
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-bottom: 5px;
-  font-size: 85%;
-  font-weight: normal;
-  letter-spacing: 1px;
-  color: #51586a;
-  text-transform: uppercase;
-}
-.nav > li + .nav-header {
-  margin-top: 20px;
-}
-.nav-pills > li {
-  float: left;
-}
-.nav-pills > li > a {
-  border-radius: 4px;
-}
-.nav-pills > li + li {
-  margin-left: 2px;
-}
-
-.nav > li > a:hover,
-.nav > li > a:focus {
-  color: #fff;
-}
-
-.nav-pills > li.active > a,
-.nav-pills > li.active > a:hover,
-.nav-pills > li.active > a:focus {
-  color: #252830;
-  background-color: #1CA8DD;
-}
-.nav-stacked > li {
-  float: none;
-}
-.nav-stacked > li + li {
-  margin-top: 2px;
+.menu li{
+  margin-top: 0.2rem;
   margin-left: 0;
 }
 
-.navbar {
+.menu a{
+  border-radius: 0.25rem;
+  color: #cfd2da;
+  padding: 0.5rem 1rem;
   position: relative;
-  min-height: 50px;
-  margin-bottom: 21px;
-  border: 1px solid transparent;
-  padding: .25rem 0.5rem;
+  display: block;
 }
+
+.menu a:hover, a:focus{
+  background-color: #434857;
+  text-decoration: none;
+}
+
+
+.menu .header {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-bottom: 0.25rem;
+  font-size: 85%;
+  font-weight: normal;
+  color: #51586a;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.menu li + .header {
+  margin-top: 1.2rem;
+}
+
 
 .row {
     margin-left: -15px;
