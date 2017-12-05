@@ -6,6 +6,61 @@
   min-height: 100%;
 }
 
+.main-content-container{
+  background-color: transparent;
+  flex: 1;
+  height: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.main-content-sidenav{
+  min-width: 200px;
+  background-color: transparent;
+  overflow: auto;
+  height: 100%;
+}
+
+.main-container{
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    max-width: 75rem;
+  }
+
+  .app-content {
+    padding-top: 50px; /* report the same value in featured.component.css .header class and in  featured.component.ts padding variable */
+  }
+@media screen and (max-width: 576px){
+  .main-container{
+    max-width: 100%!important;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+@media (max-width: 767px) {
+  .main-content-sidenav {
+    flex: 1 0 auto;
+    background-color: #252830;
+  }
+}
+
+
+:host /deep/ .navbar{
+  position: fixed;
+  width: 100%;
+  border-radius: 0px;
+  z-index: 10;
+  min-height: 50px;
+}
+
+.navbar-iOS-fix-onfocus{
+  position: absolute!important;
+}
+
 .menu{
   margin-top: 3rem;
   padding: 2rem;
@@ -43,72 +98,6 @@
   margin-top: 1.2rem;
 }
 
-
-.row {
-    margin-left: -15px;
-    margin-right: -15px;
-}
-
-.form-control {
-    box-shadow: none;
-}
-
-.form-control {
-    -webkit-transition: none;
-    transition: none;
-}
-
-.form-control {
-    display: block;
-    width: 100%;
-    height: 35px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.5;
-    color: #fff;
-    background-color: #434857;
-    background-image: none;
-    border: 1px solid #434857;
-    border-radius: 4px;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-}
-
-
-.active-link{
-  color: #252830!important;
-  background-color: #1CA8DD!important;
-}
-
-.active-route{
-  border-radius: 4px;
-  color: #252830!important;
-  background-color: #1CA8DD!important;
-  position: relative;
-    display: block;
-    padding: 7px 15px;
-    margin-bottom: 15px;
-}
-
-.navbar-iOS-fix-onfocus{
-  position: absolute!important;
-}
-
-.embedded-welcome{
-  padding-top: 50px;
-  margin-bottom: 50px;
-  flex: 1;
-}
-
-.embedded-welcome  /deep/ .welcome{
-  min-height: auto!important;
-}
-
-.sidebar-nav{
-    margin-top: 5rem;
-}
-
 .menu-button{
   min-width: 38px;
   height: 38px;
@@ -123,17 +112,24 @@
   background-color: rgba(0,0,0,0.06);
   border-color: transparent;
   color: black;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0.3rem 1rem;
+  border-radius: 4px;
+  box-shadow: none;
+  -webkit-transition: none;
+  transition: none;
 }
-
 .searchPhrase:focus {
     background-color: #fff;
+    outline: 0;
 }
-
 .sarchButton {
     position: absolute;
     top: 0;
     right: 0;
-    padding: 7px 30px;
+    padding: 0.6rem 2rem;
     color: #b7bcc8;
     background-color: transparent;
     border: 0;
@@ -141,74 +137,29 @@
     font-size: 1.1rem;
 }
 
-
-
-.main-container{
-    margin-right: auto;
-    margin-left: auto;
-    padding-left: 30px;
-    padding-right: 30px;
-    max-width: 1200px;
-  }
-
-
-@media screen and (max-width: 576px){
-  .main-container{
-    max-width: 100%!important;
-    padding-left: 0px;
-    padding-right: 0px;
-  }
+.active-link{
+  color: #252830!important;
+  background-color: #1CA8DD!important;
 }
 
+/*
+.active-route{
+  border-radius: 4px;
+  color: #252830!important;
+  background-color: #1CA8DD!important;
+  position: relative;
+  display: block;
+  padding: 7px 15px;
+  margin-bottom: 15px;
+}*/
 
 
-.app-content {
-  padding-top: 50px; /* report the same value in featured.component.css .header class and in  featured.component.ts padding variable */
-}
-
-
-.navbar-toggler{
-  padding: 18px;
-  padding-right: 22px;
-  padding-left: 22px;
-}
-
-
-:host /deep/ .navbar{
-  position: fixed;
-  width: 100%;
-  border-radius: 0px;
-  z-index: 10;
-}
-
-
-main-content{
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-
-.main-content-container{
-  background-color: transparent;
+.embedded-welcome{
+  padding-top: 50px;
+  margin-bottom: 50px;
   flex: 1;
-  height: 100%;
-  margin-right: auto;
-  margin-left: auto;
-  max-width: 1200px;
-  width: 100%;
 }
 
-.main-content-sidenav{
-  min-width: 200px;
-  background-color: transparent;
-  overflow: auto;
-  height: 100%;
-}
-
-@media (max-width: 767px) {
-  .main-content-sidenav {
-    flex: 1 0 auto;
-    background-color: #252830;
-  }
+.embedded-welcome  /deep/ .welcome{
+  min-height: auto!important;
 }
