@@ -45,7 +45,7 @@ export class ArticleComponent implements OnInit {
 
   public openLinkInBrowser() {
     let url: string = this.article.url;
-    if (this.userProfile.getGeneralReadability()) {
+    if (this.userProfile.getGeneralReadability() && this.article.id != null && this.article.topicId) {
       url = environment.serviceURL + "/readability/" + this.article.topicId + "/" + this.article.id;
     }
     this.cordovaService.openLinkInBrowser(url);
