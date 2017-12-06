@@ -1,23 +1,14 @@
-li{
-  list-style-type:none
-}
-
-ul{
-  padding: 0px;
-}
 
 
 h2{
   margin-bottom: 0rem;
-  margin-top: 5rem;
-  font-size: 5rem;
-  padding-left: 1.5rem;
+  margin-top: 3rem;
+  font-size: 3rem;
+  padding-left: 0.75rem;
   display: flex;
   flex-direction: row;
 }
-hr{
-  margin-top: 1rem;
-}
+
 
 .search-settings-button{
   color: white;
@@ -30,9 +21,6 @@ hr{
     font-size: 2.5rem;
     line-height: 36px;
     padding-left: 1.1rem;
-  }
-  hr{
-    margin-bottom: 0px;
   }
 }
 

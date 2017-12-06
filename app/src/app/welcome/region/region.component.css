@@ -3,21 +3,23 @@
 
 .statcard i {
   float: right;
-  font-size: 4rem;
+  font-size: 2rem;
   margin-top: 0.8rem;
 }
 
 .statcard{
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   text-align: left;
 }
 
-@media screen and (max-width: 320px) {
 h3{
-  font-size: 20px;
+  margin-top: 0;
 }
+
+@media screen and (max-width: 320px) {
+
 .statcard i{
-  font-size: 3rem;
+  font-size: 1.5rem;
 }
 }
 

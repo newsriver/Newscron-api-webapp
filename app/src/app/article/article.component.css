@@ -1,25 +1,22 @@
 .article{
-  margin-bottom: 5rem;
+  margin-bottom: 2.5rem;
   background-color: #fff;
 }
 
 .article .card-block{
-  padding: 2rem;
+  padding: 1.1rem;
   text-align: left;
 }
 
 .article h4{
   color: #252830;
-font-weight: 700;
-margin-top: 0rem;
-margin-bottom: 0.4rem;
-font-size: 2.4rem;
-line-height: 2.8rem;
+  font-weight: 700;
+  line-height: 130%;
 }
 
 .article .content{
-  margin: -2rem;
-  padding: 2rem;
+  margin: -1rem;
+  padding: 1rem;
   margin-top: 0px;
   padding-top: 0px;
 }
@@ -31,26 +28,23 @@ line-height: 2.8rem;
    clear: both;
 }
 
-
-
 .article .img{
   float: left;
   background-repeat: no-repeat,no-repeat;
   background-size: cover,cover;
   background-position: center center, center center;
-  width: 24rem;
-  height: 20rem;
-  margin-right: 2rem;
+  width: 13rem;
+  height: 11rem;
+  margin-right: 1rem;
   background-image: url('/assets/img/placeholder-image.png');
   background-color: lightgray;
 }
-
 
 .article  p{
   color: #252830;
   margin-bottom: 0;
   font-family: 'PT Serif', serif;
-  font-size: 1.75rem;
+  font-size: 1.2rem;
   height: auto;
   overflow: hidden;
   display: inline;
@@ -59,7 +53,7 @@ line-height: 2.8rem;
 .article .digest{
   display: flex;
   flex-direction: row;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .article .info{
@@ -81,110 +75,54 @@ line-height: 2.8rem;
     margin: 2px;
 }
 
-a{
-  text-decoration: none;
-}
-
-
-
-.optout-publisher{
-   flex: 1;
-   text-align: right;
-}
-
-.optout-publisher .mat-icon-button{
-  font-size:20px;
-  margin-top:-18px;
-  margin-right: -18px;
-}
-
-.optout-publisher .mat-icon-button i{
-  color: #1CA8DD;
-}
-
-.mat-menu-item span{
-  font-weight: 400;
-}
-.mat-menu-item .fa{
-  width: 19px;
-  text-align: center;
-  margin-right: 5px;
-}
-
 .publisher-name{
-  margin-top: 5px;
-  margin-bottom: 2px;
+  margin-top: 0.3rem;
+  margin-bottom: 0.1rem;
 }
-
-
 
 @media screen and (max-width: 576px) {
 
-
-  .article h4{
-    font-size: 1.8rem;
-    line-height: 1.9rem;
-    margin-top: 0.8rem;
-  }
-
-  .article h6{
-    font-size: 12px;
-  }
-
   .article .img{
     float: right;
-    width: 10rem;
-    height: 10rem;
-    margin-left: 0.6rem;
+    width: 7rem;
+    height: 7rem;
+    margin-left: 0.3rem;
     margin-right: 0;
-    margin-top: -0.8rem;
-    margin-bottom: .6rem;
+    margin-top: -0.4rem;
+    margin-bottom: .3rem;
   }
   .article p{
-    font-size: 1.5rem;
     display: none;
   }
 
   .article .digest{
     margin-bottom: 0rem;
   }
-  .article .digest h6{
-    line-height: 24px;
-  }
   .article .info{
     display: none;
   }
-
   .article .info-mobile{
     color:#666;
-    margin:0px;
+    margin:0;
     margin-top: 1rem;
     display: block;
   }
-
-
   .article{
     margin-bottom: 0rem;
   }
-
-  .article .card-block{
-    padding: 18px;
-  }
   .article .content{
-    margin: -18px;
+    margin: -0.6rem;
     margin-top: 0px;
   }
 
-  .publisher-name{
-    margin-top: 0px;
-  }
 }
 
 @media screen and (max-width: 320px) {
-
-  .article h4{
-    font-size: 1.5rem;
-    line-height: 1.6rem;
-    margin-top: 0.8rem;
+  .article .card-block{
+    padding: 0.8rem;
+  }
+  .article .img{
+    width: 5rem;
+    height: 5rem;
   }
 }
