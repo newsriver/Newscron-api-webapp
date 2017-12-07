@@ -33,7 +33,7 @@
           <mat-slide-toggle [checked]="userProfile.getGeneralReadability()" (change)="setGeneralReadability($event)" tabindex="-1">Readability</mat-slide-toggle>
         </li>
         <li>
-          <a [routerLink]="['/welcome']" tabindex="-1">Reset Settings</a>
+          <a [routerLink]="['/config']" tabindex="-1">Settings</a>
         </li>
         <li class="header" style="font-weight: lighter;">{{version}}</li>
       </ul>

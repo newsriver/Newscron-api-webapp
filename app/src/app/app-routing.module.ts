@@ -9,6 +9,8 @@ import { ConfigModule,ConfigComponent } from './config/config.component';
 import { SearchModule,SearchComponent } from './search/search.component';
 import { WelcomeModule,WelcomeComponent } from './welcome/welcome.component';
 import { MainContentModule,MainContentComponent } from './main-content/main-content.component';
+import { GeneralConfigComponent } from './config/general-config/general-config.component';
+
 import { environment } from '../environments/environment';
 
 export const appRoutes: Routes = [
@@ -25,6 +27,7 @@ export const appRoutes: Routes = [
   {
     path: 'config', component: ConfigComponent,
     children: [
+      { path: '', component: GeneralConfigComponent},
       { path: 'category/:id', component: CategoryConfigComponent }
     ]
   },

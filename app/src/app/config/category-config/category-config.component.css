@@ -2,8 +2,9 @@
 
 
 >>> .statcard-success {
-    background-color: #1ca8dd;
+    background-color: #51586a;
 }
+
 
 >>> .custom-control-input:checked~ .custom-control-indicator {
     background-color: #1bc98e!important;
