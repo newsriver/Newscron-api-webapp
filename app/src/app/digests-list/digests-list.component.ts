@@ -11,7 +11,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { CordovaService } from '../cordova.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { ɵgetDOM as getDOM } from '@angular/platform-browser';
+
+//Scroll hack -> romeve once https://github.com/angular/angular/pull/20030 is mergeg
+//-------
+function _window(): any {
+  // return the global native browser window object
+  return window;
+}
+//------
+
 @Component({
   selector: 'app-digests-list',
   templateUrl: './digests-list.component.html',
@@ -24,7 +34,14 @@ export class DigestsListComponent implements OnInit {
   public loading: boolean = true;
   public counter: number = 0;
 
-  constructor(private client: NewscronClientService, public snackBar: MatSnackBar, public ga: GoogleAnalyticsService, public cordova: CordovaService) {
+  //Scroll hack -> romeve once https://github.com/angular/angular/pull/20030 is mergeg
+  //-------
+  private scrollPosition: number[] = [];
+  private lastId = "/news/digest";
+  //---
+
+  //Scroll hack -> romeve router from constructor
+  constructor(private client: NewscronClientService, public snackBar: MatSnackBar, public ga: GoogleAnalyticsService, public cordova: CordovaService, private router: Router) {
 
   }
 
@@ -40,10 +57,35 @@ export class DigestsListComponent implements OnInit {
       }
     });
 
+    //Scroll hack -> romeve once https://github.com/angular/angular/pull/20030 is mergeg
+    //-------
+    this.router.events.subscribe(e => {
+      if (e instanceof NavigationStart) {
+        // store the scroll position of the current stable navigations
+        this.scrollPosition[this.lastId] = this.getCurrentScrollPosition();
+      } else if (e instanceof NavigationEnd) {
+        this.lastId = e.url;
+        this.restorePositionOrScrollIntoView(this.scrollPosition[this.lastId]);
+      }
+    });
+    //-----
+
     this.ga.trackPage("/");
   }
 
+  //Scroll hack -> romeve once https://github.com/angular/angular/pull/20030 is mergeg
+  //-------
+  private restorePositionOrScrollIntoView(position: number): void {
+    setTimeout(() => {
+      _window().scrollTo(0, position);
+    }, 0);
 
+  }
+
+  protected getCurrentScrollPosition(): number {
+    return _window().scrollY;
+  }
+  //-----
 
   private downloadDigest() {
     this.loading = true;
