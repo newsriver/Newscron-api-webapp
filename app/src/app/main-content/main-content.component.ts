@@ -51,7 +51,7 @@ export class MainContentComponent implements OnInit {
   ngOnInit() {
     this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
       //clear search phrase if route is not search
-      if (!event.url.startsWith('/search')) {
+      if (!event.url.startsWith('/news/search')) {
         this.searchPhrase = "";
       }
       if (this.isScreenSmall()) {
@@ -91,7 +91,7 @@ export class MainContentComponent implements OnInit {
   public searchPhrase: string;
   public search(e) {
     if (this.searchPhrase.length > 0) {
-      this.router.navigate(['/search', this.searchPhrase]);
+      this.router.navigate(['/news/search', this.searchPhrase]);
     }
   }
 

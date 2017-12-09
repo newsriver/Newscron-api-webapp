@@ -1,16 +1,16 @@
 <!-- Navigation Bar -->
 <nav class="navbar navbar-light bg-faded" [ngClass]="cordovaService.platformName()==='iOS' && searchInputFocus ? 'navbar-iOS-fix-onfocus' : ''">
-    <div class="col-xs-3 hidden-md-up">
-      <button mat-button class="mat-primary menu-button" (click)="menu.toggle()"><i class="fa fa-bars" aria-hidden="true"></i></button>
-    </div>
-    <div class="col-xs-9 col-md-8 offset-md-2">
-      <form (submit)="search($event)" name="search">
-        <input class="searchPhrase" type="text" placeholder="Search..." [(ngModel)]="searchPhrase" name="searchPhrase" (blur)="onSearchBlur()" (focus)="onSearchFocus()">
-        <button type="submit" class="sarchButton" (click)="search(null)">
+  <div class="col-xs-3 hidden-md-up">
+    <button mat-button class="mat-primary menu-button" (click)="menu.toggle()"><i class="fa fa-bars" aria-hidden="true"></i></button>
+  </div>
+  <div class="col-xs-9 col-md-8 offset-md-2">
+    <form (submit)="search($event)" name="search">
+      <input class="searchPhrase" type="text" placeholder="Search..." [(ngModel)]="searchPhrase" name="searchPhrase" (blur)="onSearchBlur()" (focus)="onSearchFocus()">
+      <button type="submit" class="sarchButton" (click)="search(null)">
       <i class="fa fa-search" aria-hidden="true"></i>
     </button>
-      </form>
-    </div>
+    </form>
+  </div>
 </nav>
 
 <welcome *ngIf="displayWelcome" class="embedded-welcome" style="height: fit-content;"></welcome>
@@ -21,11 +21,11 @@
   <mat-sidenav class="main-content-sidenav" #menu [opened]="!isScreenSmall()" [mode]="isScreenSmall() ? 'over' : 'side'" [fixedInViewport]="isScreenSmall()">
     <nav class="menu">
       <ul>
-        <li><a routerLink='/' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true}" tabindex="-1">News Digest</a></li>
+        <li><a routerLink='/news/' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true}" tabindex="-1">News Digest</a></li>
         <!--<li><a routerLink='/top' [routerLinkActive]="[ 'active-link'] " [routerLinkActiveOptions]="{exact:true} " (click)="menu.close()">Top News</a></li>-->
         <li class="header ">Categories</li>
         <li *ngFor="let category of categories | sortCategory ">
-          <a [routerLink]="[ '/category', category.id,category.name] " [routerLinkActive]="[ 'active-link']" tabindex="-1">{{category.name}}</a>
+          <a [routerLink]="[ '/news/category', category.id,category.name] " [routerLinkActive]="[ 'active-link']" tabindex="-1">{{category.name}}</a>
         </li>
 
         <li class="header">Other</li>
