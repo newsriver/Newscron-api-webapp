@@ -1,12 +1,15 @@
+import { Subject } from "rxjs/Subject";
+import 'rxjs/add/operator/takeUntil';
+
 import { NgModule } from '@angular/core';
 import { Component, OnInit, Input, Output, EventEmitter, Pipe, PipeTransform, Inject } from '@angular/core';
 import { NewscronClientService, BootstrapConfiguration, CategoryPreference, UserPreferences } from '../newscron-client.service';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
-import { MatDialogModule,MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import {MatButtonModule} from '@angular/material/button';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatDialogModule, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { GoogleAnalyticsService } from '../google-analytics.service';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegionComponent } from './region/region.component';
 import { EditionComponent } from './edition/edition.component';
 import { CategoriesComponent } from './categories/categories.component';
@@ -61,6 +64,7 @@ export class WelcomeComponent implements OnInit {
   public step: number = 0;
   public packagesIds: number[] = [];
   public categories: CategoryPreference[] = [];
+  private unsubscribe: Subject<void> = new Subject();
 
   constructor(private client: NewscronClientService, private router: Router, private route: ActivatedRoute, public dialog: MatDialog, public ga: GoogleAnalyticsService) {
 
@@ -68,7 +72,7 @@ export class WelcomeComponent implements OnInit {
 
   ngOnInit() {
     this.step = 1
-    this.route.params.subscribe(params => {
+    this.route.params.takeUntil(this.unsubscribe).subscribe(params => {
       this.continent = params.continent;
       if (this.continent != null) {
         this.step = 2;
@@ -80,20 +84,20 @@ export class WelcomeComponent implements OnInit {
 
     if (this.client.hasPreferences() && this.step == 1) {
 
-        setTimeout(() =>{
-      let dialogRef = this.dialog.open(ResetConfirmationDialoug, {
-        data: {}
-      }
-      );
-    });
+      setTimeout(() => {
+        let dialogRef = this.dialog.open(ResetConfirmationDialoug, {
+          data: {}
+        }
+        );
+      });
     }
 
     this.boot(null);
   }
 
-ngAfterViewChecked(){
+  ngAfterViewChecked() {
 
-}
+  }
 
   close() {
     this.step = 0;
@@ -152,12 +156,17 @@ ngAfterViewChecked(){
 
   private boot(packagesIds: number[]) {
     this.loading = true;
-    this.client.boot(packagesIds).subscribe(bootConfig => {
+    this.client.boot(packagesIds).takeUntil(this.unsubscribe).subscribe(bootConfig => {
       this.loading = false;
       if (bootConfig != null) {
         this.categories = bootConfig.categories;
       }
     });
+  }
+
+  public ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
 }
@@ -210,7 +219,7 @@ export class Continent {
     ResetConfirmationDialoug
   ],
   exports: [WelcomeComponent],
-  declarations: [WelcomeComponent,RegionComponent,EditionComponent,CategoriesComponent,ResetConfirmationDialoug,KeysPipe,CategoryAmmountPipe],
-  providers: [NewscronClientService,GoogleAnalyticsService],
+  declarations: [WelcomeComponent, RegionComponent, EditionComponent, CategoriesComponent, ResetConfirmationDialoug, KeysPipe, CategoryAmmountPipe],
+  providers: [NewscronClientService, GoogleAnalyticsService],
 })
-export class WelcomeModule {}
+export class WelcomeModule { }

@@ -1,0 +1,16 @@
+<h2>Settings</h2>
+<h3>Categories Preferences</h3>
+<hr/>
+<p>Individually configure any category based on your personal preferences.</p>
+<mat-card>
+  <mat-list>
+    <mat-list-item *ngFor="let category of preferences.categories">
+      <h4> {{category.name}}
+
+      </h4>
+      <button mat-button (click)="removeCategory(category.id)" tabindex="-1"><i class="fa fa-trash" aria-hidden="true"></i></button>
+      <button mat-button [routerLink]="[ '/config/category', category.id] " [routerLinkActive]="[ 'active-link']" tabindex="-1">  <i class="fa fa-pencil" aria-hidden="true"></i></button>
+
+    </mat-list-item>
+  </mat-list>
+</mat-card>

@@ -1,9 +1,11 @@
-import { NgModule, Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef,Pipe, PipeTransform } from '@angular/core';
-import { RouterModule,Router, ActivatedRoute, Params } from '@angular/router';
-import { NewscronClientService ,CategoryPreference} from '../newscron-client.service';
+import { Subject } from "rxjs/Subject";
+import 'rxjs/add/operator/takeUntil';
+import { NgModule, Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef, Pipe, PipeTransform } from '@angular/core';
+import { RouterModule, Router, ActivatedRoute, Params } from '@angular/router';
+import { NewscronClientService, CategoryPreference } from '../newscron-client.service';
 import { Section, Category, Article } from '../newscron-model';
 import { GoogleAnalyticsService } from '../google-analytics.service';
-import { SectionModule,SectionComponent } from '../section/section.component';
+import { SectionModule, SectionComponent } from '../section/section.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button'
 import { CommonModule } from '@angular/common';
@@ -35,6 +37,8 @@ export class CategoryComponent implements OnInit {
   public sections: Section[];
   public name: string;
   public loading: boolean = true;
+  private unsubscribe: Subject<void> = new Subject();
+
   constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router, private chageDetector: ChangeDetectorRef, public ga: GoogleAnalyticsService) {
 
   }
@@ -42,7 +46,7 @@ export class CategoryComponent implements OnInit {
   ngOnInit() {
 
     //we need to subscribe to the params changes as the router is not reloading the componet on param changes
-    this.route.params.subscribe(params => {
+    this.route.params.takeUntil(this.unsubscribe).subscribe(params => {
 
       this.categoryId = params.id;
       this.name = params.name;
@@ -62,21 +66,26 @@ export class CategoryComponent implements OnInit {
   }
 
 
-  public loadMore(){
+  public loadMore() {
 
-    let timestamp : number= Number.MAX_VALUE;
-    for(let article of this.sections[this.sections.length-1].articles){
-      if(article.publicationDate < timestamp){
+    let timestamp: number = Number.MAX_VALUE;
+    for (let article of this.sections[this.sections.length - 1].articles) {
+      if (article.publicationDate < timestamp) {
         timestamp = article.publicationDate;
       }
     }
 
     this.loading = true;
-    this.client.category(this.categoryId,timestamp).subscribe(section => {
+    this.client.category(this.categoryId, timestamp).takeUntil(this.unsubscribe).subscribe(section => {
       this.sections.push(section);
       this.loading = false;
       this.chageDetector.markForCheck();
     });
+  }
+
+  public ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
 }
@@ -93,8 +102,8 @@ export class CategoryComponent implements OnInit {
     MatButtonModule,
     SectionModule
   ],
-  exports: [CategoryComponent,SortCategory],
-  declarations: [CategoryComponent,SortCategory],
-  providers: [NewscronClientService,GoogleAnalyticsService],
+  exports: [CategoryComponent, SortCategory],
+  declarations: [CategoryComponent, SortCategory],
+  providers: [NewscronClientService, GoogleAnalyticsService],
 })
-export class CategoryModule {}
+export class CategoryModule { }

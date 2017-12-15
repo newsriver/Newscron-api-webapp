@@ -2,14 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { CategoryModule, CategoryComponent } from './category/category.component';
-import { FeaturedModule, FeaturedComponent } from './featured/featured.component';
 import { DigestModule, DigestsListComponent } from './digests-list/digests-list.component';
 import { CategoryConfigComponent } from './config/category-config/category-config.component';
 import { ConfigModule, ConfigComponent } from './config/config.component';
 import { SearchModule, SearchComponent } from './search/search.component';
 import { WelcomeModule, WelcomeComponent } from './welcome/welcome.component';
 import { MainContentModule, MainContentComponent } from './main-content/main-content.component';
-import { GeneralConfigComponent } from './config/general-config/general-config.component';
+import { GlobalConfigComponent } from './config/global-config/global-config.component';
 import { ActivatedRouteSnapshot, RouteReuseStrategy, DetachedRouteHandle } from '@angular/router';
 import { environment } from '../environments/environment';
 
@@ -19,7 +18,6 @@ export const appRoutes: Routes = [
     children: [
       { path: '', redirectTo: 'digest', pathMatch: 'full' },
       { path: 'digest', component: DigestsListComponent, data: { exitOnBack: true } },
-      { path: 'top', component: FeaturedComponent, data: { exitOnBack: true } },
       { path: 'search/:searchPhrase', component: SearchComponent, data: { exitOnBack: true } },
       { path: 'search/:language/:searchPhrase', component: SearchComponent, data: { exitOnBack: true } },
       { path: 'category/:id/:name', component: CategoryComponent, data: { exitOnBack: true } }
@@ -29,7 +27,7 @@ export const appRoutes: Routes = [
     path: 'config', component: ConfigComponent,
     children: [
       { path: '', redirectTo: 'general', pathMatch: 'full' },
-      { path: 'general', component: GeneralConfigComponent },
+      { path: 'general', component: GlobalConfigComponent },
       { path: 'category/:id', component: CategoryConfigComponent }
     ]
   },
@@ -103,7 +101,6 @@ export class CustomReuseStrategy implements RouteReuseStrategy {
     DigestModule,
     ConfigModule,
     SearchModule,
-    FeaturedModule,
     RouterModule.forRoot(appRoutes, { useHash: environment.useLocationHash })
   ],
   exports: [

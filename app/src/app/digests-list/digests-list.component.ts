@@ -1,3 +1,5 @@
+import { Subject } from "rxjs/Subject";
+import 'rxjs/add/operator/takeUntil';
 import { NgModule } from '@angular/core';
 import { HostListener, Component, OnInit } from '@angular/core';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
@@ -33,6 +35,7 @@ export class DigestsListComponent implements OnInit {
   public digests: Digest[] = [];
   public loading: boolean = true;
   public counter: number = 0;
+  private unsubscribe: Subject<void> = new Subject();
 
   //Scroll hack -> romeve once https://github.com/angular/angular/pull/20030 is mergeg
   //-------
@@ -47,7 +50,7 @@ export class DigestsListComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.client.refreshListener().subscribe(refresh => {
+    this.client.refreshListener().takeUntil(this.unsubscribe).subscribe(refresh => {
       if (refresh) {
         this.digestsData = this.client.digestsList();
         this.digests = [];
@@ -59,7 +62,7 @@ export class DigestsListComponent implements OnInit {
 
     //Scroll hack -> romeve once https://github.com/angular/angular/pull/20030 is mergeg
     //-------
-    this.router.events.subscribe(e => {
+    this.router.events.takeUntil(this.unsubscribe).subscribe(e => {
       if (e instanceof NavigationStart) {
         // store the scroll position of the current stable navigations
         this.scrollPosition[this.lastId] = this.getCurrentScrollPosition();
@@ -110,6 +113,12 @@ export class DigestsListComponent implements OnInit {
       }
     }
   }
+
+  public ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+  }
+
 }
 
 @NgModule({

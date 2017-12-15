@@ -1,0 +1,15 @@
+
+h4{
+  width: 100%;
+}
+
+.mat-list-item button{
+  float: right;
+  font-size: 1rem;
+  min-width: 0;
+  color: white;
+}
+
+>>> .mat-list-item {
+border-bottom: 1px solid #434857;
+}
