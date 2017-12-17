@@ -137,6 +137,8 @@ export class NewscronClientService {
       .map(this.extractData).map(digest => {
         if (digest != null) {
           this.digests.unshift(digest);
+          //keep a maximum of 10 digests
+          this.digests = this.digests.slice(0, 10);
           localStorage.setItem('digests', JSON.stringify(this.digests));
           return digest;
         } else {
