@@ -3,6 +3,9 @@ import { NewscronClientService, UserPreferences, CategoryPreference } from '../.
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { MatSliderModule } from '@angular/material/slider';
+
 
 @Component({
   selector: 'app-global-config',

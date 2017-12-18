@@ -12,6 +12,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 import { Location } from '@angular/common';
@@ -35,7 +36,7 @@ export class ConfigComponent implements OnInit {
 }
 
 @NgModule({
-  imports: [BrowserAnimationsModule, BrowserModule, MatButtonModule, RouterModule, FormsModule, MatTabsModule, MatSliderModule, MatCardModule, MatListModule],
+  imports: [BrowserAnimationsModule, BrowserModule, MatButtonModule, RouterModule, FormsModule, MatTabsModule, MatSliderModule, MatCardModule, MatListModule,MatExpansionModule],
   exports: [ConfigComponent, PackageSelectionComponent, CategoryConfigComponent, GlobalConfigComponent],
   declarations: [ConfigComponent, PackageSelectionComponent, CategoryConfigComponent, GlobalConfigComponent, EditionPerContinent],
   providers: [],
