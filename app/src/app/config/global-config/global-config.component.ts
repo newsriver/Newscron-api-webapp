@@ -5,7 +5,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { MatSliderModule } from '@angular/material/slider';
-
+import {FormControl,ReactiveFormsModule} from '@angular/forms';
+import {MatSelectModule} from '@angular/material/select';
 
 @Component({
   selector: 'app-global-config',
@@ -27,6 +28,10 @@ export class GlobalConfigComponent implements OnInit {
     this.client.resetUserPreferences(this.preferences, true);
   }
 
+
+  public onPreferenceChange($event) {
+    this.client.setUserPreferences(this.preferences);
+  }
 
 
 

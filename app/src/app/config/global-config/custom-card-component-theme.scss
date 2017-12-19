@@ -4,3 +4,15 @@
 .mat-expansion-indicator::after{
   //color: white;
 }
+
+.mat-mini-fab[disabled][disabled] {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+.mat-mini-fab.mat-primary[disabled][disabled]{
+  color: balck;
+}
+
+.mat-mini-fab.mat-primary{
+  color: white;
+}

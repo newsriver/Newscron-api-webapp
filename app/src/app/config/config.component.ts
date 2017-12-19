@@ -13,8 +13,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import {MatExpansionModule} from '@angular/material/expansion';
-
-
+import {MatSelectModule} from '@angular/material/select';
+import {ReactiveFormsModule} from '@angular/forms';
 import { Location } from '@angular/common';
 @Component({
   selector: 'app-config',
@@ -36,7 +36,7 @@ export class ConfigComponent implements OnInit {
 }
 
 @NgModule({
-  imports: [BrowserAnimationsModule, BrowserModule, MatButtonModule, RouterModule, FormsModule, MatTabsModule, MatSliderModule, MatCardModule, MatListModule,MatExpansionModule],
+  imports: [BrowserAnimationsModule, BrowserModule, MatButtonModule, RouterModule, FormsModule, MatTabsModule, MatSliderModule, MatCardModule, MatListModule,MatExpansionModule,MatSelectModule,ReactiveFormsModule],
   exports: [ConfigComponent, PackageSelectionComponent, CategoryConfigComponent, GlobalConfigComponent],
   declarations: [ConfigComponent, PackageSelectionComponent, CategoryConfigComponent, GlobalConfigComponent, EditionPerContinent],
   providers: [],

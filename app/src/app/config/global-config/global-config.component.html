@@ -15,6 +15,24 @@
     </mat-list-item>
   </mat-list>
 </mat-card>-->
+<div style="display: flex; flex-direction: row-reverse; margin-bottom: 1rem;">
+<div style="margin-left: 1rem;"><button mat-mini-fab color="primary" disabled><i class="fa fa-plus" aria-hidden="true"></i></button></div>
+<mat-form-field>
+  <mat-select placeholder="Add Category">
+    <mat-option>-- None --</mat-option>
+    <mat-optgroup [label]="Test" >
+      <mat-option [value]="1">
+        Uno
+      </mat-option>
+      <mat-option [value]="2">
+        Due
+      </mat-option>
+    </mat-optgroup>
+  </mat-select>
+</mat-form-field>
+</div>
+
+
 <mat-accordion>
   <mat-expansion-panel *ngFor="let category of preferences.categories">
     <mat-expansion-panel-header>
