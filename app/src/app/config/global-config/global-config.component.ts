@@ -7,7 +7,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { MatSliderModule } from '@angular/material/slider';
 import {FormControl,ReactiveFormsModule} from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
-
+import { GENERIC_CATEGORIES,LOCAL_CATEGORIES } from '../categories';
 @Component({
   selector: 'app-global-config',
   templateUrl: './global-config.component.html',
@@ -18,6 +18,9 @@ export class GlobalConfigComponent implements OnInit {
 
   public preferences: UserPreferences = new UserPreferences();
   constructor(private client: NewscronClientService) { }
+  public newCategory : number = null;
+  public categories = GENERIC_CATEGORIES;
+  public localCategories = LOCAL_CATEGORIES;
 
   ngOnInit() {
     this.preferences = this.client.getUserPreferences();
