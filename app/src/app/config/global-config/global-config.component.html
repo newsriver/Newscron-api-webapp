@@ -16,14 +16,14 @@
   </mat-list>
 </mat-card>-->
 <div style="display: flex; flex-direction: row-reverse; margin-bottom: 1rem;">
-<div style="margin-left: 1rem;"><button mat-mini-fab color="primary" [disabled]="newCategory==null"><i class="fa fa-plus" aria-hidden="true"></i></button></div>
+<div style="margin-left: 1rem;"><button mat-mini-fab color="primary" [disabled]="newCategory==null" (click)="addCategory()"><i class="fa fa-plus" aria-hidden="true"></i></button></div>
 <mat-form-field>
   <mat-select placeholder="Add Category" [(value)]="newCategory">
     <mat-optgroup [label]="'Generic Categories'">
-      <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
+      <mat-option *ngFor="let category of categories" [value]="category">{{category.name}}</mat-option>
     </mat-optgroup>
     <mat-optgroup [label]="'Local Categories'">
-      <mat-option *ngFor="let category of localCategories" [value]="category.id">{{category.name}}</mat-option>
+      <mat-option *ngFor="let category of localCategories" [value]="category">{{category.name}}</mat-option>
     </mat-optgroup>
   </mat-select>
 </mat-form-field>

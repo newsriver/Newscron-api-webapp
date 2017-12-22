@@ -2,98 +2,98 @@ export const GENERIC_CATEGORIES = [
 	{
 		"id" : 0,
 		"name" : "International",
-		"defaultAmount" : 7,
-		"specificCountryID" : null
+		"amount" : 7,
+		"entitledPackages" : null
 	},
 	{
 		"id" : 2,
 		"name" : "Business",
-		"defaultAmount" : 4,
-		"specificCountryID" : null
+		"amount" : 4,
+		"entitledPackages" : null
 	},
 	{
 		"id" : 3,
 		"name" : "Technology",
-		"defaultAmount" : 4,
-		"specificCountryID" : null
+		"amount" : 4,
+		"entitledPackages" : null
 	},
 	{
 		"id" : 4,
 		"name" : "Entertainment",
-		"defaultAmount" : 4,
-		"specificCountryID" : null
+		"amount" : 4,
+		"entitledPackages" : null
 	},
 	{
 		"id" : 5,
 		"name" : "Sports",
-		"defaultAmount" : 3,
-		"specificCountryID" : null
+		"amount" : 3,
+		"entitledPackages" : null
 	},
 	{
 		"id" : 6,
 		"name" : "Life",
-		"defaultAmount" : 3,
-		"specificCountryID" : null
+		"amount" : 3,
+		"entitledPackages" : null
 	},
 	{
 		"id" : 7,
 		"name" : "Motors",
-		"defaultAmount" : 3,
-		"specificCountryID" : null
+		"amount" : 3,
+		"entitledPackages" : null
 	},
 	{
 		"id" : 8,
 		"name" : "Culture",
-		"defaultAmount" : 3,
-		"specificCountryID" : null
+		"amount" : 3,
+		"entitledPackages" : null
 	},
 	{
 		"id" : 13,
 		"name" : "Science",
-		"defaultAmount" : 4,
-		"specificCountryID" : null
+		"amount" : 4,
+		"entitledPackages" : null
 	},
 	{
 		"id" : 20,
 		"name" : "Wine & Dine",
-		"defaultAmount" : 4,
-		"specificCountryID" : null
+		"amount" : 4,
+		"entitledPackages" : null
 	},
 	{
 		"id" : 21,
 		"name" : "Politics",
-		"defaultAmount" : 4,
-		"specificCountryID" : null
+		"amount" : 4,
+		"entitledPackages" : null
 	},
 	{
 		"id" : 22,
 		"name" : "TV & Movies",
-		"defaultAmount" : 4,
-		"specificCountryID" : null
+		"amount" : 4,
+		"entitledPackages" : null
 	},
 	{
 		"id" : 23,
 		"name" : "Travel",
-		"defaultAmount" : 4,
-		"specificCountryID" : null
+		"amount" : 4,
+		"entitledPackages" : null
 	},
 	{
 		"id" : 24,
 		"name" : "Health",
-		"defaultAmount" : 4,
-		"specificCountryID" : null
+		"amount" : 4,
+		"entitledPackages" : null
 	},
 	{
 		"id" : 25,
 		"name" : "Fashion",
-		"defaultAmount" : 4,
-		"specificCountryID" : null
+		"amount" : 4,
+		"entitledPackages" : null
 	},
 	{
 		"id" : 26,
 		"name" : "Photography",
-		"defaultAmount" : 4,
-		"specificCountryID" : null
+		"amount" : 4,
+		"entitledPackages" : null
 	}
 ];
 
@@ -101,199 +101,205 @@ export const LOCAL_CATEGORIES = [
 	{
 		"id" : 1,
 		"name" : "Swiss",
-		"defaultAmount" : 7,
-		"specificCountryID" : 1
+		"amount" : 7,
+		"entitledPackages" : [1,2,3]
 	},
 	{
 		"id" : 9,
 		"name" : "Germany",
-		"defaultAmount" : 7,
-		"specificCountryID" : 2
+		"amount" : 7,
+		"entitledPackages" : [4]
 	},
 	{
 		"id" : 11,
 		"name" : "Italy",
-		"defaultAmount" : 7,
-		"specificCountryID" : 3
+		"amount" : 7,
+		"entitledPackages" : [5,16,17,18,19]
 	},
 	{
 		"id" : 14,
 		"name" : "Austria",
-		"defaultAmount" : 7,
-		"specificCountryID" : 4
+		"amount" : 7,
+		"entitledPackages" : [7]
 	},
 	{
 		"id" : 15,
 		"name" : "Belgium",
-		"defaultAmount" : 7,
-		"specificCountryID" : 5
+		"amount" : 7,
+		"entitledPackages" : [8]
 	},
 	{
 		"id" : 16,
 		"name" : "France",
-		"defaultAmount" : 7,
-		"specificCountryID" : 6
+		"amount" : 7,
+		"entitledPackages" : [9]
 	},
 	{
 		"id" : 17,
 		"name" : "Spain",
-		"defaultAmount" : 7,
-		"specificCountryID" : 7
+		"amount" : 7,
+		"entitledPackages" : [10]
 	},
 	{
 		"id" : 18,
 		"name" : "United Kingdom",
-		"defaultAmount" : 7,
-		"specificCountryID" : 8
+		"amount" : 7,
+		"entitledPackages" : [11,12,13,14]
 	},
 	{
 		"id" : 19,
 		"name" : "Republic of Ireland",
-		"defaultAmount" : 7,
-		"specificCountryID" : 9
+		"amount" : 7,
+		"entitledPackages" : [15]
 	},
 	{
 		"id" : 27,
 		"name" : "Australia",
-		"defaultAmount" : 7,
-		"specificCountryID" : 10
+		"amount" : 7,
+		"entitledPackages" : [20]
 	},
 	{
 		"id" : 28,
 		"name" : "India",
-		"defaultAmount" : 7,
-		"specificCountryID" : 11
+		"amount" : 7,
+		"entitledPackages" : [21]
 	},
 	{
 		"id" : 29,
 		"name" : "New Zealand",
-		"defaultAmount" : 7,
-		"specificCountryID" : 12
+		"amount" : 7,
+		"entitledPackages" : [22]
 	},
 	{
 		"id" : 30,
 		"name" : "Argentina",
-		"defaultAmount" : 7,
-		"specificCountryID" : 13
+		"amount" : 7,
+		"entitledPackages" : [23]
 	},
 	{
 		"id" : 31,
 		"name" : "Bolivia",
-		"defaultAmount" : 7,
-		"specificCountryID" : 14
+		"amount" : 7,
+		"entitledPackages" : [24]
 	},
 	{
 		"id" : 32,
 		"name" : "Chile",
-		"defaultAmount" : 7,
-		"specificCountryID" : 15
+		"amount" : 7,
+		"entitledPackages" : [25]
 	},
 	{
 		"id" : 33,
 		"name" : "Colombia",
-		"defaultAmount" : 7,
-		"specificCountryID" : 16
+		"amount" : 7,
+		"entitledPackages" : [26]
 	},
 	{
 		"id" : 34,
 		"name" : "Costa Rica",
-		"defaultAmount" : 7,
-		"specificCountryID" : 17
+		"amount" : 7,
+		"entitledPackages" : [27]
 	},
 	{
 		"id" : 35,
 		"name" : "Cuba",
-		"defaultAmount" : 7,
-		"specificCountryID" : 18
+		"amount" : 7,
+		"entitledPackages" : [28]
 	},
 	{
 		"id" : 36,
 		"name" : "Ecuador",
-		"defaultAmount" : 7,
-		"specificCountryID" : 19
+		"amount" : 7,
+		"entitledPackages" : [29]
 	},
 	{
 		"id" : 37,
 		"name" : "El Salvador",
-		"defaultAmount" : 7,
-		"specificCountryID" : 20
+		"amount" : 7,
+		"entitledPackages" : [30]
 	},
 	{
 		"id" : 38,
 		"name" : "Guatemala",
-		"defaultAmount" : 7,
-		"specificCountryID" : 21
+		"amount" : 7,
+		"entitledPackages" : [31]
 	},
 	{
 		"id" : 39,
 		"name" : "Honduras",
-		"defaultAmount" : 7,
-		"specificCountryID" : 22
+		"amount" : 7,
+		"entitledPackages" : [32]
 	},
 	{
 		"id" : 40,
 		"name" : "Mexico",
-		"defaultAmount" : 7,
-		"specificCountryID" : 23
+		"amount" : 7,
+		"entitledPackages" : [33]
 	},
 	{
 		"id" : 41,
 		"name" : "Nicaragua",
-		"defaultAmount" : 7,
-		"specificCountryID" : 24
+		"amount" : 7,
+		"entitledPackages" : [34]
 	},
 	{
 		"id" : 42,
 		"name" : "Paraguay",
-		"defaultAmount" : 7,
-		"specificCountryID" : 25
+		"amount" : 7,
+		"entitledPackages" : [35]
 	},
 	{
 		"id" : 43,
 		"name" : "Perú",
-		"defaultAmount" : 7,
-		"specificCountryID" : 26
+		"amount" : 7,
+		"entitledPackages" : [36]
 	},
 	{
 		"id" : 44,
 		"name" : "Uruguay",
-		"defaultAmount" : 7,
-		"specificCountryID" : 27
+		"amount" : 7,
+		"entitledPackages" : [37]
 	},
 	{
 		"id" : 45,
 		"name" : "Panamá",
-		"defaultAmount" : 7,
-		"specificCountryID" : 28
+		"amount" : 7,
+		"entitledPackages" : [38]
 	},
 	{
 		"id" : 46,
 		"name" : "Venezuela",
-		"defaultAmount" : 7,
-		"specificCountryID" : 29
+		"amount" : 7,
+		"entitledPackages" : [39]
 	},
 	{
 		"id" : 47,
 		"name" : "República Dominicana",
-		"defaultAmount" : 7,
-		"specificCountryID" : 30
+		"amount" : 7,
+		"entitledPackages" : [40]
 	},
 	{
 		"id" : 48,
 		"name" : "United Arab Emirates",
-		"defaultAmount" : 7,
-		"specificCountryID" : 32
+		"amount" : 7,
+		"entitledPackages" : [41]
 	},
 	{
 		"id" : 49,
 		"name" : "USA",
-		"defaultAmount" : 7,
-		"specificCountryID" : 33
+		"amount" : 7,
+		"entitledPackages" : [42,43,44,45,46,47,48]
+	},
+	{
+		"id" : 50,
+		"name" : "Pakistan",
+		"amount" : 7,
+		"entitledPackages" : [49]
 	},
 	{
 		"id" : 51,
 		"name" : "Canada",
-		"defaultAmount" : 7,
-		"specificCountryID" : 35
+		"amount" : 7,
+		"entitledPackages" : [50,51,52,53,54,55,56,57]
 	}
-]
+];
