@@ -2,7 +2,8 @@
 <h3>Categories Preferences</h3>
 <hr/>
 <p>Individually configure any category based on your personal preferences.</p>
-<mat-card>
+  <!--
+  <mat-card>
   <mat-list>
     <mat-list-item *ngFor="let category of preferences.categories">
       <h4> {{category.name}}
@@ -13,4 +14,45 @@
 
     </mat-list-item>
   </mat-list>
-</mat-card>
+</mat-card>-->
+<div style="display: flex; flex-direction: row-reverse; margin-bottom: 1rem;">
+<div style="margin-left: 1rem;"><button mat-mini-fab color="primary" [disabled]="newCategory==null" (click)="addCategory()"><i class="fa fa-plus" aria-hidden="true"></i></button></div>
+<mat-form-field>
+  <mat-select placeholder="Add Category" [(value)]="newCategory">
+    <mat-optgroup [label]="'Generic Categories'">
+      <mat-option *ngFor="let category of categories" [value]="category">{{category.name}}</mat-option>
+    </mat-optgroup>
+    <mat-optgroup [label]="'Local Categories'">
+      <mat-option *ngFor="let category of localCategories" [value]="category">{{category.name}}</mat-option>
+    </mat-optgroup>
+  </mat-select>
+</mat-form-field>
+</div>
+
+
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let category of preferences.categories">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h4>{{category.name}}</h4>
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <h5>Number of articles</h5>
+    <p>Select how many news articles for the category {{category.name}} you aim to recive in your digest.</p>
+    <div style="display: flex; flex-direction:row; max-width: 400px;">
+      <mat-slider placeholder="Value" [max]="20" [min]="3" [(ngModel)]="category.amount" (change)="onPreferenceChange($event)"></mat-slider>
+      <span style="line-height: 48px;margin-left: 2rem;font-weight: 400;color: #1ca8dd; min-width: 100px;" *ngIf="category.amount<=3">Few</span>
+      <span style="line-height: 48px;margin-left: 2rem;font-weight: 400;color: #1ca8dd; min-width: 100px;" *ngIf="category.amount>3 && category.amount<=9">Some</span>
+      <span style="line-height: 48px;margin-left: 2rem;font-weight: 400;color: #1ca8dd; min-width: 100px;" *ngIf="category.amount>9 && category.amount<=12">Many</span>
+      <span style="line-height: 48px;margin-left: 2rem;font-weight: 400;color: #1ca8dd; min-width: 100px;" *ngIf="category.amount>12 && category.amount<=15">A Lot</span>
+      <span style="line-height: 48px;margin-left: 2rem;font-weight: 400;color: #1ca8dd; min-width: 100px;" *ngIf="category.amount>15">Extreme</span>
+    </div>
+
+    <mat-action-row>
+      <button color="warn" mat-button (click)="removeCategory(category.id)" tabindex="-1"><i class="fa fa-trash" aria-hidden="true"></i> Remove</button>
+      <button color="primary" mat-button [routerLink]="[ '/config/category', category.id] " [routerLinkActive]="[ 'active-link']" tabindex="-1"><i class="fa fa-pencil" aria-hidden="true"></i> Advanced Settings</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
