@@ -144,9 +144,7 @@ export class NewscronClientService {
         } else {
           return null;
         }
-      })
-      .catch(error => { return error; });
-
+      });
   }
 
   public boot(packagesIds: number[]): Observable<BootstrapConfiguration> {
@@ -176,8 +174,8 @@ export class NewscronClientService {
       //re-setting the  categoris will also delete all current digests
       this.digests = [];
       localStorage.setItem('digests', JSON.stringify(this.digests));
-      this.refresh.next(true);
     }
+    this.refresh.next(true);
   }
 
 

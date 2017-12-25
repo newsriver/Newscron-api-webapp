@@ -92,7 +92,7 @@ export class DigestsListComponent implements OnInit {
 
   private downloadDigest() {
     this.loading = true;
-    this.client.assembleDigest().subscribe(digest => {
+    this.client.assembleDigest().takeUntil(this.unsubscribe).subscribe(digest => {
       this.loading = false;
       if (digest != null) {
         //since digestsData is a reference from the client we don't need to update it
@@ -102,6 +102,8 @@ export class DigestsListComponent implements OnInit {
         //don't display this currently it is quite useless..
         //this.snackBar.open('New Digest Available - Scroll to top', 'OK', { duration: 5000, });
       }
+    }, error => {
+      console.log(error);
     });
   }
 
