@@ -246,5 +246,6 @@ export class UserPreferences {
 export class CategoryPreference extends Category {
   public amount: number;
   public packages: number[];
+  public entitledPackages: number[];
   public publishersRelevance: { [id: number]: Publisher; } = {};
 }

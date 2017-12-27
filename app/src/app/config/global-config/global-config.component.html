@@ -2,7 +2,7 @@
 <h3>Categories Preferences</h3>
 <hr/>
 <p>Individually configure any category based on your personal preferences.</p>
-  <!--
+<!--
   <mat-card>
   <mat-list>
     <mat-list-item *ngFor="let category of preferences.categories">
@@ -16,17 +16,17 @@
   </mat-list>
 </mat-card>-->
 <div style="display: flex; flex-direction: row-reverse; margin-bottom: 1rem;">
-<div style="margin-left: 1rem;"><button mat-mini-fab color="primary" [disabled]="newCategory==null" (click)="addCategory()"><i class="fa fa-plus" aria-hidden="true"></i></button></div>
-<mat-form-field>
-  <mat-select placeholder="Add Category" [(value)]="newCategory">
-    <mat-optgroup [label]="'Generic Categories'">
-      <mat-option *ngFor="let category of categories" [value]="category">{{category.name}}</mat-option>
-    </mat-optgroup>
-    <mat-optgroup [label]="'Local Categories'">
-      <mat-option *ngFor="let category of localCategories" [value]="category">{{category.name}}</mat-option>
-    </mat-optgroup>
-  </mat-select>
-</mat-form-field>
+  <div style="margin-left: 1rem;"><button mat-mini-fab color="primary" [disabled]="newCategory==null" (click)="addCategory()"><i class="material-icons">add</i></button></div>
+  <mat-form-field>
+    <mat-select placeholder="Add Category" [(value)]="newCategory">
+      <mat-optgroup [label]="'Generic Categories'">
+        <mat-option *ngFor="let category of categories" [value]="category">{{category.name}}</mat-option>
+      </mat-optgroup>
+      <mat-optgroup [label]="'Local Categories'">
+        <mat-option *ngFor="let category of localCategories" [value]="category">{{category.name}}</mat-option>
+      </mat-optgroup>
+    </mat-select>
+  </mat-form-field>
 </div>
 
 
@@ -34,12 +34,13 @@
   <mat-expansion-panel *ngFor="let category of preferences.categories">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <h4>{{category.name}}</h4>
+        <h4 style="margin-top:0">{{category.name}}</h4>
       </mat-panel-title>
       <mat-panel-description>
       </mat-panel-description>
     </mat-expansion-panel-header>
     <h5>Number of articles</h5>
+    <hr/>
     <p>Select how many news articles for the category {{category.name}} you aim to recive in your digest.</p>
     <div style="display: flex; flex-direction:row; max-width: 400px;">
       <mat-slider placeholder="Value" [max]="20" [min]="3" [(ngModel)]="category.amount" (change)="onPreferenceChange($event)"></mat-slider>
@@ -49,10 +50,38 @@
       <span style="line-height: 48px;margin-left: 2rem;font-weight: 400;color: #1ca8dd; min-width: 100px;" *ngIf="category.amount>12 && category.amount<=15">A Lot</span>
       <span style="line-height: 48px;margin-left: 2rem;font-weight: 400;color: #1ca8dd; min-width: 100px;" *ngIf="category.amount>15">Extreme</span>
     </div>
+    <h5>Regional Sources</h5>
+    <hr/>
+    <p>For the category International, select from which regions you would like to read news articles.</p>
+
+    <mat-chip-list>
+      <mat-chip *ngFor="let packagesId of category.packages">{{packages[packagesId].name}}
+        <mat-icon matChipRemove (click)="removeSource(packagesId,category)" *ngIf="category.packages.length>1">cancel</mat-icon>
+      </mat-chip>
+      <mat-form-field style="margin-left:1rem; margin-top: 0.5rem;">
+        <mat-select placeholder="Add Sources" (selectionChange)="addSource($event,category)">
+          <mat-option *ngFor="let package of packagesList |  entitledPackages:category" [value]="package" [disabled]="category.packages.indexOf(package.id)>=0">{{package.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-chip-list>
+
+    <h5>Removed Publishers</h5>
+    <hr/>
+    <p>All articles of the following publishers are going to be hidden for the category {{category.name}}.</p>
+    <mat-chip-list>
+      <mat-chip *ngFor="let publisher of userProfile.getRemovedPublishersForCategory(category.id) | values" selected="true" color="warn">{{publisher.name}}
+        <mat-icon matChipRemove (click)="restorePublisher(publisher,category)">cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+    <div *ngIf="!hasRemovedPublishers(category.id)">
+      <p style="display: flex;flex-direction: row;">
+        <i class="material-icons" style="margin-right: 1rem;">info</i>
+        <i>No specific news publishe has been removed for this category. You can do so by clicking on the relevance indicator button on the top left side of any news article.</i>
+      </p>
+    </div>
 
     <mat-action-row>
-      <button color="warn" mat-button (click)="removeCategory(category.id)" tabindex="-1"><i class="fa fa-trash" aria-hidden="true"></i> Remove</button>
-      <button color="primary" mat-button [routerLink]="[ '/config/category', category.id] " [routerLinkActive]="[ 'active-link']" tabindex="-1"><i class="fa fa-pencil" aria-hidden="true"></i> Advanced Settings</button>
+      <button color="warn" mat-button (click)="removeCategory(category.id)" tabindex="-1"><i class="material-icons">delete_forever</i> Remove</button>
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>

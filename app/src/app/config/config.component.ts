@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PackageSelectionComponent, EditionPerContinent } from './package-selection/package-selection.component';
 import { CategoryConfigComponent } from './category-config/category-config.component';
-import { GlobalConfigComponent } from './global-config/global-config.component';
+import { GlobalConfigComponent, ValuesPipe, EntitledPackages } from './global-config/global-config.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatTabsModule } from '@angular/material';
@@ -12,9 +12,12 @@ import { MatSliderModule } from '@angular/material/slider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatSelectModule} from '@angular/material/select';
-import {ReactiveFormsModule} from '@angular/forms';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSelectModule } from '@angular/material/select';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+
+import { ReactiveFormsModule } from '@angular/forms';
 import { Location } from '@angular/common';
 @Component({
   selector: 'app-config',
@@ -36,9 +39,9 @@ export class ConfigComponent implements OnInit {
 }
 
 @NgModule({
-  imports: [BrowserAnimationsModule, BrowserModule, MatButtonModule, RouterModule, FormsModule, MatTabsModule, MatSliderModule, MatCardModule, MatListModule,MatExpansionModule,MatSelectModule,ReactiveFormsModule],
-  exports: [ConfigComponent, PackageSelectionComponent, CategoryConfigComponent, GlobalConfigComponent],
-  declarations: [ConfigComponent, PackageSelectionComponent, CategoryConfigComponent, GlobalConfigComponent, EditionPerContinent],
+  imports: [BrowserAnimationsModule, BrowserModule, MatButtonModule, RouterModule, FormsModule, MatTabsModule, MatSliderModule, MatCardModule, MatListModule, MatExpansionModule, MatSelectModule, MatChipsModule, MatIconModule, ReactiveFormsModule],
+  exports: [ConfigComponent, PackageSelectionComponent, CategoryConfigComponent, GlobalConfigComponent, ValuesPipe, EntitledPackages],
+  declarations: [ConfigComponent, PackageSelectionComponent, CategoryConfigComponent, GlobalConfigComponent, EditionPerContinent, ValuesPipe, EntitledPackages],
   providers: [],
 })
 export class ConfigModule { }
