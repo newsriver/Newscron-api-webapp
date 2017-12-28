@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PackageSelectionComponent, EditionPerContinent } from './package-selection/package-selection.component';
-import { CategoryConfigComponent } from './category-config/category-config.component';
 import { GlobalConfigComponent, ValuesPipe, EntitledPackages, AddSourceDialog, AddCategoryDialog } from './global-config/global-config.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -40,8 +39,8 @@ export class ConfigComponent implements OnInit {
 
 @NgModule({
   imports: [BrowserAnimationsModule, BrowserModule, MatButtonModule, RouterModule, FormsModule, MatTabsModule, MatSliderModule, MatCardModule, MatListModule, MatExpansionModule, MatSelectModule, MatChipsModule, MatIconModule, MatDialogModule, ReactiveFormsModule],
-  exports: [ConfigComponent, PackageSelectionComponent, CategoryConfigComponent, GlobalConfigComponent, ValuesPipe, EntitledPackages],
-  declarations: [ConfigComponent, PackageSelectionComponent, CategoryConfigComponent, GlobalConfigComponent, EditionPerContinent, ValuesPipe, EntitledPackages, AddSourceDialog, AddCategoryDialog],
+  exports: [ConfigComponent, PackageSelectionComponent, GlobalConfigComponent, ValuesPipe, EntitledPackages],
+  declarations: [ConfigComponent, PackageSelectionComponent, GlobalConfigComponent, EditionPerContinent, ValuesPipe, EntitledPackages, AddSourceDialog, AddCategoryDialog],
   providers: [],
   entryComponents: [AddSourceDialog, AddCategoryDialog],
 })
