@@ -1,4 +1,4 @@
-import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform, Inject } from '@angular/core';
 import { NewscronClientService, UserPreferences, CategoryPreference } from '../../newscron-client.service';
 import { Publisher } from '../../newscron-model';
 import { UserProfileService } from '../../user-profile.service';
@@ -13,6 +13,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { GENERIC_CATEGORIES, LOCAL_CATEGORIES } from '../categories';
 import { PACKAGES } from '../packages';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Pipe({ name: 'values', pure: false })
 export class ValuesPipe implements PipeTransform {
@@ -41,30 +42,102 @@ export class EntitledPackages implements PipeTransform {
 export class GlobalConfigComponent implements OnInit {
 
 
-  public preferences: UserPreferences = new UserPreferences();
-  public newCategory: CategoryPreference = null;
-  public categories = null;
-  public localCategories = null;
+  public preferences: UserPreferences = null;
   public packages = PACKAGES;
-  public packagesList = null;
 
-  constructor(private client: NewscronClientService, public userProfile: UserProfileService) {
+
+  constructor(private client: NewscronClientService, public userProfile: UserProfileService, public dialog: MatDialog) {
+
+  }
+
+
+  ngOnInit() {
+    this.preferences = this.client.getUserPreferences();
+  }
+
+  removeCategory(categoryId: number) {
+    this.preferences.categories = this.preferences.categories.filter(item => item.id != categoryId);
+    this.client.resetUserPreferences(this.preferences, true);
+  }
+
+
+  public onPreferenceChange($event) {
+    this.client.setUserPreferences(this.preferences);
+  }
+
+  public addSourceDialog(category: CategoryPreference) {
+    let dialogRef = this.dialog.open(AddSourceDialog, {
+      data: { "category": category }
+    }
+    );
+  }
+
+  public addCategoryDialog() {
+    let dialogRef = this.dialog.open(AddCategoryDialog, {
+      data: { "preferences": this.preferences }
+    }
+    );
+  }
+
+  public removeSource(packagesId: number, category: CategoryPreference) {
+    let index: number = category.packages.indexOf(packagesId);
+    if (index >= 0) {
+      category.packages.splice(index, 1);
+    }
+    this.client.setUserPreferences(this.preferences);
+  }
+
+  public restorePublisher(publisher: Publisher, category: CategoryPreference) {
+    this.userProfile.setPublishersRelevance(category.id, publisher, 0);
+  }
+
+  public hasRemovedPublishers(categoryId: number) {
+    return Object.keys(this.userProfile.getRemovedPublishersForCategory(categoryId)).length > 0
+  }
+}
+
+@Component({
+  selector: 'addSource-dialog',
+  templateUrl: './addsource-dialog.html',
+  styleUrls: ['./dialog.css']
+})
+export class AddSourceDialog {
+
+  public packagesList = null;
+  public category: CategoryPreference = null;
+  public newPacakgeId: number;
+
+  constructor(public dialogRef: MatDialogRef<AddSourceDialog>, @Inject(MAT_DIALOG_DATA) public data: any, private client: NewscronClientService) {
     this.packagesList = Object.keys(PACKAGES).map(key => PACKAGES[key]).sort((a, b) => {
       if (a.name < b.name) return -1;
       if (a.name > b.name) return 1;
       return 0;
     });
+    this.category = data.category;
   }
-
-
-
-  ngOnInit() {
-    this.preferences = this.client.getUserPreferences();
-    this.updateAvailableCategories();
+  public addSource() {
+    this.dialogRef.close('close');
+    let preferences: UserPreferences = this.client.getUserPreferences();
+    this.category.packages.push(this.newPacakgeId);
+    this.client.setUserPreferences(preferences);
   }
+}
 
-  private updateAvailableCategories() {
 
+@Component({
+  selector: 'addCategory-dialog',
+  templateUrl: './addcategory-dialog.html',
+  styleUrls: ['./dialog.css']
+})
+export class AddCategoryDialog {
+
+  public preferences: UserPreferences = null;
+  public categories = null;
+  public localCategories = null;
+  public newCategory: CategoryPreference = null;
+
+  constructor(public dialogRef: MatDialogRef<AddCategoryDialog>, @Inject(MAT_DIALOG_DATA) public data: any, private client: NewscronClientService) {
+    this.preferences = data.preferences;
     this.categories = GENERIC_CATEGORIES
       .filter(item => {
         return this.preferences.categories.filter(pref => pref.id == item.id).length == 0;
@@ -84,15 +157,8 @@ export class GlobalConfigComponent implements OnInit {
         return 0;
       });
   }
-
-  removeCategory(categoryId: number) {
-    this.preferences.categories = this.preferences.categories.filter(item => item.id != categoryId);
-    this.client.resetUserPreferences(this.preferences, true);
-    this.updateAvailableCategories();
-  }
-
-  addCategory() {
-
+  public addCategory() {
+    this.dialogRef.close('close');
     let category = { "name": null, "id": null, "amount": null, "packages": [], "publishersRelevance": {}, "entitledPackages": [] };
     category.id = this.newCategory.id;
     category.name = this.newCategory.name;
@@ -124,35 +190,5 @@ export class GlobalConfigComponent implements OnInit {
     this.preferences.categories.unshift(category);
     this.client.resetUserPreferences(this.preferences, true);
     this.newCategory = null;
-    this.updateAvailableCategories();
-  }
-
-
-  public onPreferenceChange($event) {
-    this.client.setUserPreferences(this.preferences);
-    this.updateAvailableCategories();
-  }
-
-
-
-  public addSource(change: MatSelectChange, category: CategoryPreference) {
-    category.packages.push(change.value.id);
-    this.client.setUserPreferences(this.preferences);
-    console.log(change)
-  }
-  public removeSource(packagesId: number, category: CategoryPreference) {
-    let index: number = category.packages.indexOf(packagesId);
-    if (index >= 0) {
-      category.packages.splice(index, 1);
-    }
-    this.client.setUserPreferences(this.preferences);
-  }
-
-  public restorePublisher(publisher: Publisher, category: CategoryPreference) {
-    this.userProfile.setPublishersRelevance(category.id, publisher, 0);
-  }
-
-  public hasRemovedPublishers(categoryId: number) {
-    return Object.keys(this.userProfile.getRemovedPublishersForCategory(categoryId)).length > 0
   }
 }

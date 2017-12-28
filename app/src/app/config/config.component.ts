@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PackageSelectionComponent, EditionPerContinent } from './package-selection/package-selection.component';
 import { CategoryConfigComponent } from './category-config/category-config.component';
-import { GlobalConfigComponent, ValuesPipe, EntitledPackages } from './global-config/global-config.component';
+import { GlobalConfigComponent, ValuesPipe, EntitledPackages, AddSourceDialog, AddCategoryDialog } from './global-config/global-config.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatTabsModule } from '@angular/material';
@@ -16,7 +16,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
-
+import { MatDialogModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Location } from '@angular/common';
 @Component({
@@ -39,9 +39,10 @@ export class ConfigComponent implements OnInit {
 }
 
 @NgModule({
-  imports: [BrowserAnimationsModule, BrowserModule, MatButtonModule, RouterModule, FormsModule, MatTabsModule, MatSliderModule, MatCardModule, MatListModule, MatExpansionModule, MatSelectModule, MatChipsModule, MatIconModule, ReactiveFormsModule],
+  imports: [BrowserAnimationsModule, BrowserModule, MatButtonModule, RouterModule, FormsModule, MatTabsModule, MatSliderModule, MatCardModule, MatListModule, MatExpansionModule, MatSelectModule, MatChipsModule, MatIconModule, MatDialogModule, ReactiveFormsModule],
   exports: [ConfigComponent, PackageSelectionComponent, CategoryConfigComponent, GlobalConfigComponent, ValuesPipe, EntitledPackages],
-  declarations: [ConfigComponent, PackageSelectionComponent, CategoryConfigComponent, GlobalConfigComponent, EditionPerContinent, ValuesPipe, EntitledPackages],
+  declarations: [ConfigComponent, PackageSelectionComponent, CategoryConfigComponent, GlobalConfigComponent, EditionPerContinent, ValuesPipe, EntitledPackages, AddSourceDialog, AddCategoryDialog],
   providers: [],
+  entryComponents: [AddSourceDialog, AddCategoryDialog],
 })
 export class ConfigModule { }

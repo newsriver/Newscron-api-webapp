@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule, MatSelectChange } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'search',
   templateUrl: './search.component.html',
@@ -96,6 +97,7 @@ export class SearchComponent implements OnInit {
     MatProgressSpinnerModule,
     MatButtonModule,
     MatSelectModule,
+    MatIconModule,
     SectionModule
   ],
   exports: [SearchComponent],

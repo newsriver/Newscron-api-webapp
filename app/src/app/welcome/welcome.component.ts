@@ -16,7 +16,7 @@ import { CategoriesComponent } from './categories/categories.component';
 import { ConfigModule } from '../config/config.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { MatIconModule } from '@angular/material/icon';
 @Pipe({
   name: 'keys'
 })
@@ -211,6 +211,7 @@ export class Continent {
     MatDialogModule,
     MatButtonModule,
     MatProgressBarModule,
+    MatIconModule,
     RouterModule,
     BrowserAnimationsModule,
     ConfigModule

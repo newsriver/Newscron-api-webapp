@@ -100,8 +100,6 @@
 
 .menu-button{
   min-width: 38px;
-  height: 38px;
-  font-size: 22px;
 }
 .menu-button i{
   vertical-align: baseline;
@@ -129,12 +127,13 @@
     position: absolute;
     top: 0;
     right: 0;
-    padding: 0.6rem 2rem;
+    padding: 0.4rem 2rem;
     color: #b7bcc8;
     background-color: transparent;
     border: 0;
     line-height: 0;
     font-size: 1.1rem;
+    cursor: pointer;
 }
 
 .active-link{

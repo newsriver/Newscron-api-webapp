@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { CategoryModule, CategoryComponent } from './category/category.component';
 import { DigestModule, DigestsListComponent } from './digests-list/digests-list.component';
-import { CategoryConfigComponent } from './config/category-config/category-config.component';
 import { ConfigModule, ConfigComponent } from './config/config.component';
 import { SearchModule, SearchComponent } from './search/search.component';
 import { WelcomeModule, WelcomeComponent } from './welcome/welcome.component';
@@ -28,7 +27,6 @@ export const appRoutes: Routes = [
     children: [
       { path: '', redirectTo: 'general', pathMatch: 'full' },
       { path: 'general', component: GlobalConfigComponent },
-      { path: 'category/:id', component: CategoryConfigComponent }
     ]
   },
   {

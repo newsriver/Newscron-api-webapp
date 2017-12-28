@@ -13,6 +13,7 @@ import { UserProfileService } from '../user-profile.service';
 import { environment } from '../../environments/environment';
 import { MatSidenavModule, MatSidenav } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule, MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -122,6 +123,7 @@ export class MainContentComponent implements OnInit {
     MatSidenavModule,
     MatButtonModule,
     MatSlideToggleModule,
+    MatIconModule,
     RouterModule,
     WelcomeModule,
     CategoryModule

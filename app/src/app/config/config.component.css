@@ -6,15 +6,9 @@
 }
 
 .back{
-  font-size: 1.2rem;
   color: rgba(0,0,0,.9);
-  min-width: 2rem;
-  height: 2rem;
   padding: 0px;
-}
-
-.back i{
-vertical-align: baseline;
+  min-width: 38px;
 }
 
 .config-content{

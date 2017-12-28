@@ -1,14 +1,12 @@
 <!-- Navigation Bar -->
 <nav class="navbar navbar-light bg-faded" [ngClass]="cordovaService.platformName()==='iOS' && searchInputFocus ? 'navbar-iOS-fix-onfocus' : ''">
   <div class="col-xs-3 hidden-md-up">
-    <button mat-button class="mat-primary menu-button" (click)="menu.toggle()"><i class="fa fa-bars" aria-hidden="true"></i></button>
+    <button mat-button class="mat-primary menu-button" (click)="menu.toggle()"><mat-icon>menu</mat-icon></button>
   </div>
   <div class="col-xs-9 col-md-8 offset-md-2">
     <form (submit)="search($event)" name="search">
       <input class="searchPhrase" type="text" placeholder="Search..." [(ngModel)]="searchPhrase" name="searchPhrase" (blur)="onSearchBlur()" (focus)="onSearchFocus()">
-      <button type="submit" class="sarchButton" (click)="search(null)">
-      <i class="fa fa-search" aria-hidden="true"></i>
-    </button>
+      <button type="submit" class="sarchButton" (click)="search(null)"><mat-icon>search</mat-icon></button>
     </form>
   </div>
 </nav>

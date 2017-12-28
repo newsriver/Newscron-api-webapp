@@ -1,0 +1,30 @@
+h1{
+  color:black;
+}
+
+>>> .dark .mat-select-arrow{
+  color: rgba(0, 0, 0, 0.54);
+}
+>>> .dark .mat-form-field-underline {
+        background-color: rgba(0, 0, 0, 0.54);
+}
+
+>>> .dark .mat-select-value {
+    color: rgba(0, 0, 0, 0.87);
+}
+>>> .dark .mat-input-placeholder{
+  color: rgba(0, 0, 0, 0.54);
+}
+
+>>> .mat-dialog-container{
+  background-color: #fafafa;
+}
+.mat-dialog-content{
+  color:black;
+  padding-bottom: 10px;
+}
+
+.mat-dialog-actions{
+  color:black;
+  flex-wrap: wrap;
+}
