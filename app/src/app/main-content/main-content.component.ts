@@ -1,3 +1,6 @@
+import { Subject } from "rxjs/Subject";
+import 'rxjs/add/operator/takeUntil';
+import 'rxjs/add/operator/filter';
 import { NgModule, OnInit, Component, ViewChild, NgZone } from '@angular/core';
 import { WelcomeModule, WelcomeComponent } from '../welcome/welcome.component';
 import { CategoryModule } from '../category/category.component';
@@ -8,9 +11,9 @@ import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { CordovaService } from '../cordova.service';
 import { UserProfileService } from '../user-profile.service';
 import { environment } from '../../environments/environment';
-import 'rxjs/add/operator/filter';
 import { MatSidenavModule, MatSidenav } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule, MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -34,6 +37,7 @@ export class MainContentComponent implements OnInit {
   public displayWelcome: boolean = false;
   public version: string = "v";
   public searchInputFocus: boolean = false;
+  private unsubscribe: Subject<void> = new Subject();
 
   constructor(private client: NewscronClientService, public router: Router, public cordovaService: CordovaService, zone: NgZone, private userProfile: UserProfileService) {
     this.version += environment.version;
@@ -49,9 +53,9 @@ export class MainContentComponent implements OnInit {
   @ViewChild(MatSidenav) sidenav: MatSidenav;
 
   ngOnInit() {
-    this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
+    this.router.events.filter(event => event instanceof NavigationEnd).takeUntil(this.unsubscribe).subscribe((event: NavigationEnd) => {
       //clear search phrase if route is not search
-      if (!event.url.startsWith('/search')) {
+      if (!event.url.startsWith('/news/search')) {
         this.searchPhrase = "";
       }
       if (this.isScreenSmall()) {
@@ -71,7 +75,7 @@ export class MainContentComponent implements OnInit {
     }
 
 
-    this.client.refreshListener().subscribe(refresh => {
+    this.client.refreshListener().takeUntil(this.unsubscribe).subscribe(refresh => {
       if (refresh) {
         if (this.client.getUserPreferences() == null) {
           this.displayWelcome = true;
@@ -91,7 +95,7 @@ export class MainContentComponent implements OnInit {
   public searchPhrase: string;
   public search(e) {
     if (this.searchPhrase.length > 0) {
-      this.router.navigate(['/search', this.searchPhrase]);
+      this.router.navigate(['/news/search', this.searchPhrase]);
     }
   }
 
@@ -106,6 +110,10 @@ export class MainContentComponent implements OnInit {
   public setGeneralReadability(toggleValue: MatSlideToggleChange) {
     this.userProfile.setGeneralReadability(toggleValue.checked);
   }
+  public ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+  }
 }
 
 @NgModule({
@@ -115,6 +123,7 @@ export class MainContentComponent implements OnInit {
     MatSidenavModule,
     MatButtonModule,
     MatSlideToggleModule,
+    MatIconModule,
     RouterModule,
     WelcomeModule,
     CategoryModule

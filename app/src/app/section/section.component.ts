@@ -1,3 +1,5 @@
+import { Subject } from "rxjs/Subject";
+import 'rxjs/add/operator/takeUntil';
 import { NgModule, Component, OnInit, Input, Pipe, PipeTransform, ElementRef, Output, EventEmitter, HostListener, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ArticleModule, ArticleComponent } from '../article/article.component';
 import { Section, Category, Article, Publisher } from '../newscron-model';
@@ -56,8 +58,9 @@ export class ValidSectionFilter implements PipeTransform {
 export class SectionComponent implements OnInit {
 
   @Output() sectionPosition = new EventEmitter();
-  @Input()  section: Section;
+  @Input() section: Section;
   public articles: Article[];
+  private unsubscribe: Subject<void> = new Subject();
 
   constructor(private userProfile: UserProfileService, private el: ElementRef, private chageDetector: ChangeDetectorRef) {
 
@@ -68,7 +71,7 @@ export class SectionComponent implements OnInit {
       this.sectionPosition.emit({ name: this.section.category.name, position: this.el.nativeElement.offsetTop });
     }
     if (this.section.category != null) {
-      this.userProfile.getProfileUpdateObserver().subscribe(result => {
+      this.userProfile.getProfileUpdateObserver().takeUntil(this.unsubscribe).subscribe(result => {
         if (result != null && result["publisher-relevance"] != null && result["publisher-relevance"] == this.section.category.id) {
           this.articles = this.filterRemovedPublishers(this.section.articles);
           this.chageDetector.detectChanges();
@@ -100,6 +103,11 @@ export class SectionComponent implements OnInit {
       this.sectionPosition.emit({ name: this.section.category.name, position: this.el.nativeElement.offsetTop });
     }
   }
+
+  public ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+  }
 }
 
 @NgModule({
@@ -110,8 +118,8 @@ export class SectionComponent implements OnInit {
     MatButtonModule,
     ArticleModule
   ],
-  exports: [SectionComponent, ValidSectionFilter, SortArticle,SectionHeaderComponent],
-  declarations: [SectionComponent, SortArticle, ValidSectionFilter,SectionHeaderComponent],
+  exports: [SectionComponent, ValidSectionFilter, SortArticle, SectionHeaderComponent],
+  declarations: [SectionComponent, SortArticle, ValidSectionFilter, SectionHeaderComponent],
   providers: [UserProfileService, NewscronClientService],
 })
 export class SectionModule { }

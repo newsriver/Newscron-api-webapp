@@ -1,9 +1,9 @@
 <div class="publisher-vote">
   <button mat-button (click)="publisherDialog(article.publisher,article.category)">
     <div class="publisher-vote-button">
-      <i class="fa fa-chevron-up publisher-vote-button-arrow up" aria-hidden="true" [ngClass]="{active: publisherUserRelevance>0}"></i>
+      <mat-icon class="publisher-vote-button-arrow up" [ngClass]="{active: publisherUserRelevance>0}">keyboard_arrow_up</mat-icon>
       <span class="publisher-vote-text"><span *ngIf="publisherRelevance>0">+</span>{{publisherRelevance}}</span>
-      <i class="fa fa-chevron-down publisher-vote-button-arrow down" aria-hidden="true" [ngClass]="{active: publisherUserRelevance<0}"></i>
+      <mat-icon class="publisher-vote-button-arrow down" [ngClass]="{active: publisherUserRelevance<0}">keyboard_arrow_down</mat-icon>
     </div>
   </button>
 </div>

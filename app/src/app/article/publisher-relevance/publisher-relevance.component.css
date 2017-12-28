@@ -21,7 +21,6 @@
 }
 .publisher-vote-button-arrow{
   color: darkgray;
-  font-size: 0.8rem;
   margin-top:-2px;
 }
 .publisher-vote-button-arrow.up.active{

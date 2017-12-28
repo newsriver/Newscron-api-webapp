@@ -6,7 +6,7 @@
     <div class="relevance">
       <button mat-raised-button (click)="save(1)" [disabled]="data.userRelevance==1" tabindex="-1">Very relevant</button>
       <button mat-raised-button (click)="save(-1)" [disabled]="data.userRelevance==-1" tabindex="-1">Not relevant</button>
-      <button mat-raised-button (click)="remove()" color="warn" tabindex="-1"><i class="fa fa-ban" aria-hidden="true"></i> Remove</button>
+      <button mat-raised-button (click)="remove()" color="warn" tabindex="-1"><mat-icon>block</mat-icon> Remove</button>
     </div>
   </div>
   <div *ngIf="confirmRemove">

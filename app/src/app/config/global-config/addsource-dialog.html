@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Add Regonal Sources</h1>
+<div mat-dialog-content>
+  <p>Select a region from which news publishers should be added to the category <b>{{data.category.name}}</b>.</p>
+  <mat-form-field class="dark">
+    <mat-select placeholder="Select Source" [(value)]="newPacakgeId">
+      <mat-option *ngFor="let package of packagesList |  entitledPackages:category" [value]="package.id" [disabled]="category.packages.indexOf(package.id)>=0">{{package.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align='end'>
+  <button mat-button (click)="dialogRef.close('cancel')" tabindex="-1">Cancel</button>
+  <button mat-button color="primary" (click)="addSource()" tabindex="-1" [disabled]="newPacakgeId==null">Add</button>
+</div>

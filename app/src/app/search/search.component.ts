@@ -1,3 +1,5 @@
+import { Subject } from "rxjs/Subject";
+import 'rxjs/add/operator/takeUntil';
 import { NgModule, Component, OnInit, Input } from '@angular/core';
 import { RouterModule, Router, ActivatedRoute, Params } from '@angular/router';
 import { NewscronClientService } from '../newscron-client.service';
@@ -9,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule, MatSelectChange } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'search',
   templateUrl: './search.component.html',
@@ -21,15 +24,16 @@ export class SearchComponent implements OnInit {
   public loading: boolean = true;
   public language: string = "";
   public showSettings: boolean = false;
-  constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router, public ga: GoogleAnalyticsService) {
+  private unsubscribe: Subject<void> = new Subject();
 
+  constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router, public ga: GoogleAnalyticsService) {
   }
 
 
 
   ngOnInit() {
     //we need to subscribe to the params changes as the router is not reloading the componet on param changes
-    this.route.params.subscribe(params => {
+    this.route.params.takeUntil(this.unsubscribe).subscribe(params => {
       this.searchPhrase = params.searchPhrase;
       this.language = params.language;
       if (this.language == null) {
@@ -72,10 +76,15 @@ export class SearchComponent implements OnInit {
     if (this.language.length > 0) {
       query += " AND language:" + this.language;
     }
-    this.client.search(query).subscribe(section => {
+    this.client.search(query).takeUntil(this.unsubscribe).subscribe(section => {
       this.section = section;
       this.loading = false;
     });
+  }
+
+  public ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
 }
@@ -88,6 +97,7 @@ export class SearchComponent implements OnInit {
     MatProgressSpinnerModule,
     MatButtonModule,
     MatSelectModule,
+    MatIconModule,
     SectionModule
   ],
   exports: [SearchComponent],

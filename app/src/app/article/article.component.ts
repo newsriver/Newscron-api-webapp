@@ -8,6 +8,7 @@ import { GoogleAnalyticsService } from '../google-analytics.service';
 import { UserProfileService } from '../user-profile.service';
 import { PublisherRelevanceComponent, PublisherDialog } from './publisher-relevance/publisher-relevance.component';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../environments/environment';
@@ -67,7 +68,8 @@ export class ArticleComponent implements OnInit {
     CommonModule,
     FormsModule,
     RouterModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   entryComponents: [
     PublisherDialog

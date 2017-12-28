@@ -137,14 +137,14 @@ export class NewscronClientService {
       .map(this.extractData).map(digest => {
         if (digest != null) {
           this.digests.unshift(digest);
+          //keep a maximum of 10 digests
+          this.digests = this.digests.slice(0, 10);
           localStorage.setItem('digests', JSON.stringify(this.digests));
           return digest;
         } else {
           return null;
         }
-      })
-      .catch(error => { return error; });
-
+      });
   }
 
   public boot(packagesIds: number[]): Observable<BootstrapConfiguration> {
@@ -174,8 +174,8 @@ export class NewscronClientService {
       //re-setting the  categoris will also delete all current digests
       this.digests = [];
       localStorage.setItem('digests', JSON.stringify(this.digests));
-      this.refresh.next(true);
     }
+    this.refresh.next(true);
   }
 
 
@@ -246,5 +246,6 @@ export class UserPreferences {
 export class CategoryPreference extends Category {
   public amount: number;
   public packages: number[];
+  public entitledPackages: number[];
   public publishersRelevance: { [id: number]: Publisher; } = {};
 }

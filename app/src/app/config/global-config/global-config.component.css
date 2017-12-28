@@ -1,0 +1,28 @@
+
+h4{
+  width: 100%;
+}
+
+
+
+hr {
+    border-top: 1px solid rgba(255,255,255,0.2);
+    margin-top: 2rem;
+    margin-bottom:2rem;
+}
+
+
+p{
+  color:white;
+}
+
+.mat-list-item button{
+  float: right;
+  font-size: 1rem;
+  min-width: 0;
+  color: white;
+}
+
+>>> .mat-list-item {
+border-bottom: 1px solid #434857;
+}

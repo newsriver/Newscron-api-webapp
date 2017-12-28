@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Add Category</h1>
+<div mat-dialog-content>
+  <p>Select which category you would like to add.</p>
+  <mat-form-field>
+    <mat-select placeholder="Add Category" [(value)]="newCategory">
+      <mat-optgroup [label]="'Generic Categories'" *ngIf="categories.length>0">
+        <mat-option *ngFor="let category of categories" [value]="category">{{category.name}}</mat-option>
+      </mat-optgroup>
+      <mat-optgroup [label]="'Local Categories'">
+        <mat-option *ngFor="let category of localCategories" [value]="category">{{category.name}}</mat-option>
+      </mat-optgroup>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align='end'>
+  <button mat-button (click)="dialogRef.close('cancel')" tabindex="-1">Cancel</button>
+  <button mat-button color="primary" (click)="addCategory()" tabindex="-1" [disabled]="newCategory==null">Add</button>
+</div>

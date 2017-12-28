@@ -1,3 +1,5 @@
+import { Subject } from "rxjs/Subject";
+import 'rxjs/add/operator/takeUntil';
 import { NgModule } from '@angular/core';
 import { HostListener, Component, OnInit } from '@angular/core';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
@@ -11,7 +13,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { CordovaService } from '../cordova.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { ɵgetDOM as getDOM } from '@angular/platform-browser';
+
+
 @Component({
   selector: 'app-digests-list',
   templateUrl: './digests-list.component.html',
@@ -23,6 +27,8 @@ export class DigestsListComponent implements OnInit {
   public digests: Digest[] = [];
   public loading: boolean = true;
   public counter: number = 0;
+  private unsubscribe: Subject<void> = new Subject();
+
 
   constructor(private client: NewscronClientService, public snackBar: MatSnackBar, public ga: GoogleAnalyticsService, public cordova: CordovaService) {
 
@@ -30,7 +36,7 @@ export class DigestsListComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.client.refreshListener().subscribe(refresh => {
+    this.client.refreshListener().takeUntil(this.unsubscribe).subscribe(refresh => {
       if (refresh) {
         this.digestsData = this.client.digestsList();
         this.digests = [];
@@ -44,10 +50,9 @@ export class DigestsListComponent implements OnInit {
   }
 
 
-
   private downloadDigest() {
     this.loading = true;
-    this.client.assembleDigest().subscribe(digest => {
+    this.client.assembleDigest().takeUntil(this.unsubscribe).subscribe(digest => {
       this.loading = false;
       if (digest != null) {
         //since digestsData is a reference from the client we don't need to update it
@@ -57,6 +62,8 @@ export class DigestsListComponent implements OnInit {
         //don't display this currently it is quite useless..
         //this.snackBar.open('New Digest Available - Scroll to top', 'OK', { duration: 5000, });
       }
+    }, error => {
+      console.log(error);
     });
   }
 
@@ -68,13 +75,18 @@ export class DigestsListComponent implements OnInit {
       }
     }
   }
+
+  public ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+  }
+
 }
 
 @NgModule({
   imports: [
     FormsModule,
     CommonModule,
-    RouterModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatButtonModule,
