@@ -2,7 +2,9 @@
 h4{
   width: 100%;
 }
-
+h2{
+margin-bottom: 1rem;
+}
 
 
 hr {
@@ -25,4 +27,8 @@ p{
 
 >>> .mat-list-item {
 border-bottom: 1px solid #434857;
+}
+
+>>> .mat-chip:not(.mat-basic-chip)+.mat-chip:not(.mat-basic-chip) {
+    margin: 0 0 5px 10px!important;
 }

@@ -3,6 +3,7 @@
   margin-left: -0.7rem;
   margin-top: -0.7rem;
   margin-right: 0.3rem;
+  background-color: rgba(255, 255, 255, 0.2);
 }
 .publisher-vote button{
     min-width: 0px;
@@ -21,7 +22,8 @@
 }
 .publisher-vote-button-arrow{
   color: darkgray;
-  margin-top:-2px;
+  margin-top:-3px;
+  margin-bottom:-3px;
 }
 .publisher-vote-button-arrow.up.active{
   color: #1BC98E;
