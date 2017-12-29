@@ -25,8 +25,8 @@ export const appRoutes: Routes = [
   {
     path: 'config', component: ConfigComponent,
     children: [
-      { path: '', redirectTo: 'general', pathMatch: 'full' },
-      { path: 'general', component: GlobalConfigComponent },
+      { path: '', redirectTo: 'global', pathMatch: 'full' },
+      { path: 'global', component: GlobalConfigComponent },
     ]
   },
   {
