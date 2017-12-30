@@ -17,6 +17,7 @@ export enum InstallMode {
   ON_NEXT_RESUME
 }
 
+declare var codePush: any;
 
 @Injectable()
 export class CordovaService {
@@ -32,6 +33,18 @@ export class CordovaService {
     }
   }
 
+  static CheckForUpdate(): void {
+    //sync will check for update, download them and restart the app
+    //allso sync will inform codePush that the app has successfully loaded, validation the update and avoiding rollbacks
+    //if (!!_window().codePush && !!_window().codePush.notifyApplicationReady) {
+    //  _window().codePush.notifyApplicationReady();  //should not be nesecary to call as sync is doing it... but we got too many rollabks
+    //}
+    if (!!_window().codePush) {
+      console.log("[CodePush] Sync called.")
+      codePush.sync(null, { installMode: InstallMode.ON_NEXT_RESUME, minimumBackgroundDuration: 60 * 10 });
+    }
+  }
+
   private TIMEOUT: number = 900000; //15min
 
   private resume: BehaviorSubject<boolean>;
@@ -39,6 +52,7 @@ export class CordovaService {
   constructor(private zone: NgZone, private router: Router) {
     this.lastResume = new Date();
     this.resume = new BehaviorSubject<boolean>(null);
+    CordovaService.CheckForUpdate();
     //document.addEventListener('resume', this.onResume, false);
     Observable.fromEvent(document, 'resume').subscribe(event => {
       this.zone.run(() => {
@@ -87,17 +101,12 @@ export class CordovaService {
 
 
 
-  public checkForUpdate(): void {
-    //sync will check for update, download them and restart the app
-    //allso sync will inform codePush that the app has successfully loaded, validation the update and avoiding rollbacks
-    _window().codePush.notifyApplicationReady();  //should not be nesecary to call as sync is doing it... but we got too many rollabks
-    _window().codePush.sync(null, { installMode: InstallMode.ON_NEXT_RESUME, minimumBackgroundDuration: 60 * 10 });
-  }
+
 
 
   public onResume(): void {
     CordovaService.HideSplashScreen();
-
+    CordovaService.CheckForUpdate();
     if (this.lastResume == null) {
       //lastResume should never be null - therefor lets completely reload the app
       //hard-reset forces the app to completely reload
@@ -109,7 +118,6 @@ export class CordovaService {
         this.resume.next(true);
       }
     }
-    this.checkForUpdate();
   }
 
   public openLinkInBrowser(url: string) {

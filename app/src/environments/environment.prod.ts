@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  version: '5.1.12',
+  version: '5.1.18',
   useLocationHash: true,
   serviceURL: "http://app.newscron.com",
 };

@@ -25,10 +25,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.cordovaService.onCordova) {
-      this.cordovaService.checkForUpdate();
-    }
-
     //Set full story id
     if (_window().FS) {
       _window().FS.identify(this.client.getUUID(), {});
