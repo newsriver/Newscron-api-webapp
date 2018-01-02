@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { HttpClientModule, HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable'
@@ -24,7 +25,7 @@ export class NewscronClientService {
 
 
 
-  constructor( @Inject(Http) private http: Http, private cordova: CordovaService, private userProfile: UserProfileService) {
+  constructor( @Inject(Http) private http: Http, private cordova: CordovaService, private userProfile: UserProfileService, private httpClient: HttpClient) {
     let prefJson = JSON.parse(localStorage.getItem('userPreferences'));
     if (prefJson != null) {
       let preferences: UserPreferences = Object.assign(new UserPreferences(), prefJson);
@@ -133,7 +134,27 @@ export class NewscronClientService {
         category.publishersRelevance = this.userProfile.getRemovedPublishersForCategory(category.id);
       }
     }
-    return this.http.post(this.baseURL + "/digest?after=" + timestamp, categoriesPreferences, options)
+    console.log("[Newscron] preparing digest request...");
+    return this.httpClient.post<any>(this.baseURL + "/digest?after=" + timestamp, categoriesPreferences, { headers: new HttpHeaders().set('Content-Type', 'application/json') }).map(digest => {
+      console.log("[Newscron] digest received.");
+      if (digest != null) {
+        this.digests.unshift(digest);
+        //keep a maximum of 10 digests
+        this.digests = this.digests.slice(0, 10);
+        localStorage.setItem('digests', JSON.stringify(this.digests));
+        return digest;
+      } else {
+        return null;
+      }
+    },
+      (err: HttpErrorResponse) => {
+        console.log("[Newscron] error receiving digest.");
+        return err;
+      }
+    );
+
+
+    /*return this.http.post(this.baseURL + "/digest?after=" + timestamp, categoriesPreferences, options)
       .map(this.extractData).map(digest => {
         if (digest != null) {
           this.digests.unshift(digest);
@@ -144,7 +165,7 @@ export class NewscronClientService {
         } else {
           return null;
         }
-      });
+      });*/
   }
 
   public boot(packagesIds: number[]): Observable<BootstrapConfiguration> {

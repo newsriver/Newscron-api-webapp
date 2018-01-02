@@ -63,6 +63,7 @@ export class DigestsListComponent implements OnInit {
         //this.snackBar.open('New Digest Available - Scroll to top', 'OK', { duration: 5000, });
       }
     }, error => {
+      this.loading = false;
       console.log(error);
     });
   }

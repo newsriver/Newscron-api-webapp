@@ -17,7 +17,6 @@ export enum InstallMode {
   ON_NEXT_RESUME
 }
 
-declare var codePush: any;
 
 @Injectable()
 export class CordovaService {
@@ -29,6 +28,7 @@ export class CordovaService {
 
   static HideSplashScreen(): void {
     if (!!_window().navigator && !!_window().navigator.splashscreen) {
+      console.log("[Cordova] hide splashscreen.");
       _window().navigator.splashscreen.hide();
     }
   }
@@ -39,9 +39,9 @@ export class CordovaService {
     //if (!!_window().codePush && !!_window().codePush.notifyApplicationReady) {
     //  _window().codePush.notifyApplicationReady();  //should not be nesecary to call as sync is doing it... but we got too many rollabks
     //}
-    if (!!_window().codePush) {
-      console.log("[CodePush] Sync called.")
-      codePush.sync(null, { installMode: InstallMode.ON_NEXT_RESUME, minimumBackgroundDuration: 60 * 10 });
+    if (!!_window().codePush && !!_window().codePush.sync) {
+      console.log("[CodePush] sync called.");
+      _window().codePush.sync(null, { installMode: InstallMode.ON_NEXT_RESUME, minimumBackgroundDuration: 60 * 10 });
     }
   }
 
@@ -49,18 +49,15 @@ export class CordovaService {
 
   private resume: BehaviorSubject<boolean>;
   private lastResume: Date;
+
   constructor(private zone: NgZone, private router: Router) {
     this.lastResume = new Date();
     this.resume = new BehaviorSubject<boolean>(null);
-    CordovaService.CheckForUpdate();
-    //document.addEventListener('resume', this.onResume, false);
     Observable.fromEvent(document, 'resume').subscribe(event => {
       this.zone.run(() => {
         this.onResume();
       });
-    })
-
-
+    });
     if (CordovaService.OnCordova) {
       Observable.fromEvent(document, 'backbutton').subscribe(event => {
         this.zone.run(() => {
@@ -74,7 +71,7 @@ export class CordovaService {
           }
           _window().navigator.app.backHistory()
         });
-      })
+      });
     }
   }
 
@@ -98,11 +95,6 @@ export class CordovaService {
       return null;
     }
   }
-
-
-
-
-
 
   public onResume(): void {
     CordovaService.HideSplashScreen();

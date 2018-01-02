@@ -11,10 +11,9 @@ if (environment.production) {
 
 
 let onBootstrap = () => {
+  console.log("[Newscron] booting app.");
   platformBrowserDynamic().bootstrapModule(AppModule)
     .catch(err => console.log(err));
-  CordovaService.HideSplashScreen();
-  CordovaService.CheckForUpdate();
 };
 
 

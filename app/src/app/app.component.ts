@@ -25,11 +25,15 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    //Cordova related tasks
+    CordovaService.HideSplashScreen();
+    CordovaService.CheckForUpdate();
+
     //Set full story id
     if (_window().FS) {
       _window().FS.identify(this.client.getUUID(), {});
     }
-
   }
 
 }
