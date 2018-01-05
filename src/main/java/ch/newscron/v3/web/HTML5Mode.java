@@ -12,27 +12,27 @@ import java.util.Map;
 public class HTML5Mode {
 
     @RequestMapping(value = {"/news/category/**"})
-    public String readabilityCategory(Map<String, Object> model) {
+    public String categoryPath(Map<String, Object> model) {
         return "forward:/";
     }
 
     @RequestMapping(value = {"/news/search/**"})
-    public String readabilityCategory(Map<String, Object> model) {
+    public String searchPath(Map<String, Object> model) {
         return "forward:/";
     }
 
     @RequestMapping(value = {"/news/digest"})
-    public String readabilityStream(Map<String, Object> model) {
+    public String digestPath(Map<String, Object> model) {
         return "forward:/";
     }
 
     @RequestMapping(value = {"/welcome/**"})
-    public String readabilityWelcome(Map<String, Object> model) {
+    public String welcomePath(Map<String, Object> model) {
         return "forward:/";
     }
 
     @RequestMapping(value = {"/config/**"})
-    public String readabilityConfig(Map<String, Object> model) {
+    public String configPath(Map<String, Object> model) {
         return "forward:/";
     }
 
