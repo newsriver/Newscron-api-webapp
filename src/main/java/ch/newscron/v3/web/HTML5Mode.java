@@ -11,12 +11,17 @@ import java.util.Map;
 @Controller
 public class HTML5Mode {
 
-    @RequestMapping(value = {"/category/**"})
+    @RequestMapping(value = {"/news/category/**"})
     public String readabilityCategory(Map<String, Object> model) {
         return "forward:/";
     }
 
-    @RequestMapping(value = {"/digest"})
+    @RequestMapping(value = {"/news/search/**"})
+    public String readabilityCategory(Map<String, Object> model) {
+        return "forward:/";
+    }
+
+    @RequestMapping(value = {"/news/digest"})
     public String readabilityStream(Map<String, Object> model) {
         return "forward:/";
     }
