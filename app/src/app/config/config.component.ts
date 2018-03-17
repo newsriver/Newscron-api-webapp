@@ -17,7 +17,6 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Location } from '@angular/common';
 @Component({
   selector: 'app-config',
   templateUrl: './config.component.html',
@@ -25,11 +24,9 @@ import { Location } from '@angular/common';
 })
 export class ConfigComponent implements OnInit {
 
-  constructor(private location: Location) {
+  constructor() {
   }
-  back() {
-    this.location.back();
-  }
+
 
   ngOnInit() {
     window.scrollTo(0, 0);

@@ -17,7 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule, MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { ElementRef } from '@angular/core';
 
 
 const SMALL_WIDTH_BREAKPOINT = 767;
@@ -38,6 +38,7 @@ export class MainContentComponent implements OnInit {
   public version: string = "v";
   public searchInputFocus: boolean = false;
   private unsubscribe: Subject<void> = new Subject();
+  @ViewChild("searhInput") searhInput: ElementRef;
 
   constructor(private client: NewscronClientService, public router: Router, public cordovaService: CordovaService, zone: NgZone, private userProfile: UserProfileService) {
     this.version += environment.version;
@@ -97,7 +98,15 @@ export class MainContentComponent implements OnInit {
     if (this.searchPhrase.length > 0) {
       this.router.navigate(['/news/search', this.searchPhrase]);
     }
+    this.searhInput.nativeElement.blur()
   }
+
+  public onSearchKey(event) {
+    if (event.keyCode == 13) {
+      this.search(null);
+    }
+  }
+
 
   public onSearchBlur() {
     this.searchInputFocus = false;

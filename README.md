@@ -1,5 +1,14 @@
 
-#Build cordova version
-ng build --aot --target=production --environment=prod --output-path ../../Newscron-cordova/www/ --base-href .
 
-cordova run ios --device
+
+#Update angular
+sudo npm uninstall -g @angular/cli
+npm uninstall --save-dev angular-cli
+rm -rf node_modules dist && rm package-lock.json
+npm cache verify
+npm install -g @angular/cli@latest
+npm install --save-dev @angular/cli@latest
+npm install
+
+#Build cordova version
+npm run build-prod-cordova

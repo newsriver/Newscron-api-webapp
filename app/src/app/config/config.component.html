@@ -1,7 +1,7 @@
 <div>
   <!-- Navigation Bar -->
   <nav class="navbar navbar-light bg-faded">
-    <button mat-button (click)="back()" class="back"><mat-icon>arrow_back</mat-icon></button>
+    <a [routerLink]="['/']" tabindex="-1"><button mat-button class="back"><mat-icon>arrow_back</mat-icon></button></a>
   </nav>
   <!-- Main Content -->
   <div class="config-content">

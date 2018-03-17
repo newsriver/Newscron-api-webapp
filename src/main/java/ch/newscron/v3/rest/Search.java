@@ -43,8 +43,8 @@ import java.util.Map;
 @RestController
 public class Search {
 
-    private static final int HTTP_TIMEOUT_SHORT = 5000;
-    private static final int SOKET_TIMEOUT_SHORT = 5000;
+    private static final int HTTP_TIMEOUT_SHORT = 30000;
+    private static final int SOKET_TIMEOUT_SHORT = 30000;
     private static final String NEWSRIVER_API_URL = "https://api.newsriver.io/v2/search?sortBy=discoverDate&sortOrder=DESC&limit=25&query=";
     private static final String NEWSRIVER_API_TOKEN = "sBBqsGXiYgF0Db5OV5tAw6DW7BpOpuMs5WCfGSNgf3xsm9_tCBPN-sUd129X9sh5";
     private static final SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSZ");
@@ -134,7 +134,7 @@ public class Search {
                 log.error("Unable to parse article date", e);
                 article.setPublicationDate(new Date().getTime());
             }
-            
+
 
             //article.setId(strArticle.getArticleID());
             //article.setScore(articlesId.get(article.getId()));
