@@ -21,6 +21,7 @@ export class NewscronClientService {
   private refresh: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   private digests: Digest[] = [];
   private uuid: string = null;
+  private latestDigestUnvalid = false;
   //public categories: Observable<Array<Category>> = this._categories.asObservable();
 
 
@@ -106,6 +107,11 @@ export class NewscronClientService {
 
   }
 
+  public unvalidateLatestDigest() {
+    this.latestDigestUnvalid = true;
+    this.refresh.next(true);
+  }
+
   public digestsList(): Digest[] {
     return this.digests;
   }
@@ -115,6 +121,11 @@ export class NewscronClientService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     let timestamp: number = 0;
+
+    if (this.latestDigestUnvalid && this.digests.length > 0) {
+      this.digests.splice(0, 1);
+      this.latestDigestUnvalid = false;
+    }
 
     if (this.digests.length > 0) {
       //this is a check to identify corrupted storage
@@ -196,6 +207,7 @@ export class NewscronClientService {
       this.digests = [];
       localStorage.setItem('digests', JSON.stringify(this.digests));
     }
+    this.unvalidateLatestDigest();
     this.refresh.next(true);
   }
 
@@ -212,6 +224,7 @@ export class NewscronClientService {
   public setUserPreferences(preferences: UserPreferences) {
     this.userPreferences = preferences;
     localStorage.setItem('userPreferences', JSON.stringify(this.userPreferences));
+    this.unvalidateLatestDigest();
   }
 
   public refreshListener(): BehaviorSubject<boolean> {

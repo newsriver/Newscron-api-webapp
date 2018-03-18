@@ -58,11 +58,13 @@ export class GlobalConfigComponent implements OnInit {
   removeCategory(categoryId: number) {
     this.preferences.categories = this.preferences.categories.filter(item => item.id != categoryId);
     this.client.resetUserPreferences(this.preferences, true);
+    this.client.unvalidateLatestDigest();
   }
 
 
   public onPreferenceChange($event) {
     this.client.setUserPreferences(this.preferences);
+    this.client.unvalidateLatestDigest();
   }
 
   public addSourceDialog(category: CategoryPreference) {
@@ -85,10 +87,12 @@ export class GlobalConfigComponent implements OnInit {
       category.packages.splice(index, 1);
     }
     this.client.setUserPreferences(this.preferences);
+    this.client.unvalidateLatestDigest();
   }
 
   public restorePublisher(publisher: Publisher, category: CategoryPreference) {
     this.userProfile.setPublishersRelevance(category.id, publisher, 0);
+    this.client.unvalidateLatestDigest();
   }
 
   public hasRemovedPublishers(categoryId: number) {
@@ -120,6 +124,7 @@ export class AddSourceDialog {
     let preferences: UserPreferences = this.client.getUserPreferences();
     this.category.packages.push(this.newPacakgeId);
     this.client.setUserPreferences(preferences);
+    this.client.unvalidateLatestDigest();
   }
 }
 
@@ -189,6 +194,7 @@ export class AddCategoryDialog {
     }
     this.preferences.categories.unshift(category);
     this.client.resetUserPreferences(this.preferences, true);
+    this.client.unvalidateLatestDigest();
     this.newCategory = null;
   }
 }
