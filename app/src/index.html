@@ -31,11 +31,17 @@
     ga('create', 'UA-81261143-2', 'auto');
     ga('set', 'dimension1', 'web');
   </script>
+
   <!-- end-web-version-config-on -->
   <!-- cordova-version-config-off
   <script type="text/javascript" src="cordova.js"></script>
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0">
   <link rel="stylesheet" href="assets/bootstrap.min.css">
+  <!-- Preload main fonts -->
+  <link rel="preload" href="assets/font-montserrat/IQHow_FEYlDC4Gzy_m8fcmaVI6zN22yiurzcBKxPjFE.woff2" as="font">
+  <link rel="preload" href="assets/font-montserrat/zhcz-_WihjSQC0oHJ9TCYAzyDMXhdD8sAj6OAJTFsBI.woff2" as="font">
+  <link rel="preload" href="assets/font-montserrat/IVeH6A3MiFyaSEiudUMXEweOulFbQKHxPa89BaxZzA0.woff2" as="font">
+  <link rel="preload" href="assets/font-montserrat/CdKWaRAal2Bxq9mORLKRRRampu5_7CjHW5spxoeN3Vs.woff2" as="font">
   <link rel="stylesheet" href="assets/font-montserrat/montserrat-font.css">
   <style>
     * {
@@ -68,16 +74,16 @@
     })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
     var fields = {
-       trackingId: 'UA-81261143-2',
-       storage: 'none'
+      trackingId: 'UA-81261143-2',
+      storage: 'none'
     };
     fields.clientId = localStorage.getItem('ga:clientId');
 
     ga('create', fields);
     ga('set', 'checkProtocolTask', null);
     ga('set', 'transport', 'beacon');
-    ga(function(tracker){
-       localStorage.setItem('ga:clientId', tracker.get('clientId'));
+    ga(function(tracker) {
+      localStorage.setItem('ga:clientId', tracker.get('clientId'));
     });
     ga('set', 'dimension1', 'app');
   </script>
