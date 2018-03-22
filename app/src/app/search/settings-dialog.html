@@ -1,0 +1,92 @@
+<h1 mat-dialog-title>Search Settings</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-select placeholder="Language" [(value)]="language">
+      <mat-option value="null" disabled>-- Most Used --</mat-option>
+      <mat-option value="">Any</mat-option>
+      <mat-option value="EN">English</mat-option>
+      <mat-option value="ES">Spanish</mat-option>
+      <mat-option value="DE">German</mat-option>
+      <mat-option value="FR">French</mat-option>
+      <mat-option value="IT">Italian</mat-option>
+      <mat-option value="RU">Russian</mat-option>
+      <mat-option value="PT">Portuguese</mat-option>
+      <mat-option value="null" disabled>-- All --</mat-option>
+      <mat-option value="SQ">Albanian</mat-option>
+      <mat-option value="AR">Arabic</mat-option>
+      <mat-option value="HY">Armenian</mat-option>
+      <mat-option value="EU">Basque</mat-option>
+      <mat-option value="BN">Bengali</mat-option>
+      <mat-option value="BG">Bulgarian</mat-option>
+      <mat-option value="CA">Catalan</mat-option>
+      <mat-option value="KM">Cambodian</mat-option>
+      <mat-option value="ZH">Chinese (Mandarin)</mat-option>
+      <mat-option value="HR">Croation</mat-option>
+      <mat-option value="CS">Czech</mat-option>
+      <mat-option value="DA">Danish</mat-option>
+      <mat-option value="NL">Dutch</mat-option>
+      <mat-option value="EN">English</mat-option>
+      <mat-option value="ET">Estonian</mat-option>
+      <mat-option value="FJ">Fiji</mat-option>
+      <mat-option value="FI">Finnish</mat-option>
+      <mat-option value="FR">French</mat-option>
+      <mat-option value="KA">Georgian</mat-option>
+      <mat-option value="DE">German</mat-option>
+      <mat-option value="EL">Greek</mat-option>
+      <mat-option value="GU">Gujarati</mat-option>
+      <mat-option value="HE">Hebrew</mat-option>
+      <mat-option value="HI">Hindi</mat-option>
+      <mat-option value="HU">Hungarian</mat-option>
+      <mat-option value="IS">Icelandic</mat-option>
+      <mat-option value="ID">Indonesian</mat-option>
+      <mat-option value="GA">Irish</mat-option>
+      <mat-option value="IT">Italian</mat-option>
+      <mat-option value="JA">Japanese</mat-option>
+      <mat-option value="JW">Javanese</mat-option>
+      <mat-option value="KO">Korean</mat-option>
+      <mat-option value="LA">Latin</mat-option>
+      <mat-option value="LV">Latvian</mat-option>
+      <mat-option value="LT">Lithuanian</mat-option>
+      <mat-option value="MK">Macedonian</mat-option>
+      <mat-option value="MS">Malay</mat-option>
+      <mat-option value="ML">Malayalam</mat-option>
+      <mat-option value="MT">Maltese</mat-option>
+      <mat-option value="MI">Maori</mat-option>
+      <mat-option value="MR">Marathi</mat-option>
+      <mat-option value="MN">Mongolian</mat-option>
+      <mat-option value="NE">Nepali</mat-option>
+      <mat-option value="NO">Norwegian</mat-option>
+      <mat-option value="FA">Persian</mat-option>
+      <mat-option value="PL">Polish</mat-option>
+      <mat-option value="PT">Portuguese</mat-option>
+      <mat-option value="PA">Punjabi</mat-option>
+      <mat-option value="QU">Quechua</mat-option>
+      <mat-option value="RO">Romanian</mat-option>
+      <mat-option value="RU">Russian</mat-option>
+      <mat-option value="SM">Samoan</mat-option>
+      <mat-option value="SR">Serbian</mat-option>
+      <mat-option value="SK">Slovak</mat-option>
+      <mat-option value="SL">Slovenian</mat-option>
+      <mat-option value="ES">Spanish</mat-option>
+      <mat-option value="SW">Swahili</mat-option>
+      <mat-option value="SV">Swedish </mat-option>
+      <mat-option value="TA">Tamil</mat-option>
+      <mat-option value="TT">Tatar</mat-option>
+      <mat-option value="TE">Telugu</mat-option>
+      <mat-option value="TH">Thai</mat-option>
+      <mat-option value="BO">Tibetan</mat-option>
+      <mat-option value="TO">Tonga</mat-option>
+      <mat-option value="TR">Turkish</mat-option>
+      <mat-option value="UK">Ukranian</mat-option>
+      <mat-option value="UR">Urdu</mat-option>
+      <mat-option value="UZ">Uzbek</mat-option>
+      <mat-option value="VI">Vietnamese</mat-option>
+      <mat-option value="CY">Welsh</mat-option>
+      <mat-option value="XH">Xhosa</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align='end'>
+  <button mat-button (click)="dialogRef.close(null)" tabindex="-1">Cancel</button>
+  <button mat-button color="primary" (click)="save()" tabindex="-1">Save</button>
+</div>

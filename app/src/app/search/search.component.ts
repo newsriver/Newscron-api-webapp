@@ -1,6 +1,6 @@
 import { Subject } from "rxjs/Subject";
 import 'rxjs/add/operator/takeUntil';
-import { NgModule, Component, OnInit, Input } from '@angular/core';
+import { NgModule, Component, OnInit, Input, Inject } from '@angular/core';
 import { RouterModule, Router, ActivatedRoute, Params } from '@angular/router';
 import { NewscronClientService } from '../newscron-client.service';
 import { Section, Category, Article } from '../newscron-model';
@@ -12,6 +12,8 @@ import { MatSelectModule, MatSelectChange } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 @Component({
   selector: 'search',
   templateUrl: './search.component.html',
@@ -23,10 +25,9 @@ export class SearchComponent implements OnInit {
   public section: Section;
   public loading: boolean = true;
   public language: string = "";
-  public showSettings: boolean = false;
   private unsubscribe: Subject<void> = new Subject();
 
-  constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router, public ga: GoogleAnalyticsService) {
+  constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router, public ga: GoogleAnalyticsService, public dialog: MatDialog) {
   }
 
 
@@ -38,7 +39,7 @@ export class SearchComponent implements OnInit {
       this.language = params.language;
       if (this.language == null) {
         if (this.client.getUserPreferences().searchLanguage == null) {
-          this.showSettings = true;
+          this.togleSettings();
           this.language = "";
         } else {
           this.language = this.client.getUserPreferences().searchLanguage;
@@ -51,21 +52,25 @@ export class SearchComponent implements OnInit {
   }
 
   public togleSettings() {
-    this.showSettings = !this.showSettings;
-  }
-
-  public setLanguage(selectValue: MatSelectChange) {
-    let preferences = this.client.getUserPreferences();
-    preferences.searchLanguage = selectValue.value;
-    this.client.setUserPreferences(preferences);
-    this.router.navigate(['/search', selectValue.value, this.searchPhrase]);
+    let dialogRef = this.dialog.open(SettingsDialog, {
+      data: { "language": this.language, "searchPhrase": this.searchPhrase }
+    }
+    );
+    dialogRef.afterClosed().subscribe((language: string) => {
+      if (language != null) {
+        let preferences = this.client.getUserPreferences();
+        preferences.searchLanguage = language;
+        this.client.setUserPreferences(preferences);
+        this.router.navigate(['/news/search', language, this.searchPhrase]);
+      }
+    });
   }
 
   public search(event: any) {
     if (event) {
       event.preventDefault();
     }
-    this.router.navigate(['/search', this.language, this.searchPhrase]);
+    this.router.navigate(['/news/search', this.language, this.searchPhrase]);
   }
 
   public searchArticles() {
@@ -89,6 +94,24 @@ export class SearchComponent implements OnInit {
 
 }
 
+@Component({
+  selector: 'settings-dialog',
+  templateUrl: './settings-dialog.html',
+  styleUrls: ['./dialog.css']
+})
+export class SettingsDialog {
+
+  public language: string = "";
+  public searchPhrase: string;
+  constructor(public dialogRef: MatDialogRef<SettingsDialog>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.language = data.language;
+    this.searchPhrase = data.searchPhrase;
+  }
+  public save() {
+    this.dialogRef.close(this.language);
+  }
+}
+
 @NgModule({
   imports: [
     CommonModule,
@@ -98,10 +121,12 @@ export class SearchComponent implements OnInit {
     MatButtonModule,
     MatSelectModule,
     MatIconModule,
+    MatDialogModule,
     SectionModule
   ],
   exports: [SearchComponent],
-  declarations: [SearchComponent],
+  declarations: [SearchComponent, SettingsDialog],
   providers: [NewscronClientService, GoogleAnalyticsService],
+  entryComponents: [SettingsDialog],
 })
 export class SearchModule { }
