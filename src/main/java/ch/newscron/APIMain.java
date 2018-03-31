@@ -13,6 +13,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import org.tuckey.web.filters.urlrewrite.UrlRewriteFilter;
 
@@ -66,8 +67,15 @@ class DBDataSource {
 
 
     @Bean(name = "dataSource", destroyMethod = "close")
-    @ConfigurationProperties(prefix = "spring.datasource")
+    @ConfigurationProperties(prefix = "content.datasource")
+    @Primary
     public DataSource dataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean(name = "dataSourceConfig", destroyMethod = "close")
+    @ConfigurationProperties(prefix = "config.datasource")
+    public DataSource dataSourceConfig() {
         return DataSourceBuilder.create().build();
     }
 
@@ -75,10 +83,12 @@ class DBDataSource {
     public void legacyDataSources() throws Exception {
         //Setting internal datasources -- legacy old newscron
         DbConnectionFactory.overrideJNIContentDataSource(this.dataSource());
-        DbConnectionFactory.overrideJNIConfigDataSource(this.dataSource());
+        DbConnectionFactory.overrideJNIConfigDataSource(this.dataSourceConfig());
         DbConnectionFactory.overrideJNIComunicationDataSource(this.dataSource());
         DbConnectionFactory.overrideJNIUserDataSource(this.dataSource());
     }
 
 
 }
+
+
