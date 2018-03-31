@@ -37,7 +37,7 @@ public class Article {
             if (articleURL != null) {
                 //return ResponseEntity.status(HttpStatus.FOUND).header("Location", articleURL.url).body(null);
                 model.addAttribute("attribute", "redirectWithRedirectPrefix");
-                return new ModelAndView("redirect:" + article.getUrl(), model);
+                return new ModelAndView("redirect:" + articleURL, model);
             } else {
                 //if the URL is not present in the LongTermArticleURL table, this Newscron URL is gone.
                 //return ResponseEntity.status(HttpStatus.GONE).body(null);
