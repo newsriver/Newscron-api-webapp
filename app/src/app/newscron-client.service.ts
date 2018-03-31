@@ -20,7 +20,6 @@ export class NewscronClientService {
   private userPreferences: UserPreferences = null;
   private refresh: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   private digests: Digest[] = [];
-  private uuid: string = null;
   private latestDigestUnvalid = false;
   //public categories: Observable<Array<Category>> = this._categories.asObservable();
 
@@ -41,11 +40,6 @@ export class NewscronClientService {
     if (this.digests == null) {
       this.digests = [];
     }
-    this.uuid = localStorage.getItem('uuid');
-    if (this.uuid == null) {
-      this.uuid = this.uuidGenerator();
-      localStorage.setItem('uuid', this.uuid);
-    }
 
     //consider to move this in the client and use refreshListener instead
     if (this.cordova.onCordova) {
@@ -57,9 +51,7 @@ export class NewscronClientService {
     }
   }
 
-  public getUUID(): string {
-    return this.uuid;
-  }
+
 
   public category(categoryId: number, before?: number): Observable<Section> {
     var cat: CategoryPreference = null;
@@ -241,12 +233,7 @@ export class NewscronClientService {
   }
 
 
-  private uuidGenerator(): string {
-    var S4 = function() {
-      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-    };
-    return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
-  }
+
 
 
 

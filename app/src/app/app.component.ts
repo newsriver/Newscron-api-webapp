@@ -3,6 +3,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { NewscronClientService, BootstrapConfiguration, CategoryPreference } from './newscron-client.service';
 import { Injectable, Pipe, PipeTransform } from '@angular/core';
 import { CordovaService } from './cordova.service';
+import { LoggerService } from './logger.service';
 
 
 function _window(): any {
@@ -20,7 +21,7 @@ function _window(): any {
 export class AppComponent implements OnInit {
 
 
-  constructor(private client: NewscronClientService, public cordovaService: CordovaService) {
+  constructor(private logger: LoggerService, public cordovaService: CordovaService) {
 
   }
 
@@ -32,7 +33,7 @@ export class AppComponent implements OnInit {
 
     //Set full story id
     if (_window().FS) {
-      _window().FS.identify(this.client.getUUID(), {});
+      _window().FS.identify(this.logger.getUUID(), {});
     }
   }
 

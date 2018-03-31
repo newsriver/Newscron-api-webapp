@@ -13,6 +13,10 @@ export class LoggerService {
 
   constructor( @Inject(Http) private http: Http) {
     this.uuid = localStorage.getItem('uuid');
+    if (this.uuid == null) {
+      this.uuid = this.uuidGenerator();
+      localStorage.setItem('uuid', this.uuid);
+    }
   }
 
 
@@ -34,5 +38,15 @@ export class LoggerService {
     return this.http.post(this.baseURL + "/log", log, options).subscribe(data => { });
   }
 
+  public getUUID(): string {
+    return this.uuid;
+  }
+
+  private uuidGenerator(): string {
+    var S4 = function() {
+      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    };
+    return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+  }
 
 }
