@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.text.DateFormat;
@@ -20,6 +20,11 @@ import java.util.Date;
 /**
  * Created by eliapalme on 06.12.16.
  */
+
+@ResponseStatus(value = HttpStatus.GONE)
+class ResourceGoneException extends RuntimeException {
+
+}
 
 @Controller
 public class Article {
@@ -37,11 +42,11 @@ public class Article {
             if (articleURL != null) {
                 //return ResponseEntity.status(HttpStatus.FOUND).header("Location", articleURL.url).body(null);
                 model.addAttribute("attribute", "redirectWithRedirectPrefix");
-                return new ModelAndView("redirect:" + articleURL, model);
+                return new ModelAndView("redirect:" + articleURL.url, model);
             } else {
                 //if the URL is not present in the LongTermArticleURL table, this Newscron URL is gone.
                 //return ResponseEntity.status(HttpStatus.GONE).body(null);
-                throw new HttpClientErrorException(HttpStatus.GONE);
+                throw new ResourceGoneException();
             }
         } else if (readbility != null && readbility.equals(articleId)) {
             return readability(article, model);
