@@ -72,7 +72,7 @@ def angular2Compile() {
         sh 'npm update -g'
         stage 'install modules'
         //sh 'rm -rf node_modules && rm -rf dist'
-        sh 'npm install'
+        sh 'npm update --dev'
         stage 'build'
         sh 'npm run build-prod-webapp'
     }
