@@ -59,8 +59,8 @@ def angular2Compile() {
 
     stage 'angular2'
 
-    // uncomment these 2 lines and edit the name 'node-4.4.5' according to what you choose in configuration
-    def nodeHome = tool name: 'node-6.9.5', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+    // uncomment these 2 lines and edit the name 'node-8.11.3' according to what you choose in configuration
+    def nodeHome = tool name: 'node-8.11.3', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
     env.PATH = "${nodeHome}/bin:${env.PATH}"
 
 
