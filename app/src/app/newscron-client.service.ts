@@ -1,5 +1,4 @@
 import { Injectable, Inject } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { HttpClientModule, HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -25,7 +24,7 @@ export class NewscronClientService {
 
 
 
-  constructor( @Inject(Http) private http: Http, private cordova: CordovaService, private userProfile: UserProfileService, private httpClient: HttpClient) {
+  constructor(private cordova: CordovaService, private userProfile: UserProfileService, private httpClient: HttpClient) {
     let prefJson = JSON.parse(localStorage.getItem('userPreferences'));
     if (prefJson != null) {
       let preferences: UserPreferences = Object.assign(new UserPreferences(), prefJson);
@@ -63,39 +62,27 @@ export class NewscronClientService {
       }
     }
 
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
 
     let url = this.baseURL + "/category";
     if (before != null) {
       url += "?before=" + before;
     }
 
-    return this.http.post(url, cat, options)
-      .map(this.extractData);
+    return this.httpClient.post<any>(url, cat, { headers: new HttpHeaders().set('Content-Type', 'application/json') });
 
   }
 
 
   public search(search: string): Observable<Section> {
 
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
 
-    return this.http.get(this.baseURL + "/search?search=" + search, options)
-      .map(this.extractData)
-      .catch(error => { return error; });
-
+    return this.httpClient.get<any>(this.baseURL + "/search?search=" + search, { headers: new HttpHeaders().set('Content-Type', 'application/json') });
   }
 
 
   public featured(): Observable<Section[]> {
 
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-
-    return this.http.post(this.baseURL + "/featured", this.getUserPreferences().categories, options)
-      .map(this.extractData);
+    return this.httpClient.post<any>(this.baseURL + "/featured", this.getUserPreferences().categories, { headers: new HttpHeaders().set('Content-Type', 'application/json') });
 
   }
 
@@ -110,8 +97,6 @@ export class NewscronClientService {
 
   public assembleDigest(): Observable<Digest> {
 
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
     let timestamp: number = 0;
 
     if (this.latestDigestUnvalid && this.digests.length > 0) {
@@ -157,33 +142,22 @@ export class NewscronClientService {
     );
 
 
-    /*return this.http.post(this.baseURL + "/digest?after=" + timestamp, categoriesPreferences, options)
-      .map(this.extractData).map(digest => {
-        if (digest != null) {
-          this.digests.unshift(digest);
-          //keep a maximum of 10 digests
-          this.digests = this.digests.slice(0, 10);
-          localStorage.setItem('digests', JSON.stringify(this.digests));
-          return digest;
-        } else {
-          return null;
-        }
-      });*/
   }
 
   public boot(packagesIds: number[]): Observable<BootstrapConfiguration> {
 
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-
-    return this.http.post(this.baseURL + "/boot", packagesIds, options)
-      .map(this.extractData).map(bootConfig => {
-        var preferences: UserPreferences = new UserPreferences();
-        preferences.categories = bootConfig.categories;
-        preferences.searchLanguage = bootConfig.searchLanguage;
-        this.resetUserPreferences(preferences, false);
-        return bootConfig;
-      });
+    return this.httpClient.post<any>(this.baseURL + "/boot", packagesIds, { headers: new HttpHeaders().set('Content-Type', 'application/json') }).map(bootConfig => {
+      var preferences: UserPreferences = new UserPreferences();
+      preferences.categories = bootConfig.categories;
+      preferences.searchLanguage = bootConfig.searchLanguage;
+      this.resetUserPreferences(preferences, false);
+      return bootConfig;
+    },
+      (err: HttpErrorResponse) => {
+        console.log("[Newscron] error receiving bootstrap config.");
+        return err;
+      }
+    );
   }
 
 
@@ -200,7 +174,6 @@ export class NewscronClientService {
       localStorage.setItem('digests', JSON.stringify(this.digests));
     }
     this.unvalidateLatestDigest();
-    this.refresh.next(true);
   }
 
 
