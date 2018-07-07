@@ -67,11 +67,11 @@ def angular2Compile() {
     dir('app') {
 
         stage 'update global modules'
-
-        //sh 'npm cache clean'
+        sh 'npm install npm@latest -g'
+        sh 'npm cache verify'
         sh 'npm update -g'
         stage 'install modules'
-        //sh 'rm -rf node_modules && rm -rf dist'
+        sh 'rm -rf node_modules && rm -rf dist'
         sh 'npm update'
         stage 'build'
         sh 'npm run build-prod-webapp'
