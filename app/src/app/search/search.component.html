@@ -19,6 +19,19 @@
     <section [section]="section" *ngIf="section!=null"></section>
   </li>
 </ul>
-<h4 *ngIf="section==null && !loading && searchPhrase.length>0" style="margin-top:5rem;">
+<h4 *ngIf="section==null && error==null && !loading && searchPhrase.length>0" style="margin-top:5rem;">
   No results found!
 </h4>
+<mat-card *ngIf="error">
+  <mat-card-header>
+    <mat-card-title>Error</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p style="margin-left: 8px;">
+      {{error}}
+    </p>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-button (click)="error=null">Ok</button>
+  </mat-card-actions>
+</mat-card>

@@ -14,6 +14,8 @@ import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+
 @Component({
   selector: 'search',
   templateUrl: './search.component.html',
@@ -26,6 +28,7 @@ export class SearchComponent implements OnInit {
   public loading: boolean = true;
   public language: string = "";
   private unsubscribe: Subject<void> = new Subject();
+  public error: String = null;
 
   constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router, public ga: GoogleAnalyticsService, public dialog: MatDialog) {
   }
@@ -76,6 +79,7 @@ export class SearchComponent implements OnInit {
   public searchArticles() {
     this.loading = true;
     this.section = null;
+    this.error = null;
 
     let query: string = "text:\"" + this.searchPhrase + "\"~50";
     if (this.language.length > 0) {
@@ -84,7 +88,14 @@ export class SearchComponent implements OnInit {
     this.client.search(query).takeUntil(this.unsubscribe).subscribe(section => {
       this.section = section;
       this.loading = false;
-    });
+    }
+      , error => {
+        this.loading = false;
+        console.log(error);
+        this.error = "Unable to complete the news search. Please make sure your devie is connected to Internet and try again.";
+      }
+    );
+
   }
 
   public ngOnDestroy() {
@@ -122,6 +133,7 @@ export class SettingsDialog {
     MatSelectModule,
     MatIconModule,
     MatDialogModule,
+    MatCardModule,
     SectionModule
   ],
   exports: [SearchComponent],
