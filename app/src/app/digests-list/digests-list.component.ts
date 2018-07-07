@@ -10,6 +10,7 @@ import { GoogleAnalyticsService } from '../google-analytics.service';
 import { SectionModule, SectionComponent } from '../section/section.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { CordovaService } from '../cordova.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -28,7 +29,7 @@ export class DigestsListComponent implements OnInit {
   public loading: boolean = true;
   public counter: number = 0;
   private unsubscribe: Subject<void> = new Subject();
-
+  public error: String = null;
 
   constructor(private client: NewscronClientService, public snackBar: MatSnackBar, public ga: GoogleAnalyticsService, public cordova: CordovaService) {
 
@@ -65,6 +66,7 @@ export class DigestsListComponent implements OnInit {
     }, error => {
       this.loading = false;
       console.log(error);
+      this.error = "Unable to assemble a new digest. Please make sure your devie is connected to Internet and try again.";
     });
   }
 
@@ -91,6 +93,7 @@ export class DigestsListComponent implements OnInit {
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatButtonModule,
+    MatCardModule,
     SectionModule
   ],
   exports: [DigestsListComponent],

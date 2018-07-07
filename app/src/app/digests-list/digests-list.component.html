@@ -3,6 +3,20 @@
   <h3>Assembling Digest...</h3>
 </div>
 
+<mat-card *ngIf="error">
+  <mat-card-header>
+    <mat-card-title>Error</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p style="margin-left: 8px;">
+      {{error}}
+    </p>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-button (click)="error=null">Ok</button>
+  </mat-card-actions>
+</mat-card>
+
 <ul *ngIf="!loading" class="digests-list">
   <li *ngFor="let digest of digests; let j = index">
     <digest [digest]="digest"></digest>
@@ -11,7 +25,6 @@
     <button mat-raised-button (click)="loadDigest(1)">Load Previous Digest</button>
   </li>
 </ul>
-
 
 <!--- Footer --->
 <div style="font-weight: lighter; padding-bottom: 30px; color:white; margin-top:60px;" *ngIf="!loading">
