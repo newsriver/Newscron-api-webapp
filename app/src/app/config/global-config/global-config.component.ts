@@ -58,13 +58,11 @@ export class GlobalConfigComponent implements OnInit {
   removeCategory(categoryId: number) {
     this.preferences.categories = this.preferences.categories.filter(item => item.id != categoryId);
     this.client.resetUserPreferences(this.preferences, true);
-    this.client.unvalidateLatestDigest();
   }
 
 
   public onPreferenceChange($event) {
     this.client.setUserPreferences(this.preferences);
-    this.client.unvalidateLatestDigest();
   }
 
   public addSourceDialog(category: CategoryPreference) {
