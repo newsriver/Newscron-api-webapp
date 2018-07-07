@@ -1,3 +1,4 @@
+var package = require("./package.json");
 var replace = require('replace-in-file');
 var value = false;
 process.argv.forEach(function(val, index, array) {

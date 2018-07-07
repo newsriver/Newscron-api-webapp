@@ -1,5 +1,5 @@
-var replace = require('replace-in-file');
 var package = require("./package.json");
+var replace = require('replace-in-file');
 var buildVersion = package.version;
 const options = {
   files: 'src/environments/environment.prod.ts',
