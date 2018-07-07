@@ -77,6 +77,7 @@ export class NewscronClientService {
 
 
     return this.httpClient.get<any>(this.baseURL + "/search?search=" + search, { headers: new HttpHeaders().set('Content-Type', 'application/json') });
+
   }
 
 
@@ -134,13 +135,7 @@ export class NewscronClientService {
       } else {
         return null;
       }
-    },
-      (err: HttpErrorResponse) => {
-        console.log("[Newscron] error receiving digest.");
-        return err;
-      }
-    );
-
+    });
 
   }
 
