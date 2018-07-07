@@ -71,8 +71,8 @@ def angular2Compile() {
         sh 'npm cache verify'
         sh 'npm update -g'
         stage 'install modules'
-        sh 'rm -rf node_modules && rm -rf dist'
-        sh 'npm update'
+        //sh 'rm -rf node_modules && rm -rf dist'
+        sh 'npm install'
         stage 'build'
         sh 'npm run build-prod-webapp'
     }
