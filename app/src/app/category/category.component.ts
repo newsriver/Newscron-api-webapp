@@ -4,7 +4,7 @@ import { NgModule, Component, OnInit, Input, ChangeDetectionStrategy, ChangeDete
 import { RouterModule, Router, ActivatedRoute, Params } from '@angular/router';
 import { NewscronClientService, CategoryPreference } from '../newscron-client.service';
 import { Section, Category, Article } from '../newscron-model';
-import { GoogleAnalyticsService } from '../google-analytics.service';
+import { LoggerService } from '../logger.service';
 import { SectionModule, SectionComponent } from '../section/section.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button'
@@ -41,7 +41,7 @@ export class CategoryComponent implements OnInit {
   private unsubscribe: Subject<void> = new Subject();
   public error: String = null;
 
-  constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router, private chageDetector: ChangeDetectorRef, public ga: GoogleAnalyticsService) {
+  constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router, private chageDetector: ChangeDetectorRef, public logger: LoggerService) {
 
   }
 
@@ -52,7 +52,7 @@ export class CategoryComponent implements OnInit {
 
       this.categoryId = params.id;
       this.name = params.name;
-      this.ga.trackPage("/category/" + this.name.toLowerCase());
+      this.logger.trackPage("/category/" + this.name.toLowerCase());
       this.loading = true;
       this.sections = null;
       this.chageDetector.markForCheck();
@@ -122,6 +122,6 @@ export class CategoryComponent implements OnInit {
   ],
   exports: [CategoryComponent, SortCategory],
   declarations: [CategoryComponent, SortCategory],
-  providers: [NewscronClientService, GoogleAnalyticsService],
+  providers: [NewscronClientService, LoggerService],
 })
 export class CategoryModule { }

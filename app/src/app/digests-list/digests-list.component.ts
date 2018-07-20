@@ -6,7 +6,7 @@ import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { NewscronClientService, } from '../newscron-client.service';
 import { Digest, Article } from '../newscron-model';
 import { DigestComponent } from './digest/digest.component';
-import { GoogleAnalyticsService } from '../google-analytics.service';
+import { LoggerService } from '../logger.service';
 import { SectionModule, SectionComponent } from '../section/section.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,7 +31,7 @@ export class DigestsListComponent implements OnInit {
   private unsubscribe: Subject<void> = new Subject();
   public error: String = null;
 
-  constructor(private client: NewscronClientService, public snackBar: MatSnackBar, public ga: GoogleAnalyticsService, public cordova: CordovaService) {
+  constructor(private client: NewscronClientService, public snackBar: MatSnackBar, public logger: LoggerService, public cordova: CordovaService) {
 
   }
 
@@ -47,7 +47,7 @@ export class DigestsListComponent implements OnInit {
       }
     });
 
-    this.ga.trackPage("/");
+    this.logger.trackPage("/");
   }
 
 
@@ -98,6 +98,6 @@ export class DigestsListComponent implements OnInit {
   ],
   exports: [DigestsListComponent],
   declarations: [DigestsListComponent, DigestComponent],
-  providers: [NewscronClientService, GoogleAnalyticsService, CordovaService],
+  providers: [NewscronClientService, LoggerService, CordovaService],
 })
 export class DigestModule { }

@@ -4,7 +4,7 @@ import { NgModule, Component, OnInit, Input, Inject } from '@angular/core';
 import { RouterModule, Router, ActivatedRoute, Params } from '@angular/router';
 import { NewscronClientService } from '../newscron-client.service';
 import { Section, Category, Article } from '../newscron-model';
-import { GoogleAnalyticsService } from '../google-analytics.service';
+import { LoggerService } from '../logger.service';
 import { SectionModule, SectionComponent } from '../section/section.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
@@ -30,7 +30,7 @@ export class SearchComponent implements OnInit {
   private unsubscribe: Subject<void> = new Subject();
   public error: String = null;
 
-  constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router, public ga: GoogleAnalyticsService, public dialog: MatDialog) {
+  constructor(private client: NewscronClientService, private route: ActivatedRoute, private router: Router, public logger: LoggerService, public dialog: MatDialog) {
   }
 
 
@@ -51,7 +51,7 @@ export class SearchComponent implements OnInit {
       this.searchArticles();
 
     });
-    this.ga.trackPage("/search");
+    this.logger.trackPage("/search");
   }
 
   public togleSettings() {
@@ -138,7 +138,7 @@ export class SettingsDialog {
   ],
   exports: [SearchComponent],
   declarations: [SearchComponent, SettingsDialog],
-  providers: [NewscronClientService, GoogleAnalyticsService],
+  providers: [NewscronClientService, LoggerService],
   entryComponents: [SettingsDialog],
 })
 export class SearchModule { }

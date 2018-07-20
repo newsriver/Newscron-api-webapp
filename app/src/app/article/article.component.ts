@@ -4,7 +4,7 @@ import { CordovaService } from '../cordova.service';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { NewscronClientService } from '../newscron-client.service';
 import { Pipe, PipeTransform } from '@angular/core';
-import { GoogleAnalyticsService } from '../google-analytics.service';
+import { LoggerService } from '../logger.service';
 import { UserProfileService } from '../user-profile.service';
 import { PublisherRelevanceComponent, PublisherDialog } from './publisher-relevance/publisher-relevance.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,7 +31,7 @@ export class ArticleComponent implements OnInit {
 
 
   @Input() article: Article;
-  constructor(public cordovaService: CordovaService, private route: ActivatedRoute, public ga: GoogleAnalyticsService, private userProfile: UserProfileService) {
+  constructor(public cordovaService: CordovaService, private route: ActivatedRoute, public logger: LoggerService, private userProfile: UserProfileService) {
 
 
   }
@@ -55,9 +55,9 @@ export class ArticleComponent implements OnInit {
 
   public trackEvent() {
     if (this.article.category == null) {
-      this.ga.trackEvent("Article", "click", null);
+      this.logger.trackEvent("Article", "click", null, null);
     } else {
-      this.ga.trackEvent("Article", "click", this.article.category.name);
+      this.logger.trackEvent("Article", "click", this.article.category.name, { "category": this.article.category.name });
     }
   }
 
@@ -76,6 +76,6 @@ export class ArticleComponent implements OnInit {
   ],
   exports: [ArticleComponent],
   declarations: [ArticleComponent, EscapeHtmlPipe, PublisherRelevanceComponent, PublisherDialog],
-  providers: [NewscronClientService, CordovaService, GoogleAnalyticsService, UserProfileService],
+  providers: [NewscronClientService, CordovaService, LoggerService, UserProfileService],
 })
 export class ArticleModule { }

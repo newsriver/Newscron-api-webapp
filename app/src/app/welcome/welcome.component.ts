@@ -8,7 +8,7 @@ import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { MatDialogModule, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { GoogleAnalyticsService } from '../google-analytics.service';
+import { LoggerService } from '../logger.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegionComponent } from './region/region.component';
 import { EditionComponent } from './edition/edition.component';
@@ -66,7 +66,7 @@ export class WelcomeComponent implements OnInit {
   public categories: CategoryPreference[] = [];
   private unsubscribe: Subject<void> = new Subject();
 
-  constructor(private client: NewscronClientService, private router: Router, private route: ActivatedRoute, public dialog: MatDialog, public ga: GoogleAnalyticsService) {
+  constructor(private client: NewscronClientService, private router: Router, private route: ActivatedRoute, public dialog: MatDialog, public logger: LoggerService) {
 
   }
 
@@ -112,14 +112,14 @@ export class WelcomeComponent implements OnInit {
     }
     window.scrollTo(0, 0);
     this.setWelcomeStep.emit(this.step);
-    this.ga.trackEvent("SetUp", "step", "" + this.step);
+    this.logger.trackEvent("SetUp", "step", "" + this.step, { "step": this.step });
   }
 
   next() {
     this.step++;
     window.scrollTo(0, 0);
     this.setWelcomeStep.emit(this.step);
-    this.ga.trackEvent("SetUp", "step", "" + this.step);
+    this.logger.trackEvent("SetUp", "step", "" + this.step, { "step": this.step });
   }
 
   finish() {
@@ -130,7 +130,7 @@ export class WelcomeComponent implements OnInit {
     this.client.resetUserPreferences(preferences, true);
     this.setWelcomeStep.emit(this.step);
     this.router.navigate(['/']);
-    this.ga.trackEvent("SetUp", "completed", null);
+    this.logger.trackEvent("SetUp", "completed", null, null);
   }
 
   public hasOnePackage() {
@@ -221,6 +221,6 @@ export class Continent {
   ],
   exports: [WelcomeComponent],
   declarations: [WelcomeComponent, RegionComponent, EditionComponent, CategoriesComponent, ResetConfirmationDialoug, KeysPipe, CategoryAmmountPipe],
-  providers: [NewscronClientService, GoogleAnalyticsService],
+  providers: [NewscronClientService, LoggerService],
 })
 export class WelcomeModule { }

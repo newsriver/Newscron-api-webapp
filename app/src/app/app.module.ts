@@ -7,7 +7,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NewscronClientService } from './newscron-client.service';
 import { CordovaService } from './cordova.service';
-import { GoogleAnalyticsService } from './google-analytics.service';
 import { UserProfileService } from './user-profile.service';
 import { LoggerService } from './logger.service';
 import { AppComponent } from './app.component';
@@ -25,7 +24,7 @@ import { AppRoutingModule } from './app-routing.module';
     RouterModule,
     AppRoutingModule,
   ],
-  providers: [CordovaService, NewscronClientService, GoogleAnalyticsService, UserProfileService, LoggerService],
+  providers: [CordovaService, NewscronClientService, UserProfileService, LoggerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
