@@ -1,4 +1,4 @@
-import { NgModule, Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { NgModule, Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Section, Category, Article, Publisher } from '../newscron-model';
 import { CordovaService } from '../cordova.service';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
@@ -12,12 +12,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../environments/environment';
+import { VisibilityObserverDirective } from '../visibility-observer.directive';
 @Pipe({ name: 'escapeHtml', pure: false })
 export class EscapeHtmlPipe implements PipeTransform {
   transform(value: string, args: any[] = []) {
     if (value == null) return "";
     return value.replace(new RegExp("<highlighted>", 'g'), "<span>").replace(new RegExp("</highlighted>", 'g'), "</span>")
   }
+}
+
+function _window(): any {
+  // return the global native browser window object
+  return window;
 }
 
 @Component({
@@ -29,16 +35,20 @@ export class EscapeHtmlPipe implements PipeTransform {
 export class ArticleComponent implements OnInit {
 
 
+  public lazyImgUrl: string = null;
 
   @Input() article: Article;
-  constructor(public cordovaService: CordovaService, private route: ActivatedRoute, public logger: LoggerService, private userProfile: UserProfileService) {
-
+  constructor(public cordovaService: CordovaService, private route: ActivatedRoute, public logger: LoggerService, private userProfile: UserProfileService, private ref: ChangeDetectorRef) {
 
   }
 
 
   ngOnInit() {
-
+    //IntersectionObserver is not available lazy loading will not work
+    //skipping it by setting the image url immediately
+    if (!_window().IntersectionObserver) {
+      this.lazyImgUrl = this.article.imgUrl;
+    }
   }
 
   ngOnDestroy() {
@@ -61,7 +71,14 @@ export class ArticleComponent implements OnInit {
     }
   }
 
+  public visibilityCallBack = (): void => {
+    //Lazy load image
+    this.lazyImgUrl = this.article.imgUrl;
+    this.ref.markForCheck();
+  }
+
 }
+
 
 @NgModule({
   imports: [
@@ -75,7 +92,7 @@ export class ArticleComponent implements OnInit {
     PublisherDialog
   ],
   exports: [ArticleComponent],
-  declarations: [ArticleComponent, EscapeHtmlPipe, PublisherRelevanceComponent, PublisherDialog],
+  declarations: [ArticleComponent, EscapeHtmlPipe, PublisherRelevanceComponent, PublisherDialog, VisibilityObserverDirective],
   providers: [NewscronClientService, CordovaService, LoggerService, UserProfileService],
 })
 export class ArticleModule { }

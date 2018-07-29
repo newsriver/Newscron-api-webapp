@@ -11,10 +11,11 @@ import { UserProfileService } from './user-profile.service';
 import { LoggerService } from './logger.service';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { VisibilityObserverDirective } from './visibility-observer.directive';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserAnimationsModule,

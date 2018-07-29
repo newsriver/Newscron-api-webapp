@@ -1,5 +1,4 @@
-<div class="article text-xs-center">
-
+<div class="article text-xs-center" [visibility-observer]="visibilityCallBack">
   <!--
   <div class="card-header">
     <ul class="nav nav-tabs card-header-tabs float-xs-left">
@@ -17,7 +16,7 @@
 -->
 
   <div class="card-block">
-    <div class="digest" >
+    <div class="digest">
       <publisher-relevance [article]="article" *ngIf="article.publisher.id!==null"></publisher-relevance>
       <div style="flex: 3;">
         <!--<img src="http://www.tio.ch/favicon.ico" style="max-height: 28px; margin-right:5px; float:left;" />-->
@@ -29,7 +28,7 @@
     </div>
     <a [attr.href]="article.url" (click)="trackEvent()" target="_blank" *ngIf="!cordovaService.onCordova">
       <div class="content">
-        <div class="img" [ngStyle]="{'background-image': 'url(' + article.imgUrl + ')'}" border="0" *ngIf="article.imgUrl!=null"></div>
+        <div class="img" [ngStyle]="{'background-image': 'url(' + lazyImgUrl + ')'}" border="0" *ngIf="article.imgUrl!=null"></div>
         <h4>{{article.title}}</h4>
         <p [innerHTML]="article.snippet | escapeHtml" class="snippet"></p>
         <h6 class="info-mobile">{{article.publicationDate | date: 'dd/MM/yyyy HH:mm'}}</h6>

@@ -60,6 +60,10 @@ import 'web-animations-js';  // Run `npm install --save web-animations-js`.
 import 'zone.js/dist/zone';  // Included with Angular CLI.
 
 
+/***************************************************************************************************
+ * Interceptor Observer needed for lazy loading and impression logging
+ */
+//import 'intersection-observer'; Looks like it's crashing Safari
 
 /***************************************************************************************************
  * APPLICATION IMPORTS
